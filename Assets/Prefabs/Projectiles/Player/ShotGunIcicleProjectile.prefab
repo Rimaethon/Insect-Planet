@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0.70710576, y: -0, z: -0, w: 0.7071079}
   m_LocalPosition: {x: 0, y: -0.00000011920929, z: -0.00000011920902}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4968222865802635402}
   m_RootOrder: 0
@@ -52,6 +53,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -107,12 +109,12 @@ GameObject:
   - component: {fileID: 4968222865802635402}
   - component: {fileID: 4968222865802635401}
   - component: {fileID: 4968222865802635400}
-  - component: {fileID: 4968222865802635407}
   - component: {fileID: 4968222865802635406}
   - component: {fileID: 3291799336425497615}
   - component: {fileID: 5454889103127659523}
+  - component: {fileID: 2653675928453091656}
   m_Layer: 2
-  m_Name: IcicleProjectile
+  m_Name: ShotGunIcicleProjectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,6 +130,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4968222865139928713}
   m_Father: {fileID: 0}
@@ -162,24 +165,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4968222865802635407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4968222865802635404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6122e9dcd5affed41b6611489d74a00f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamId: 0
-  damageAmount: 1
-  destroyAfterDamage: 1
-  dealDamageOnTriggerEnter: 1
-  dealDamageOnTriggerStay: 1
-  dealDamageOnCollision: 1
 --- !u!114 &4968222865802635406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,3 +211,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyEffect: {fileID: 5119265245389739690, guid: 66eb64c30662afa42a8b61adbee9720f, type: 3}
+  onDestroyEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2653675928453091656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4968222865802635404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ce87a99d792ff4c9f0fd5d99ede4ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamId: 0
+  damageAmount: 1
+  destroyAfterDamage: 1
+  dealDamageOnTriggerEnter: 1
+  dealDamageOnTriggerStay: 1
+  dealDamageOnCollision: 1

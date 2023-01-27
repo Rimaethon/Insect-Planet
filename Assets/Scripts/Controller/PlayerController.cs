@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     //The character controller component on the player
     public CharacterController characterController;
     public InputManager inputManager;
+    public static Transform localPlayer;
 
     /// <summary>
     /// Description:
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Start()
     {
+        localPlayer = transform;
         if(playerHealth.currentHealth<=0)
         {
             foreach(GameObject inGameObject in disableWhileDead)

@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 4292625075940306273}
   - component: {fileID: 4292625075940306272}
   - component: {fileID: 4292625075940306288}
-  - component: {fileID: -3115796188432635454}
   - component: {fileID: 3984427603643302406}
   - component: {fileID: 5486199537864129953}
+  - component: {fileID: 6374595797359168438}
   m_Layer: 9
   m_Name: FlyingSelfDestructingEnemy
   m_TagString: Untagged
@@ -34,6 +34,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.25, y: 0, z: -7.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2392476712073126344}
   m_Father: {fileID: 0}
@@ -58,6 +59,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -153,37 +155,6 @@ MonoBehaviour:
   attackClip: {fileID: 7400000, guid: 2ddcacee8a00fea4486b84d1551266a8, type: 2}
   dieOnExplosion: 1
   explostionEffect: {fileID: 3092383889052610889, guid: 5b6612dacf4f02b46b2de4d047bd2075, type: 3}
---- !u!114 &-3115796188432635454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4292625075940306303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfd127b36b1c82f4da6b98d59c6f16f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamId: 1
-  defaultHealth: 1
-  maximumHealth: 1
-  currentHealth: 1
-  invincibilityTime: 3
-  isAlwaysInvincible: 0
-  useLives: 0
-  currentLives: 3
-  maximumLives: 5
-  respawnWaitTime: 3
-  deathEffect: {fileID: 3092383889052610889, guid: 5b6612dacf4f02b46b2de4d047bd2075, type: 3}
-  hitEffect: {fileID: 1986892457192645033, guid: b4b5f92d032abe64b84d7639d84610e8, type: 3}
-  ragdollHandler: {fileID: 3984427603643302406}
-  eventsOnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  eventsOnRespawn:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &3984427603643302406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +187,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 5
   destroyChildrenOnDeath: 1
+--- !u!114 &6374595797359168438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4292625075940306303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5011c5041e1491841ba8c5deba46ec9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamId: 1
+  defaultEnemyHealth: 1
+  _currentHealth: 0
+  deathEffect: {fileID: 1515603650488286217, guid: b1d61b018291e5043b0be5ee26c12b18, type: 3}
+  hitEffect: {fileID: 1986892457192645033, guid: b4b5f92d032abe64b84d7639d84610e8, type: 3}
+  ragdollHandler: {fileID: 2725768548962742277, guid: 439a8a9d721048a46bec9d47581b4c1d, type: 3}
 --- !u!1001 &5858348798465911932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -789,13 +778,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f266c5c6b10c2754cb8d6c3512f3aa7c, type: 3}
---- !u!4 &2392476712073126344 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8106129502878748084, guid: f266c5c6b10c2754cb8d6c3512f3aa7c, type: 3}
-  m_PrefabInstance: {fileID: 5858348798465911932}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1628396400489302391 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5175815573649827083, guid: f266c5c6b10c2754cb8d6c3512f3aa7c, type: 3}
+  m_PrefabInstance: {fileID: 5858348798465911932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2392476712073126344 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8106129502878748084, guid: f266c5c6b10c2754cb8d6c3512f3aa7c, type: 3}
   m_PrefabInstance: {fileID: 5858348798465911932}
   m_PrefabAsset: {fileID: 0}

@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3507046460162178528}
   m_RootOrder: 0
@@ -57,6 +58,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.08979797, y: 0.487, z: 0.8653259}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1374090229019441459}
   m_Father: {fileID: 4699839180939646045}
@@ -112,9 +114,9 @@ GameObject:
   - component: {fileID: 4699839180939646040}
   - component: {fileID: 4699839180939646047}
   - component: {fileID: 4699839180939646046}
-  - component: {fileID: -3219269683412516719}
   - component: {fileID: 2725768548962742277}
   - component: {fileID: 621647721172439227}
+  - component: {fileID: -7563309832940884730}
   m_Layer: 9
   m_Name: FlyingShooterEnemy
   m_TagString: Untagged
@@ -132,6 +134,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.25, y: 0, z: -7.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7040697591163814588}
   - {fileID: 3507046460162178528}
@@ -219,37 +222,6 @@ MonoBehaviour:
   equippedGunIndex: 0
   inputManager: {fileID: 0}
   isPlayerControlled: 0
---- !u!114 &-3219269683412516719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4699839180939646023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfd127b36b1c82f4da6b98d59c6f16f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamId: 1
-  defaultHealth: 1
-  maximumHealth: 1
-  currentHealth: 1
-  invincibilityTime: 3
-  isAlwaysInvincible: 0
-  useLives: 0
-  currentLives: 3
-  maximumLives: 5
-  respawnWaitTime: 3
-  deathEffect: {fileID: 1515603650488286217, guid: b1d61b018291e5043b0be5ee26c12b18, type: 3}
-  hitEffect: {fileID: 1986892457192645033, guid: b4b5f92d032abe64b84d7639d84610e8, type: 3}
-  ragdollHandler: {fileID: 2725768548962742277}
-  eventsOnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  eventsOnRespawn:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2725768548962742277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +254,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 5
   destroyChildrenOnDeath: 1
+--- !u!114 &-7563309832940884730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4699839180939646023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5011c5041e1491841ba8c5deba46ec9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamId: 1
+  defaultEnemyHealth: 10
+  _currentHealth: 0
+  deathEffect: {fileID: 1515603650488286217, guid: b1d61b018291e5043b0be5ee26c12b18, type: 3}
+  hitEffect: {fileID: 1986892457192645033, guid: b4b5f92d032abe64b84d7639d84610e8, type: 3}
+  ragdollHandler: {fileID: 2725768548962742277}
 --- !u!1001 &1598798969347091084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -831,13 +821,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee608e9a5f34fb849a8fc95ac870104c, type: 3}
---- !u!4 &7040697591163814588 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8612437295614994480, guid: ee608e9a5f34fb849a8fc95ac870104c, type: 3}
-  m_PrefabInstance: {fileID: 1598798969347091084}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &4843680362151123187 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6127189698402857599, guid: ee608e9a5f34fb849a8fc95ac870104c, type: 3}
+  m_PrefabInstance: {fileID: 1598798969347091084}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7040697591163814588 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8612437295614994480, guid: ee608e9a5f34fb849a8fc95ac870104c, type: 3}
   m_PrefabInstance: {fileID: 1598798969347091084}
   m_PrefabAsset: {fileID: 0}

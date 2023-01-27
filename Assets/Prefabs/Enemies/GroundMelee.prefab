@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3642792238051749162}
   m_RootOrder: 1
@@ -53,6 +54,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -128,10 +130,10 @@ GameObject:
   - component: {fileID: 3642792238051749166}
   - component: {fileID: 3642792238051749157}
   - component: {fileID: 3642792238051749156}
-  - component: {fileID: -5730357645085634424}
   - component: {fileID: 5344201165240082450}
   - component: {fileID: 3872924443984927461}
   - component: {fileID: 1420941988157335598}
+  - component: {fileID: 9197039790982940978}
   m_Layer: 9
   m_Name: GroundMelee
   m_TagString: Untagged
@@ -149,6 +151,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9140639023062747387}
   - {fileID: 199390392789614195}
@@ -174,6 +177,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -276,37 +280,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-5730357645085634424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3642792238051749167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfd127b36b1c82f4da6b98d59c6f16f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamId: 1
-  defaultHealth: 1
-  maximumHealth: 1
-  currentHealth: 1
-  invincibilityTime: 3
-  isAlwaysInvincible: 0
-  useLives: 0
-  currentLives: 3
-  maximumLives: 5
-  respawnWaitTime: 3
-  deathEffect: {fileID: 1515603650488286217, guid: b1d61b018291e5043b0be5ee26c12b18, type: 3}
-  hitEffect: {fileID: 1986892457192645033, guid: b4b5f92d032abe64b84d7639d84610e8, type: 3}
-  ragdollHandler: {fileID: 1420941988157335598}
-  eventsOnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  eventsOnRespawn:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5344201165240082450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,6 +331,24 @@ MonoBehaviour:
   - {fileID: 3642792238051749156}
   - {fileID: 2307099136455670090}
   timedDestroyer: {fileID: 3872924443984927461}
+--- !u!114 &9197039790982940978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3642792238051749167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5011c5041e1491841ba8c5deba46ec9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamId: 1
+  defaultEnemyHealth: 1
+  _currentHealth: 0
+  deathEffect: {fileID: 1515603650488286217, guid: b1d61b018291e5043b0be5ee26c12b18, type: 3}
+  hitEffect: {fileID: 1986892457192645033, guid: b4b5f92d032abe64b84d7639d84610e8, type: 3}
+  ragdollHandler: {fileID: 1420941988157335598}
 --- !u!1001 &8079213361733700103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -419,13 +410,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f221efe237c89c742ba45c7c6cdaf8e4, type: 3}
---- !u!4 &9140639023062747387 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1064313495132078844, guid: f221efe237c89c742ba45c7c6cdaf8e4, type: 3}
-  m_PrefabInstance: {fileID: 8079213361733700103}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &7355062045754061281 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 1589010119958133734, guid: f221efe237c89c742ba45c7c6cdaf8e4, type: 3}
+  m_PrefabInstance: {fileID: 8079213361733700103}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9140639023062747387 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1064313495132078844, guid: f221efe237c89c742ba45c7c6cdaf8e4, type: 3}
   m_PrefabInstance: {fileID: 8079213361733700103}
   m_PrefabAsset: {fileID: 0}
