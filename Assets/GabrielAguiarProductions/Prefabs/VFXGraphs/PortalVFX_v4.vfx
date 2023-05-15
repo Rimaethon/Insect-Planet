@@ -58,9 +58,9 @@ MonoBehaviour:
     position:
       serializedVersion: 2
       x: -439
-      y: -188
-      width: 2496
-      height: 2523
+      y: -209
+      width: 2489
+      height: 2538
     contents:
     - model: {fileID: 8926484042661614555}
       id: 0
@@ -159,9 +159,9 @@ MonoBehaviour:
     position:
       serializedVersion: 2
       x: 657
-      y: 3129
-      width: 677
-      height: 1923
+      y: 3128
+      width: 679
+      height: 1916
     contents:
     - model: {fileID: 8926484042661615591}
       id: 0
@@ -241,9 +241,9 @@ MonoBehaviour:
     position:
       serializedVersion: 2
       x: 765
-      y: -3564
-      width: 687
-      height: 2153
+      y: -3566
+      width: 689
+      height: 2151
     contents:
     - model: {fileID: 8926484042661616196}
       id: 0
@@ -257,9 +257,6 @@ MonoBehaviour:
     - model: {fileID: 8926484042661616238}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661616514}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661616520}
       id: 0
       isStickyNote: 0
@@ -270,6 +267,9 @@ MonoBehaviour:
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661616530}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661616806}
       id: 0
       isStickyNote: 0
   - title: PARTICLES IMPACT
@@ -444,7 +444,7 @@ MonoBehaviour:
   - name: BUILD UP
     collapsed: 1
   - name: PARTICLES OUTSIDE
-    collapsed: 1
+    collapsed: 0
   - name: PARTICLES STRETCHED
     collapsed: 0
   - name: PORTAL CORE
@@ -452,9 +452,9 @@ MonoBehaviour:
   uiBounds:
     serializedVersion: 2
     x: -474
-    y: -3567
-    width: 5215
-    height: 8619
+    y: -3569
+    width: 5217
+    height: 8613
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -581,13 +581,14 @@ MonoBehaviour:
   - {fileID: 8926484042661616699}
   - {fileID: 8926484042661616701}
   - {fileID: 8926484042661616703}
+  - {fileID: 8926484042661616806}
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_UIInfos: {fileID: 114340500867371532}
   m_ParameterInfo:
-  - name: Delay
-    path: Delay
+  - name: NormalDelay
+    path: NormalDelay
     tooltip: 
     sheetType: m_Float
     realType: Single
@@ -596,6 +597,20 @@ MonoBehaviour:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
       m_SerializableObject: 1
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
+  - name: ShockWaveDelay
+    path: ShockWaveDelay
+    tooltip: 
+    sheetType: m_Float
+    realType: Single
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -3172,7 +3187,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661614707}
       inputSlot: {fileID: 8926484042661615028}
-    position: {x: 566, y: 2229}
+    position: {x: 566, y: 2228.6667}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661614707
@@ -5997,7 +6012,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 1608, y: -128}
+  m_UIPosition: {x: 1363, y: -150}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -13997,7 +14012,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
   m_Direction: 0
   m_LinkedSlots:
-  - {fileID: 8926484042661616515}
+  - {fileID: 8926484042661616807}
 --- !u!114 &8926484042661616242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20582,7 +20597,7 @@ MonoBehaviour:
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661616515}
-  m_ExposedName: Delay
+  m_ExposedName: NormalDelay
   m_Exposed: 1
   m_Order: 4
   m_Category: 
@@ -20599,13 +20614,6 @@ MonoBehaviour:
   m_ValueFilter: 0
   m_Tooltip: 
   m_Nodes:
-  - m_Id: 0
-    linkedSlots:
-    - outputSlot: {fileID: 8926484042661616515}
-      inputSlot: {fileID: 8926484042661616241}
-    position: {x: 850, y: -3340}
-    expandedSlots: []
-    expanded: 0
   - m_Id: 1
     linkedSlots:
     - outputSlot: {fileID: 8926484042661616515}
@@ -20691,7 +20699,6 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
   m_Direction: 1
   m_LinkedSlots:
-  - {fileID: 8926484042661616241}
   - {fileID: 8926484042661616477}
   - {fileID: 8926484042661616245}
   - {fileID: 8926484042661616349}
@@ -20824,7 +20831,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661616521}
       inputSlot: {fileID: 8926484042661616216}
-    position: {x: 791, y: -1712}
+    position: {x: 791.3333, y: -1712}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661616521
@@ -21120,7 +21127,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661616529}
       inputSlot: {fileID: 8926484042661616212}
-    position: {x: 803, y: -1906}
+    position: {x: 803.3333, y: -1906}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661616529
@@ -21200,7 +21207,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661616531}
       inputSlot: {fileID: 8926484042661616237}
-    position: {x: 790, y: -2921}
+    position: {x: 790, y: -2921.3333}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661616531
@@ -23507,7 +23514,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661616599}
       inputSlot: {fileID: 8926484042661614586}
-    position: {x: 539, y: 1855}
+    position: {x: 539.3333, y: 1854.6666}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661616599
@@ -23587,7 +23594,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661616601}
       inputSlot: {fileID: 8926484042661614557}
-    position: {x: 497, y: -13}
+    position: {x: 497.33334, y: -13.333334}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661616601
@@ -23752,7 +23759,7 @@ MonoBehaviour:
       inputSlot: {fileID: 8926484042661616625}
     - outputSlot: {fileID: 8926484042661616605}
       inputSlot: {fileID: 8926484042661616629}
-    position: {x: 390, y: 2031}
+    position: {x: 390, y: 2030.6666}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661616605
@@ -23833,7 +23840,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661616607}
       inputSlot: {fileID: 8926484042661615011}
-    position: {x: 1445, y: 1440}
+    position: {x: 1445.3334, y: 1440}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661616607
@@ -24211,7 +24218,7 @@ MonoBehaviour:
       inputSlot: {fileID: 8926484042661616637}
     - outputSlot: {fileID: 8926484042661616617}
       inputSlot: {fileID: 8926484042661616639}
-    position: {x: 1270, y: 407}
+    position: {x: 1365.3334, y: 472.66666}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661616617
@@ -26918,9 +26925,9 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661616702}
       inputSlot: {fileID: 8926484042661615635}
-    position: {x: 691, y: 3838}
+    position: {x: 691.3333, y: 3840}
     expandedSlots: []
-    expanded: 0
+    expanded: 1
 --- !u!114 &8926484042661616702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26998,7 +27005,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661616704}
       inputSlot: {fileID: 8926484042661615636}
-    position: {x: 724, y: 4793}
+    position: {x: 724, y: 4792.6665}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661616704
@@ -30000,3 +30007,83 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
   m_Direction: 0
   m_LinkedSlots: []
+--- !u!114 &8926484042661616806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UIIgnoredErrors: []
+  m_Parent: {fileID: 114350483966674976}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_InputSlots: []
+  m_OutputSlots:
+  - {fileID: 8926484042661616807}
+  m_ExposedName: ShockWaveDelay
+  m_Exposed: 1
+  m_Order: 49
+  m_Category: 
+  m_Min:
+    m_Type:
+      m_SerializableType: 
+    m_SerializableObject: 
+  m_Max:
+    m_Type:
+      m_SerializableType: 
+    m_SerializableObject: 
+  m_IsOutput: 0
+  m_EnumValues: []
+  m_ValueFilter: 0
+  m_Tooltip: 
+  m_Nodes:
+  - m_Id: 0
+    linkedSlots:
+    - outputSlot: {fileID: 8926484042661616807}
+      inputSlot: {fileID: 8926484042661616241}
+    position: {x: 816.6667, y: -3316}
+    expandedSlots: []
+    expanded: 0
+--- !u!114 &8926484042661616807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UIIgnoredErrors: []
+  m_Parent: {fileID: 0}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661616807}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661616806}
+    m_Value:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0
+    m_Space: 2147483647
+  m_Property:
+    name: o
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+  m_Direction: 1
+  m_LinkedSlots:
+  - {fileID: 8926484042661616241}

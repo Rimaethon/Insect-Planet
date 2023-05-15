@@ -65,10 +65,11 @@ public class MoveToDestination : MonoBehaviour
         {
             loweringSubject += 1;
             shapeModule.radius = loweringSubject;
+            currentSpeed += 10;
             yield return new WaitForSeconds(0.01f);
         }
 
-        currentSpeed = 500;
+        currentSpeed = 400;
         for (int i = 0; i < LoweringStepCount; i++) 
         {
             loweringSubject -= 1;
