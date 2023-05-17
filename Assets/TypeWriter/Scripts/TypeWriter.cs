@@ -3,74 +3,102 @@ using UnityEngine;
 
 public class TypeWriter : MonoBehaviour
 {
-    [SerializeField]
-    public GameObject letter;
+    [SerializeField] private GameObject letter;
+    [SerializeField] private GameObject cursor;
+    [SerializeField] private AudioClip typeSound;
+    [SerializeField] private AudioClip endOfLineSound;
+    [SerializeField] private Sprite[] characters;
+    [SerializeField] private Sprite[] numbers;
+    [SerializeField] private Sprite spacingSprite;
 
-    [SerializeField]
-    public GameObject cursor;
+    private Vector3 pos;
+    private readonly float lineSpacing = 0.5f;
+    private readonly float charSpacing = 0.2f;
+    private char[] convertedString;
+    private GameObject spriteChar;
+    private GameObject spriteCursor;
+    private AudioSource audioPlayer;
 
-    [SerializeField]
-    public AudioClip typeSound;
+    private readonly string[] data = { "year 2458             ", "aurelia majoris       ", "monitoring deep space ", "no anomalies detected." };
 
-    [SerializeField]
-    public AudioClip endOfLineSound;
-
-    [SerializeField]
-    public Sprite[] characters;
-
-    Vector3 pos;
-    readonly float lineSpacing = 0.5f;   
-    readonly float charSpacing = 0.35f;
-    char[] convertedString;
-    GameObject spriteChar;
-    GameObject spriteCursor;
-    AudioSource audioPlayer;
-
-    readonly string[] data = { "terminal or", "typewriter effect", " ", "check out description", "for source code" };
-
-    void Start()
+    private void Start()
     {
-        pos = transform.localPosition;
         audioPlayer = GetComponent<AudioSource>();
         StartCoroutine(PrintOut());
     }
 
-    IEnumerator PrintOut()
+    private IEnumerator PrintOut()
     {
         int charToPrint;
-        Vector3 lastPos = new Vector3(0, 0,0);
+        Vector3 lastPos = new Vector3(0, 0, 0);
 
         spriteCursor = Instantiate(cursor, pos, Quaternion.identity);
         spriteCursor.transform.parent = gameObject.transform;
-        foreach (string singleLine in data) 
+        spriteCursor.transform.localRotation=Quaternion.identity;
+        foreach (string singleLine in data)
         {
             convertedString = singleLine.ToCharArray();
             pos.x = ((singleLine.Length * charSpacing) / 2) * -1;
-            foreach (char singleChar in singleLine) 
+            foreach (char singleChar in singleLine)
             {
                 charToPrint = SelectChar(singleChar);
-                if (charToPrint >= 0 && charToPrint <= 26)  
+                if (charToPrint >= 0)
                 {
-                    spriteChar = Instantiate(letter,pos, Quaternion.identity);
-                    spriteChar.transform.parent = gameObject.transform;
-                    spriteChar.transform.localPosition = pos;
-
-                    spriteChar.GetComponent<SpriteRenderer>().sprite = characters[charToPrint];
-                    spriteCursor.transform.localPosition = pos + new Vector3(charSpacing, 0,0);
+                    if (charToPrint < characters.Length)
+                    {
+                        spriteChar = Instantiate(letter, pos, Quaternion.identity);
+                        spriteChar.transform.parent = gameObject.transform;
+                        spriteChar.transform.localPosition = pos;
+                        spriteChar.transform.localRotation = Quaternion.identity;
+                        spriteChar.GetComponent<SpriteRenderer>().sprite = characters[charToPrint];
+                    }
+                    else if (charToPrint == -2)  // Spacing character
+                    {
+                        spriteChar = Instantiate(letter, pos, Quaternion.identity);
+                        spriteChar.transform.parent = gameObject.transform;
+                        spriteChar.transform.localPosition = pos;
+                        spriteChar.transform.localRotation = Quaternion.identity;
+                        spriteChar.GetComponent<SpriteRenderer>().sprite = spacingSprite;
+                    }
+                    else
+                    {
+                        spriteChar = Instantiate(letter, pos, Quaternion.identity);
+                        spriteChar.transform.parent = gameObject.transform;
+                        spriteChar.transform.localPosition = pos;
+                        spriteChar.transform.localRotation = Quaternion.identity;
+                        spriteChar.GetComponent<SpriteRenderer>().sprite = numbers[charToPrint - characters.Length];
+                    }
+                    spriteCursor.transform.localPosition = pos + new Vector3(charSpacing, 0, 0);
                     audioPlayer.PlayOneShot(typeSound, 1f);
-                    yield return new WaitForSeconds(Random.Range(0.05f, 0.35f));   
+                    yield return new WaitForSeconds(Random.Range(0.05f, 0.35f));
                 }
-                pos.x += charSpacing; 
+                pos.x += charSpacing;
             }
             lastPos = pos;
-            pos.y -= lineSpacing;
             pos.x = transform.localPosition.x;
+            pos.y -= lineSpacing;
         }
         spriteCursor.transform.localPosition = lastPos;
     }
 
-    int SelectChar(char selChar) 
+    private int SelectChar(char selChar)
     {
-        return selChar - 97; 
+        if (char.IsLetter(selChar))
+        {
+            return selChar - 'a';
+        }
+
+        if (char.IsNumber(selChar))
+        {
+            return selChar - '0' + characters.Length;
+        }
+
+        if (selChar == ' ')
+        {
+            return -2;  // Spacing character
+        }
+
+        return -1;
     }
+
 }
