@@ -23,6 +23,7 @@ public class TypeWriter : MonoBehaviour
 
     private void Start()
     {
+        
         audioPlayer = GetComponent<AudioSource>();
         StartCoroutine(PrintOut());
     }

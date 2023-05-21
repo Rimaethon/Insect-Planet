@@ -47,11 +47,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CellDensity: 45.59
-    - _CellSpeed: 0.9
+    - _CellDensity: 100
+    - _CellSpeed: 1.8
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _SolarFlare: 68.81
+    - _SolarFlare: 25
     m_Colors:
     - _BaseColor: {r: 0.990566, g: 0.11467351, b: 0, a: 0}
     - _CellColor: {r: 1, g: 0.45315808, b: 0, a: 0}

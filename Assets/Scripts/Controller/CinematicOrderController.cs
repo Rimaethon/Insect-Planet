@@ -5,26 +5,29 @@ using UnityEngine.Serialization;
 public class CinematicOrderController : MonoBehaviour
 {
     private float rotationSpeed;
-    public float accelerationTime; 
-    public float maxRotationSpeed;
-    public float minRotationSpeed;
-    public float decelerationTime; 
-    public GameObject childObject; 
+    [SerializeField] float accelerationTime; 
+    [SerializeField] float maxRotationSpeed;
+    [SerializeField] float minRotationSpeed;
+    [SerializeField] float decelerationTime; 
+    private GameObject childObject; 
     private bool isDecelerationEnded;
     [SerializeField] private float startDelay;
+    
     private float startTimer;
-    [SerializeField] private GameObject spaceship;
-    [SerializeField] private GameObject portal;
-
     private float currentSpeed;
     private float accelerationTimer;
-    private float decelerationTimer ; 
+    private float decelerationTimer ;
+
+    private void Start()
+    {
+        childObject = transform.GetChild(0).gameObject;
+    }
 
     void Update()
     {
         if (startDelay < startTimer)
         {
-            portal.SetActive(true);
+            gameObject.SetActive(true);
             if (accelerationTimer < accelerationTime)
             {
                 accelerationTimer += Time.deltaTime;
@@ -49,7 +52,7 @@ public class CinematicOrderController : MonoBehaviour
                 currentSpeed = rotationSpeed;
             }
 
-            portal.transform.Rotate(0, 0, currentSpeed * Time.deltaTime);
+            gameObject.transform.Rotate(0, 0, currentSpeed * Time.deltaTime);
         
             if (currentSpeed < 0.0001)
             {
@@ -59,7 +62,6 @@ public class CinematicOrderController : MonoBehaviour
             if (isDecelerationEnded && childObject != null)
             {
                 childObject.SetActive(true);
-                spaceship.SetActive(true);
             
             }
             
