@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Projectile
+  - TrackingObject
+  - Ground
+  - Geyser
+  - Hazard
+  - HazardRock
   layers:
   - Default
   - TransparentFX
@@ -12,11 +17,11 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
+  - PostProcessing
   - Enemy
   - Effect
   - Environment
-  - 
+  - Player
   - 
   - 
   - 
