@@ -82,14 +82,7 @@ public class PlayerController : MonoBehaviour
         inputManager = InputManager.instance;
     }
 
-    /// <summary>
-    /// Description:
-    /// Standard Unity function called once every frame
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
-    /// </summary>
+   
     void Update()
     {
         ProcessMovement();
