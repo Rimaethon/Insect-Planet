@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Rimaethon/_Scenes/CinematicScene.unity
+    path: Assets/Insect_Planet/_Scenes/CinematicScene.unity
     guid: d9dc2222459d25e4e81865b834e0e92e
   - enabled: 1
-    path: Assets/_Rimaethon/_Scenes/Level1.unity
+    path: Assets/Insect_Planet/_Scenes/Level1.unity
     guid: 9db98970693f24b4f9162fd4fc43dee7
   - enabled: 1
-    path: Assets/_Rimaethon/_Scenes/Level2.unity
+    path: Assets/Insect_Planet/_Scenes/Level2.unity
     guid: 696a5f4509c67424c9ce49159f1e44e5
   - enabled: 1
-    path: Assets/_Rimaethon/_Scenes/Level3.unity
+    path: Assets/Insect_Planet/_Scenes/Level3.unity
     guid: c07742b967b44ba4590a76226ea77b5d
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d209a7dd0a5b5f04bb9b362489c288b9, type: 2}
