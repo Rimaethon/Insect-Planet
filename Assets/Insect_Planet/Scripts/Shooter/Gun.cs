@@ -1,230 +1,198 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-
-public class Gun : MonoBehaviour
+namespace Insect_Planet.Scripts.Shooter
 {
-    [Header("Aim Settings")]
-    [Tooltip("The gameobject to raycast forward from")]
-    public GameObject raycastFrom;
-    [Tooltip("The minimum distance away this gun will look towards when adjusting aim")]
-    public float minimumDistanceToAim = 10f;
-    [Tooltip("The maximum distance away this gun will look towards when adjusting aim")]
-    public float maxDistanceToAim = 1000f;
-    [Header("Enemy Aiming")]
-    [Tooltip("Whether or not this gun always shoots towards an enemy target")]
-    public bool alwaysShootAtTarget = true;
-    [Tooltip("The enemy whos target will be used")]
-    public Enemy enemy;
-
-    [Header("Prefab Settings")]
-    [Tooltip("The projectile game object to instantiate when firing this gun")]
-    public GameObject projectileGameObject;
-    [Tooltip("Whether or not the fired projectile should be a child of the fire location")]
-    public bool childProjectileToFireLocation = false;
-    [Tooltip("The effect prefab to instantiate when firing this gun")]
-    public GameObject fireEffect;
-
-    public Transform fireLocationTransform;
-    [Tooltip("How long to wait before being able to fire again, if no animator is set")]
-    public float fireDelay = 0.02f;
-    [Tooltip("The fire type of the weapon")]
-    public FireType fireType = FireType.semiAutomatic;
-    
-    // enum for setting the fire type
-    public enum FireType { semiAutomatic, automatic };
-
-    // The time when this gun will be able to fire again
-    private float ableToFireAgainTime = 0;
-
-    [Tooltip("The number of projectiles to fire when firing")]
-    public int maximumToFire = 1;
-    [Tooltip("The maximum degree (eular angle) of spread shots can be fired in")]
-    [Range(0, 45)]
-    public float maximumSpreadDegree = 0;
-
-    [Header("Equipping settings")]
-    [Tooltip("Whether or not this gun is available for use")]
-    public bool available = false;
-
-    [Header("Animation Settings")]
-    [Tooltip("The animator that animates this gun.")]
-    public Animator gunAnimator = null;
-    [Tooltip("Shoot animator trigger name")]
-    public string shootTriggerName = "Shoot";
-    [Tooltip("The animation state anme when the gun is idle (used to handle when we are able to fire again)")]
-    public string idleAnimationName = "Idle";
-
-    [Header("Ammo Settings")]
-    [Tooltip("Whether this gun requires ammunition.")]
-    public bool useAmmo = false;
-    [Tooltip("The ID of ammo that can be used with this gun.")]
-    public int ammunitionID = 0;
-    [Tooltip("Whether this gun must be reloaded.")]
-    public bool mustReload = false;
-    [Tooltip("The number of shots that can be fired without reloading. \n" +
-        "A magazine size of 1 means the player must reload after every shot.")]
-    public int magazineSize = 1;
-    [Tooltip("The number of shots currently loaded into this gun")]
-    public int roundsLoaded = 0;
-    [Tooltip("The time it takes to reload")]
-    public float reloadTime = 1.0f;
-
-    [Header("UI Display Settings")]
-    [Tooltip("The weapon Image to display on the UI")]
-    public Sprite weaponImage;
-    [Tooltip("The ammo image to display on the UI")]
-    public Sprite ammoImage;
-
-    private void Start()
+    public class Gun : MonoBehaviour
     {
-        Setup();
-    }
+        [SerializeField] private GameObject raycastFrom;
+        [SerializeField] private float minimumDistanceToAim = 10f;
+        [SerializeField] private float maxDistanceToAim = 1000f;
+        [SerializeField] private bool alwaysShootAtTarget = true;
+        [SerializeField] private Enemy enemy;
 
+        [SerializeField] private GameObject projectileGameObject;
+        [SerializeField] private bool childProjectileToFireLocation;
+        [SerializeField] private GameObject fireEffect;
+
+        [SerializeField] private Transform fireLocationTransform;
+        [SerializeField] private float fireDelay = 0.02f;
+        public FireType fireType = FireType.SemiAutomatic;
     
-    private void Setup()
-    {
-        if (raycastFrom == null)
+        public enum FireType { SemiAutomatic, Automatic };
+
+        private float _ableToFireAgainTime;
+
+        [SerializeField] private int maximumToFire = 1;
+        [Range(0, 45)]
+        [SerializeField] private float maximumSpreadDegree ;
+
+        public bool available;
+
+        [SerializeField] private Animator gunAnimator = null;
+        [SerializeField] private string shootTriggerName = "Shoot";
+        [SerializeField] private string idleAnimationName = "Idle";
+
+        public bool useAmmo = false;
+        public int ammunitionID = 0;
+        [SerializeField] private bool mustReload = false;
+        public int magazineSize = 1;
+        public int roundsLoaded = 0;
+        [SerializeField] private float reloadTime = 1.0f;
+
+        public Sprite weaponImage;
+        public Sprite ammoImage;
+
+        private void Start()
         {
-            raycastFrom = gameObject;
-            Debug.LogWarning("The gun script on: " + name + " does not have a raycast from set. \n" +
-                "This can cause aiming to be inaccurate.");
+            Setup();
         }
-    }
+
+    
+        private void Setup()
+        {
+            if (raycastFrom == null)
+            {
+                raycastFrom = gameObject;
+                Debug.LogWarning("The gun script on: " + name + " does not have a raycast from set. \n" +
+                                 "This can cause aiming to be inaccurate.");
+            }
+        }
 
  
-    private void Update()
-    {
-        AdjustAim();
-    }
+        private void Update()
+        {
+            AdjustAim();
+        }
 
    
-    public void AdjustAim()
-    {
-        // Special aiming for enemies
-        if (alwaysShootAtTarget && enemy != null)
+        public void AdjustAim()
         {
-            fireLocationTransform.LookAt(enemy.target);
-            return;
-        }
-
-        RaycastHit hitInformation;
-        Vector3 aimAtPosition = raycastFrom.transform.position + raycastFrom.transform.forward * maxDistanceToAim;
-        bool hitSomething = Physics.Raycast(raycastFrom.transform.position, raycastFrom.transform.forward, out hitInformation);
-        if (!hitSomething || hitInformation.distance > maxDistanceToAim || hitInformation.transform.tag == "Projectile")
-        {
-            fireLocationTransform.LookAt(aimAtPosition);
-        }
-        else if (hitInformation.distance < minimumDistanceToAim)
-        {
-            aimAtPosition = raycastFrom.transform.position + raycastFrom.transform.forward * minimumDistanceToAim;
-            fireLocationTransform.LookAt(aimAtPosition);
-        }
-        else
-        {
-            aimAtPosition = raycastFrom.transform.position + raycastFrom.transform.forward * hitInformation.distance;
-            fireLocationTransform.LookAt(aimAtPosition);
-        }
-    }
-
- 
-    public void Fire()
-    {
-        bool canFire = false;
-
-        // use the animator for fire delay if possible
-        // otherwise use the timing set in the inspector
-        if (gunAnimator != null)
-        {
-            canFire = gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(idleAnimationName);
-        }
-        else
-        {
-            canFire = ableToFireAgainTime <= Time.time;
-        }
-
-        if (canFire && HasAmmo())
-        {
-            if (projectileGameObject != null)
+            // Special aiming for enemies
+            if (alwaysShootAtTarget && enemy != null)
             {
-                for (int i = 0; i < maximumToFire; i++)
-                {
-                    float fireDegreeX = Random.Range(-maximumSpreadDegree, maximumSpreadDegree);
-                    float fireDegreeY = Random.Range(-maximumSpreadDegree, maximumSpreadDegree);
-                    Vector3 fireRotationInEular = fireLocationTransform.rotation.eulerAngles + new Vector3(fireDegreeX, fireDegreeY, 0);
-                    GameObject projectile = Instantiate(projectileGameObject, fireLocationTransform.position, 
-                        Quaternion.Euler(fireRotationInEular), null);
-                    if (childProjectileToFireLocation)
-                    {
-                        projectile.transform.SetParent(fireLocationTransform);
-                    }
-                }
+                fireLocationTransform.LookAt(enemy.target);
+                return;
             }
 
-            if (fireEffect != null)
+            RaycastHit hitInformation;
+            Vector3 aimAtPosition = raycastFrom.transform.position + raycastFrom.transform.forward * maxDistanceToAim;
+            bool hitSomething = Physics.Raycast(raycastFrom.transform.position, raycastFrom.transform.forward, out hitInformation);
+            if (!hitSomething || hitInformation.distance > maxDistanceToAim || hitInformation.transform.tag == "Projectile")
             {
-                Instantiate(fireEffect, fireLocationTransform.position, fireLocationTransform.rotation, fireLocationTransform);
+                fireLocationTransform.LookAt(aimAtPosition);
             }
-
-            ableToFireAgainTime = Time.time + fireDelay;
-            PlayShootAnimation();
-
-            GunSmokeHandler.OnGunFire(this);
-
-            if (useAmmo)
+            else if (hitInformation.distance < minimumDistanceToAim)
             {
-                AmmoTracker.OnFire(this);
-                roundsLoaded = Mathf.Clamp(roundsLoaded - 1, 0, magazineSize);
-            }
-        }
-        else if (useAmmo && mustReload && roundsLoaded == 0)
-        {
-            StartCoroutine(Reload());
-        }
-        GameManager.UpdateUIElements();
-    }
-
-
-    public bool HasAmmo()
-    {
-        if (useAmmo)
-        {
-            if (mustReload)
-            {
-                return roundsLoaded > 0;
+                aimAtPosition = raycastFrom.transform.position + raycastFrom.transform.forward * minimumDistanceToAim;
+                fireLocationTransform.LookAt(aimAtPosition);
             }
             else
             {
-                return AmmoTracker.HasAmmo(this);
+                aimAtPosition = raycastFrom.transform.position + raycastFrom.transform.forward * hitInformation.distance;
+                fireLocationTransform.LookAt(aimAtPosition);
             }
         }
-        else
-        {
-            return true;
-        }
-    }
 
-    private IEnumerator Reload()
-    {
-        ableToFireAgainTime = Time.time + reloadTime;
-        if (AmmoTracker.HasAmmo(this))
+ 
+        public void Fire()
         {
-            float t = 0;
-            while (t < reloadTime)
+            bool canFire = false;
+
+            // use the animator for fire delay if possible
+            // otherwise use the timing set in the inspector
+            if (gunAnimator != null)
             {
-                t += Time.deltaTime;
-                yield return null;
+                canFire = gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(idleAnimationName);
             }
-            AmmoTracker.Reload(this);
+            else
+            {
+                canFire = _ableToFireAgainTime <= Time.time;
+            }
+
+            if (canFire && HasAmmo())
+            {
+                if (projectileGameObject != null)
+                {
+                    for (int i = 0; i < maximumToFire; i++)
+                    {
+                        float fireDegreeX = Random.Range(-maximumSpreadDegree, maximumSpreadDegree);
+                        float fireDegreeY = Random.Range(-maximumSpreadDegree, maximumSpreadDegree);
+                        Vector3 fireRotationInEular = fireLocationTransform.rotation.eulerAngles + new Vector3(fireDegreeX, fireDegreeY, 0);
+                        GameObject projectile = Instantiate(projectileGameObject, fireLocationTransform.position, 
+                            Quaternion.Euler(fireRotationInEular), null);
+                        if (childProjectileToFireLocation)
+                        {
+                            projectile.transform.SetParent(fireLocationTransform);
+                        }
+                    }
+                }
+
+                if (fireEffect != null)
+                {
+                    Instantiate(fireEffect, fireLocationTransform.position, fireLocationTransform.rotation, fireLocationTransform);
+                }
+
+                _ableToFireAgainTime = Time.time + fireDelay;
+                PlayShootAnimation();
+
+                GunSmokeHandler.OnGunFire(this);
+
+                if (useAmmo)
+                {
+                    AmmoTracker.OnFire(this);
+                    roundsLoaded = Mathf.Clamp(roundsLoaded - 1, 0, magazineSize);
+                }
+            }
+            else if (useAmmo && mustReload && roundsLoaded == 0)
+            {
+                StartCoroutine(Reload());
+            }
+            GameManager.UpdateUIElements();
         }
-    }
 
 
-    private void PlayShootAnimation()
-    {
-        if (gunAnimator != null)
+        private bool HasAmmo()
         {
-            gunAnimator.SetTrigger(shootTriggerName);
+            if (useAmmo)
+            {
+                if (mustReload)
+                {
+                    return roundsLoaded > 0;
+                }
+                else
+                {
+                    return AmmoTracker.HasAmmo(this);
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private IEnumerator Reload()
+        {
+            _ableToFireAgainTime = Time.time + reloadTime;
+            if (AmmoTracker.HasAmmo(this))
+            {
+                float t = 0;
+                while (t < reloadTime)
+                {
+                    t += Time.deltaTime;
+                    yield return null;
+                }
+                AmmoTracker.Reload(this);
+            }
+        }
+
+
+        private void PlayShootAnimation()
+        {
+            if (gunAnimator != null)
+            {
+                gunAnimator.SetTrigger(shootTriggerName);
+            }
         }
     }
 }

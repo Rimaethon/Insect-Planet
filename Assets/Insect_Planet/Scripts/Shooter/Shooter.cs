@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Insect_Planet.Scripts.Shooter;
 using UnityEngine;
 
 
@@ -38,14 +39,14 @@ public class Shooter : MonoBehaviour
 
         if (guns.Count > 0)
         {
-            if (guns[equippedGunIndex].fireType == Gun.FireType.semiAutomatic)
+            if (guns[equippedGunIndex].fireType == Gun.FireType.SemiAutomatic)
             {
                 if (inputManager.firePressed)
                 {
                     FireEquippedGun();
                 }
             }
-            else if (guns[equippedGunIndex].fireType == Gun.FireType.automatic)
+            else if (guns[equippedGunIndex].fireType == Gun.FireType.Automatic)
             {
                 if (inputManager.firePressed || inputManager.fireHeld)
                 {
@@ -70,8 +71,8 @@ public class Shooter : MonoBehaviour
         }
     }
 
-   
-    public void GoToNextWeapon()
+
+    private void GoToNextWeapon()
     {
         List<Gun> availableGuns = guns.Where(item => item.available == true).ToList();
         int maximumAvailableGunIndex = availableGuns.Count - 1;
@@ -86,8 +87,8 @@ public class Shooter : MonoBehaviour
         EquipGun(guns.IndexOf(availableGuns[equippedAvailableGunIndex]));
     }
 
-  
-    public void GoToPreviousWeapon()
+
+    private void GoToPreviousWeapon()
     {
         List<Gun> availableGuns = guns.Where(item => item.available == true).ToList();
         int maximumAvailableGunIndex = availableGuns.Count - 1;
@@ -129,8 +130,8 @@ public class Shooter : MonoBehaviour
         EquipGun(guns.IndexOf(availableGuns[equippedAvailableGunIndex]));
     }
 
- 
-    public void EquipGun(int gunIndex)
+
+    private void EquipGun(int gunIndex)
     {
         equippedGunIndex = gunIndex;
         guns[equippedGunIndex].gameObject.SetActive(true);

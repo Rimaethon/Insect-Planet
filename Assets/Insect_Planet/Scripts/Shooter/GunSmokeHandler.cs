@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Insect_Planet.Scripts.Shooter;
 using UnityEngine;
 
 /// <summary>

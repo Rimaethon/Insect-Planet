@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Insect_Planet.Scripts.Shooter;
 using UnityEngine;
 using UnityEngine.Events;
 
