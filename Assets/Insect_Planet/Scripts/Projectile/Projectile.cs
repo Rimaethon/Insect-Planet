@@ -1,26 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-/// <summary>
-/// A class to make projectiles move
-/// </summary>
 public class Projectile : MonoBehaviour
 {
-    // The speed of this projectile in units per second
-    [Tooltip("The distance this projectile will move each second.")]
     public float projectileSpeed = 3.0f;
-    
-    /// <summary>
-    /// Description:
-    /// Every frame, move the projectile in the direction it is heading
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
+    private Rigidbody rb;
+
+    private bool hasHitTerrain = false;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     protected virtual void Update()
     {
-        transform.position = transform.position + transform.forward * projectileSpeed * Time.deltaTime;
+        if (!hasHitTerrain)
+        {
+            transform.position += transform.forward * (projectileSpeed * Time.deltaTime);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Terrain"))
+        {
+            rb.useGravity = true;
+            rb.isKinematic = false;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            hasHitTerrain = true;
+            Debug.Log("Projectile hit the terrain!");
+
+            // You can perform any desired actions here, such as destroying the projectile or spawning effects.
+            //Destroy(gameObject);
+        }
     }
 }

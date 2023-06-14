@@ -80,7 +80,6 @@ public class PlayerController : MonoBehaviour
     {
         ProcessMovement();
         ProcessRotation();
-        Debug.Log("The player is moving");
     }
 
     Vector3 moveDirection;
