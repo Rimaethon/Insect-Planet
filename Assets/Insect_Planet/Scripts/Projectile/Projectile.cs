@@ -3,9 +3,11 @@
 public class Projectile : MonoBehaviour
 {
     public float projectileSpeed = 3.0f;
+    public float blastDistance = 1.0f;
     private Rigidbody rb;
-
+    private Vector3 positionHolder;
     private bool hasHitTerrain = false;
+    [SerializeField] private GameObject bulletBlast;
 
     private void Start()
     {
@@ -16,23 +18,18 @@ public class Projectile : MonoBehaviour
     {
         if (!hasHitTerrain)
         {
+            // Move the projectile forward
             transform.position += transform.forward * (projectileSpeed * Time.deltaTime);
+
+            // Check the distance to the target
+            if (Vector3.Distance(transform.position, bulletBlast.transform.position) <= blastDistance)
+            {
+                // Instantiate bullet blast and destroy the projectile
+                Instantiate(bulletBlast, bulletBlast.transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Terrain"))
-        {
-            rb.useGravity = true;
-            rb.isKinematic = false;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            hasHitTerrain = true;
-            Debug.Log("Projectile hit the terrain!");
-
-            // You can perform any desired actions here, such as destroying the projectile or spawning effects.
-            //Destroy(gameObject);
-        }
-    }
+  
 }
