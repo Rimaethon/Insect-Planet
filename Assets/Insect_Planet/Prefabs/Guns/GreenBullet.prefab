@@ -49,8 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf0d2526b7bfbc4db941dae9bc0169b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 60
-  BulletBlast: {fileID: 2107678722563704380, guid: 903ca3cae98939f4480ec8003eefeb2e, type: 3}
+  projectileSpeed: 1
+  blastDistance: 1
+  bulletBlast: {fileID: 2107678722563704380, guid: 903ca3cae98939f4480ec8003eefeb2e, type: 3}
 --- !u!114 &-1537803013741285783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,12 +186,12 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148026040860331942}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.17297935
-  m_Height: 2.586914
+  m_Radius: 0.26166725
+  m_Height: 3.286255
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0.90478516}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1148026041359441685
 GameObject:
   m_ObjectHideFlags: 0
