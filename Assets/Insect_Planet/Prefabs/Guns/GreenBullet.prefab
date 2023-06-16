@@ -49,8 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf0d2526b7bfbc4db941dae9bc0169b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 1
-  blastDistance: 1
+  projectileSpeed: 1.34
+  blastDistance: 0.45
   bulletBlast: {fileID: 2107678722563704380, guid: 903ca3cae98939f4480ec8003eefeb2e, type: 3}
 --- !u!114 &-1537803013741285783
 MonoBehaviour:
@@ -188,8 +188,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.26166725
-  m_Height: 3.286255
+  m_Radius: 0.09610176
+  m_Height: 1.2247314
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1148026041359441685

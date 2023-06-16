@@ -22,7 +22,7 @@ namespace Insect_Planet.Scripts.Shooter
         public enum FireType { SemiAutomatic, Automatic };
 
         private float _ableToFireAgainTime;
-
+    
         [SerializeField] private int maximumToFire = 1;
         [Range(0, 45)]
         [SerializeField] private float maximumSpreadDegree ;
@@ -62,7 +62,7 @@ namespace Insect_Planet.Scripts.Shooter
  
         private void Update()
         {
-            AdjustAim();
+            //AdjustAim();
         }
 
    
