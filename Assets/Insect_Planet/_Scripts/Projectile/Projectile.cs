@@ -23,7 +23,6 @@ namespace Insect_Planet._Scripts.Projectile
                 rb.velocity = transform.forward * projectileSpeed;
             }
 
-            Debug.Log(transform.position + " is the position of the bullet" + transform.localPosition+" is the local position of the bullet"+(transform.position.z+1)+" is the z position of the bullet +1 ");
         }
 
         private void OnTriggerEnter(Collider other)
