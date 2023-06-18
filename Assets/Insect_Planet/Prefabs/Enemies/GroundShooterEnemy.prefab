@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 3642792238051749156}
   - component: {fileID: 3642792238051749158}
   - component: {fileID: 3642792238051749159}
+  - component: {fileID: -5730357645085634424}
   - component: {fileID: 7087640983471534824}
   - component: {fileID: 3769725498016207606}
-  - component: {fileID: 4702703469291948532}
   m_Layer: 7
   m_Name: GroundShooterEnemy
   m_TagString: Untagged
@@ -36,7 +36,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8987585848821494762}
   m_Father: {fileID: 0}
@@ -61,7 +60,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -197,6 +195,37 @@ MonoBehaviour:
   equippedGunIndex: 0
   inputManager: {fileID: 0}
   isPlayerControlled: 0
+--- !u!114 &-5730357645085634424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3642792238051749167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd127b36b1c82f4da6b98d59c6f16f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamId: 1
+  defaultHealth: 1
+  maximumHealth: 1
+  currentHealth: 1
+  invincibilityTime: 3
+  isAlwaysInvincible: 0
+  useLives: 0
+  currentLives: 3
+  maximumLives: 5
+  respawnWaitTime: 3
+  deathEffect: {fileID: 1515603650488286217, guid: b1d61b018291e5043b0be5ee26c12b18, type: 3}
+  hitEffect: {fileID: 1986892457192645033, guid: b4b5f92d032abe64b84d7639d84610e8, type: 3}
+  ragdollHandler: {fileID: 7087640983471534824}
+  eventsOnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  eventsOnRespawn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7087640983471534824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,24 +260,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 5
   destroyChildrenOnDeath: 1
---- !u!114 &4702703469291948532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3642792238051749167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5011c5041e1491841ba8c5deba46ec9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamId: 1
-  defaultEnemyHealth: 1
-  _currentHealth: 0
-  deathEffect: {fileID: 1515603650488286217, guid: b1d61b018291e5043b0be5ee26c12b18, type: 3}
-  hitEffect: {fileID: 1986892457192645033, guid: b4b5f92d032abe64b84d7639d84610e8, type: 3}
-  ragdollHandler: {fileID: 7087640983471534824}
 --- !u!1001 &7337606194552539313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1330,13 +1341,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26b6106291ad653468ef2007a436a15d, type: 3}
---- !u!95 &5965706547354508187 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3971642202740429610, guid: 26b6106291ad653468ef2007a436a15d, type: 3}
-  m_PrefabInstance: {fileID: 7337606194552539313}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8987585848821494762 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1832463959795940187, guid: 26b6106291ad653468ef2007a436a15d, type: 3}
+  m_PrefabInstance: {fileID: 7337606194552539313}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5965706547354508187 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3971642202740429610, guid: 26b6106291ad653468ef2007a436a15d, type: 3}
   m_PrefabInstance: {fileID: 7337606194552539313}
   m_PrefabAsset: {fileID: 0}
