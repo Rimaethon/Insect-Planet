@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// This class handles the polish effect of exploding the enemies into giblets when they die
+/// </summary>
 public class EnemyGibletSpawner : MonoBehaviour
 {
     [Header("Settings")]
@@ -18,13 +21,27 @@ public class EnemyGibletSpawner : MonoBehaviour
     public float maximumForce = 30;
 
 
-  
+    /// <summary>
+    /// Description:
+    /// Standard Unity function that is called once before the first Update call
+    /// Input:
+    /// none
+    /// Return:
+    /// void (no return)
+    /// </summary>
     void Start()
     {
         SpawnGiblets();
     }
 
- 
+    /// <summary>
+    /// Description:
+    /// Calls SpawnGiblet numberToSpawn times
+    /// Input:
+    /// none
+    /// Return:
+    /// void (no return)
+    /// </summary>
     void SpawnGiblets()
     {
         for (int i = 0; i < numberToSpawn; i++)
@@ -33,7 +50,14 @@ public class EnemyGibletSpawner : MonoBehaviour
         }
     }
 
-  
+    /// <summary>
+    /// Description:
+    /// Spawns a random giblet and gives it a random rotation, force and direction
+    /// Input:
+    /// none
+    /// Return:
+    /// void (no return)
+    /// </summary>
     void SpawnGiblet()
     {
         // Get the giblet index to spawn

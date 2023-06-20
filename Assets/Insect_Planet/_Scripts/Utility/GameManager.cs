@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using UI;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -177,7 +176,7 @@ public class GameManager : MonoBehaviour
     {
         if (instance != null && instance.uiManager != null)
         {
-            //instance.uiManager.UpdateUI();
+            instance.uiManager.UpdateUI();
         }
     }
 
@@ -198,8 +197,8 @@ public class GameManager : MonoBehaviour
             // pause the game without brining up the pause screen
             Time.timeScale = 0;
             CursorManager.instance.ChangeCursorMode(CursorManager.CursorState.Menu);
-            //uiManager.allowPause = false;
-            //uiManager.GoToPage(gameVictoryPageIndex);
+            uiManager.allowPause = false;
+            uiManager.GoToPage(gameVictoryPageIndex);
             if (victoryEffect != null)
             {
                 Instantiate(victoryEffect, transform.position, transform.rotation, null);
@@ -237,8 +236,8 @@ public class GameManager : MonoBehaviour
             // pause the game without brining up the pause screen
             Time.timeScale = 0;
             CursorManager.instance.ChangeCursorMode(CursorManager.CursorState.Menu);
-           // uiManager.allowPause = false;
-           // uiManager.GoToPage(gameOverPageIndex);
+            uiManager.allowPause = false;
+            uiManager.GoToPage(gameOverPageIndex);
         }
     }
 

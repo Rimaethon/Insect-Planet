@@ -1,44 +1,26 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Insect_Planet._Scripts.Projectile
+/// <summary>
+/// A class to make projectiles move
+/// </summary>
+public class Projectile : MonoBehaviour
 {
-    public class Projectile : MonoBehaviour
+    // The speed of this projectile in units per second
+    [Tooltip("The distance this projectile will move each second.")]
+    public float projectileSpeed = 3.0f;
+    
+    /// <summary>
+    /// Description:
+    /// Every frame, move the projectile in the direction it is heading
+    /// Input: 
+    /// none
+    /// Return: 
+    /// void (no return)
+    /// </summary>
+    protected virtual void Update()
     {
-        [SerializeField] private float projectileSpeed = 3.0f;
-        [SerializeField] private float blastDistance;
-        private Rigidbody rb;
-        private Vector3 positionHolder;
-        private bool hasHitTerrain = false;
-        [SerializeField] private GameObject bulletBlast;
-
-        private void Start()
-        {
-            rb = GetComponent<Rigidbody>();
-        }
-
-        protected virtual void Update()
-        {
-            if (!hasHitTerrain)
-            {
-                rb.velocity = transform.forward * projectileSpeed;
-            }
-
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Terrain"))
-            {
-                hasHitTerrain = true;
-           
-                positionHolder = gameObject.transform.position;
-                positionHolder.z += blastDistance;
-                transform.rotation = Quaternion.identity;
-                Instantiate(bulletBlast, positionHolder, gameObject.transform.rotation);
-                Debug.Log("Bullet has hit terrain");
-                Destroy(gameObject);
-            
-            }
-        }
+        transform.position = transform.position + transform.forward * projectileSpeed * Time.deltaTime;
     }
 }

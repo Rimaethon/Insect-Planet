@@ -25,22 +25,23 @@ public class PlayerController : MonoBehaviour
     [Tooltip("The player shooter script that fires projectiles")]
     public Shooter playerShooter;
     bool doubleJumpAvaliable;
-    private Health playerHealth;
+    public Health playerHealth;
     public List<GameObject> disableWhileDead;
 
     //The character controller component on the player
     public CharacterController characterController;
     public InputManager inputManager;
-    public static Transform localPlayer;
-    private Animator _animator;
 
-  
+    /// <summary>
+    /// Description:
+    /// Standard Unity function called once before the first Update call
+    /// Input:
+    /// none
+    /// Return:
+    /// void (no return)
+    /// </summary>
     void Start()
     {
-        playerHealth = GetComponent<Health>();
-        _animator = GetComponent<Animator>();
-        //_animator.SetBool("Aiming",true);
-        localPlayer = transform;
         if(playerHealth.currentHealth<=0)
         {
             foreach(GameObject inGameObject in disableWhileDead)
@@ -76,7 +77,14 @@ public class PlayerController : MonoBehaviour
         inputManager = InputManager.instance;
     }
 
-   
+    /// <summary>
+    /// Description:
+    /// Standard Unity function called once every frame
+    /// Input:
+    /// none
+    /// Return:
+    /// void (no return)
+    /// </summary>
     void Update()
     {
         ProcessMovement();
@@ -84,7 +92,7 @@ public class PlayerController : MonoBehaviour
     }
 
     Vector3 moveDirection;
-    
+
     void ProcessMovement()
     {
         //Get the input from the input manager

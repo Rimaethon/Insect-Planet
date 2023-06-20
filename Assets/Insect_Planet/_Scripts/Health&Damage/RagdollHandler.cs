@@ -30,7 +30,6 @@ public class RagdollHandler : MonoBehaviour
         }
         if (ragdollAnimator != null)
         {
-            
             ragdollAnimator.enabled = false;
             List<Collider> colliders = ragdollAnimator.GetComponentsInChildren<Collider>().ToList();
             foreach (Collider c in colliders)

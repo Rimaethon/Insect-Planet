@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Insect_Planet.Scripts.Shooter;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -139,7 +138,7 @@ public class Health : MonoBehaviour
             GetComponent<CharacterController>().enabled = false;
             transform.position = respawnPosition;
             GetComponent<CharacterController>().enabled = true;
-            //GameManager.instance.uiManager.UpdateUI();
+            GameManager.instance.uiManager.UpdateUI();
         }
         if (gameObject.GetComponent<PlayerController>() != null && gameObject.GetComponent<PlayerController>().playerShooter != null)
         {

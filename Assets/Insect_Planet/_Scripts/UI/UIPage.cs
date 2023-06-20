@@ -23,8 +23,8 @@ public class UIPage : MonoBehaviour
     {
         if (GameManager.instance != null && GameManager.instance.uiManager != null && defaultSelected != null)
         {
-            //GameManager.instance.uiManager.eventSystem.SetSelectedGameObject(null);
-            //GameManager.instance.uiManager.eventSystem.SetSelectedGameObject(defaultSelected);
+            GameManager.instance.uiManager.eventSystem.SetSelectedGameObject(null);
+            GameManager.instance.uiManager.eventSystem.SetSelectedGameObject(defaultSelected);
         }
 
     }
