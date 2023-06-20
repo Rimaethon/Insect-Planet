@@ -15,9 +15,8 @@ public sealed class ObjectPool : MonoBehaviour
 
 	static ObjectPool _instance;
 	static List<GameObject> tempList = new List<GameObject>();
-	
-	Dictionary<GameObject, List<GameObject>> pooledObjects = new Dictionary<GameObject, List<GameObject>>();
-	Dictionary<GameObject, GameObject> spawnedObjects = new Dictionary<GameObject, GameObject>();
+
+	public Dictionary<GameObject, List<GameObject>> pooledObjects = new Dictionary<GameObject, List<GameObject>>();
 	
 	public StartupPoolMode startupPoolMode;
 	public StartupPool[] startupPools;
@@ -77,75 +76,12 @@ public sealed class ObjectPool : MonoBehaviour
 	}
 	
 	
-	public static void Recycle<T>(T obj) where T : Component
-	{
-		Recycle(obj.gameObject);
-	}
-	public static void Recycle(GameObject obj)
-	{
-		GameObject prefab;
-		if (instance.spawnedObjects.TryGetValue(obj, out prefab))
-			Recycle(obj, prefab);
-		else
-			Object.Destroy(obj);
-	}
-	static void Recycle(GameObject obj, GameObject prefab)
-	{
-		instance.pooledObjects[prefab].Add(obj);
-		instance.spawnedObjects.Remove(obj);
-		obj.transform.parent = instance.transform;
-		obj.SetActive(false);
-	}
-
-	public static void RecycleAll<T>(T prefab) where T : Component
-	{
-		RecycleAll(prefab.gameObject);
-	}
-	public static void RecycleAll(GameObject prefab)
-	{
-		foreach (var item in instance.spawnedObjects)
-			if (item.Value == prefab)
-				tempList.Add(item.Key);
-		for (int i = 0; i < tempList.Count; ++i)
-			Recycle(tempList[i]);
-		tempList.Clear();
-	}
-	public static void RecycleAll()
-	{
-		tempList.AddRange(instance.spawnedObjects.Keys);
-		for (int i = 0; i < tempList.Count; ++i)
-			Recycle(tempList[i]);
-		tempList.Clear();
-	}
-	
-	public static bool IsSpawned(GameObject obj)
-	{
-		return instance.spawnedObjects.ContainsKey(obj);
-	}
-
-	public static int CountPooled<T>(T prefab) where T : Component
-	{
-		return CountPooled(prefab.gameObject);
-	}
 	public static int CountPooled(GameObject prefab)
 	{
 		List<GameObject> list;
 		if (instance.pooledObjects.TryGetValue(prefab, out list))
 			return list.Count;
 		return 0;
-	}
-
-	public static int CountSpawned<T>(T prefab) where T : Component
-	{
-		return CountSpawned(prefab.gameObject);
-	}
-	public static int CountSpawned(GameObject prefab)
-	{
-		int count = 0 ;
-		foreach (var instancePrefab in instance.spawnedObjects.Values)
-			if (prefab == instancePrefab)
-				++count;
-		return count;
 	}
 
 	public static int CountAllPooled()
@@ -191,20 +127,9 @@ public sealed class ObjectPool : MonoBehaviour
 				list.Add(item.Key);
 		return list;
 	}
-	public static List<T> GetSpawned<T>(T prefab, List<T> list, bool appendList) where T : Component
-	{
-		if (list == null)
-			list = new List<T>();
-		if (!appendList)
-			list.Clear();
-		var prefabObj = prefab.gameObject;
-		foreach (var item in instance.spawnedObjects)
-			if (item.Value == prefabObj)
-				list.Add(item.Key.GetComponent<T>());
-		return list;
-	}
+	
 
-	public static void DestroyPooled(GameObject prefab)
+	public void DestroyPooled(GameObject prefab)
 	{
 		List<GameObject> pooled;
 		if (instance.pooledObjects.TryGetValue(prefab, out pooled))
@@ -219,11 +144,7 @@ public sealed class ObjectPool : MonoBehaviour
 		DestroyPooled(prefab.gameObject);
 	}
 
-	public static void DestroyAll(GameObject prefab)
-	{
-		RecycleAll(prefab);
-		DestroyPooled(prefab);
-	}
+	
 	public static void DestroyAll<T>(T prefab) where T : Component
 	{
 		DestroyAll(prefab.gameObject);
@@ -268,55 +189,7 @@ public static class ObjectPoolExtensions
 	{
 		ObjectPool.CreatePool(prefab, initialPoolSize);
 	}
-	
-	public static T Spawn<T>(this T prefab, Transform parent, Vector3 position, Quaternion rotation) where T : Component
-	{
-		return ObjectPool.Spawn(prefab, parent, position, rotation);
-	}
-	public static T Spawn<T>(this T prefab, Vector3 position, Quaternion rotation) where T : Component
-	{
-		return ObjectPool.Spawn(prefab, null, position, rotation);
-	}
-	public static T Spawn<T>(this T prefab, Transform parent, Vector3 position) where T : Component
-	{
-		return ObjectPool.Spawn(prefab, parent, position, Quaternion.identity);
-	}
-	public static T Spawn<T>(this T prefab, Vector3 position) where T : Component
-	{
-		return ObjectPool.Spawn(prefab, null, position, Quaternion.identity);
-	}
-	public static T Spawn<T>(this T prefab, Transform parent) where T : Component
-	{
-		return ObjectPool.Spawn(prefab, parent, Vector3.zero, Quaternion.identity);
-	}
-	public static T Spawn<T>(this T prefab) where T : Component
-	{
-		return ObjectPool.Spawn(prefab, null, Vector3.zero, Quaternion.identity);
-	}
-	public static GameObject Spawn(this GameObject prefab, Transform parent, Vector3 position, Quaternion rotation)
-	{
-		return ObjectPool.Spawn(prefab, parent, position, rotation);
-	}
-	public static GameObject Spawn(this GameObject prefab, Vector3 position, Quaternion rotation)
-	{
-		return ObjectPool.Spawn(prefab, null, position, rotation);
-	}
-	public static GameObject Spawn(this GameObject prefab, Transform parent, Vector3 position)
-	{
-		return ObjectPool.Spawn(prefab, parent, position, Quaternion.identity);
-	}
-	public static GameObject Spawn(this GameObject prefab, Vector3 position)
-	{
-		return ObjectPool.Spawn(prefab, null, position, Quaternion.identity);
-	}
-	public static GameObject Spawn(this GameObject prefab, Transform parent)
-	{
-		return ObjectPool.Spawn(prefab, parent, Vector3.zero, Quaternion.identity);
-	}
-	public static GameObject Spawn(this GameObject prefab)
-	{
-		return ObjectPool.Spawn(prefab, null, Vector3.zero, Quaternion.identity);
-	}
+
 	
 	public static void Recycle<T>(this T obj) where T : Component
 	{
