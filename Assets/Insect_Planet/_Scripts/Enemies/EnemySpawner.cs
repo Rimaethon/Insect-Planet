@@ -1,76 +1,51 @@
-﻿using UnityEngine;
-
-
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.Pool;
+using Insect_Planet._Scripts.ObjectManagers;
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject prefab;
+    public GameObject objectToSpawn;
+    public float spawnInterval = 1f;
+    public float scaleSpeed = 0.5f;
+    public float launchForce = 10f;
 
-    
-    public enum SpawnMethod { Fixed, Random, Controlled }
+    private float timer;
 
- 
-    public SpawnMethod spawnMethod = SpawnMethod.Fixed;
-    public float spawnRate = 5.0f;
-    public Vector3 spawnAreaSize = Vector3.zero;
-    public bool showSpawnArea = true;
-    private float nextSpawnTime = Mathf.NegativeInfinity;
-
-  
     private void Update()
     {
-        TestSpawn();
-    }
+        timer += Time.deltaTime;
 
-   
-    private void OnDrawGizmos()
-    {
-        if (showSpawnArea)
+        if (timer >= spawnInterval)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(transform.position, spawnAreaSize);
-            Gizmos.color = new Color(1, 0, 0, 0.25f);
-            Gizmos.DrawCube(transform.position, spawnAreaSize);
+            SpawnObject();
+            timer = 0f;
         }
     }
 
-  
-    private void TestSpawn()
+    private void SpawnObject()
     {
-        if (Time.timeSinceLevelLoad > nextSpawnTime)
+        GameObject spawnedObject = ObjectPool.Spawn( objectToSpawn,gameObject.transform,gameObject.transform.position, transform.rotation);
+        StartCoroutine(ScaleUpObject(spawnedObject));
+
+        Rigidbody rb = spawnedObject.GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            Spawn();
+            Vector3 launchDirection = transform.forward; // Change the launch direction as desired
+            rb.AddForce(launchDirection * launchForce, ForceMode.Impulse);
         }
     }
 
-   
-    public void Spawn()
+    private IEnumerator ScaleUpObject(GameObject obj)
     {
-        if (prefab != null)
-        {
-            switch (spawnMethod)
-            {
-                case SpawnMethod.Fixed:
-                    nextSpawnTime = Time.timeSinceLevelLoad + spawnRate;
-                    break;
-                case SpawnMethod.Random:
-                    nextSpawnTime = Time.timeSinceLevelLoad + spawnRate * Random.value;
-                    break;
-                case SpawnMethod.Controlled:
-                    nextSpawnTime = Mathf.Infinity;
-                    break;
-            }
-            Vector3 spawnLocation = GetSpawnLocation();
-            GameObject instance = Instantiate(prefab, spawnLocation, Quaternion.identity, null);
-        }
-    }
+        Vector3 initialScale = obj.transform.localScale;
+        Vector3 targetScale = initialScale * 2f; // Change the scale factor as desired
 
-   
-    public Vector3 GetSpawnLocation()
-    {
-        Vector3 result = Vector3.zero;
-        result.x = transform.position.x + Random.Range(-spawnAreaSize.x * 0.5f, spawnAreaSize.x * 0.5f);
-        result.y = transform.position.y + Random.Range(-spawnAreaSize.y * 0.5f, spawnAreaSize.y * 0.5f);
-        result.z = transform.position.z + Random.Range(-spawnAreaSize.z * 0.5f, spawnAreaSize.z * 0.5f);
-        return result;
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * scaleSpeed;
+            obj.transform.localScale = Vector3.Lerp(initialScale, targetScale, t);
+            yield return null;
+        }
     }
 }

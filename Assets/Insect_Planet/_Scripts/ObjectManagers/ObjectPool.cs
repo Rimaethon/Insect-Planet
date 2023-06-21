@@ -34,7 +34,7 @@ namespace Insect_Planet._Scripts.ObjectManagers
 		
 		static ObjectPool _instance;
 
-		private static ObjectPool Instance
+		public static ObjectPool Instance
 		{
 			get
 			{

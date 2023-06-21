@@ -55,7 +55,7 @@ public class HiveAttack : EnemyAttacker
         for (int i=0; i < spawnThisMany; i++)
         {
             int spawnerIndex = Random.Range(0, spawners.Count);
-            spawners[spawnerIndex].Spawn();
+            //spawners[spawnerIndex].Spawn();
         }
     }
 }
