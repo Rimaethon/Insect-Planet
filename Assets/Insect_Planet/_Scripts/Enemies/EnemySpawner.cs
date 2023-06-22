@@ -4,10 +4,10 @@ using UnityEngine.Pool;
 using Insect_Planet._Scripts.ObjectManagers;
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject objectToSpawn;
-    public float spawnInterval = 1f;
-    public float scaleSpeed = 0.5f;
-    public float launchForce = 10f;
+    [SerializeField] private GameObject objectToSpawn;
+    private float spawnInterval = 5f;
+    private float scaleSpeed = 0.5f;
+    private float launchForce = 10f;
 
     private float timer;
 
@@ -24,7 +24,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnObject()
     {
-        GameObject spawnedObject = ObjectPool.Spawn( objectToSpawn,gameObject.transform,gameObject.transform.position, transform.rotation);
+        GameObject spawnedObject = ObjectPool.Spawn( objectToSpawn,gameObject.transform,gameObject.transform.localPosition, transform.rotation);
         StartCoroutine(ScaleUpObject(spawnedObject));
 
         Rigidbody rb = spawnedObject.GetComponent<Rigidbody>();
