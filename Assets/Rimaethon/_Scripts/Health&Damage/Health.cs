@@ -138,7 +138,6 @@ public class Health : MonoBehaviour
             GetComponent<CharacterController>().enabled = false;
             transform.position = respawnPosition;
             GetComponent<CharacterController>().enabled = true;
-            GameManager.instance.uiManager.UpdateUI();
         }
         if (gameObject.GetComponent<PlayerController>() != null && gameObject.GetComponent<PlayerController>().playerShooter != null)
         {
@@ -182,7 +181,6 @@ public class Health : MonoBehaviour
             timeToBecomeDamagableAgain = Time.time + invincibilityTime;
             isInvincableFromDamage = true;
             currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maximumHealth);
-            GameManager.UpdateUIElements();
             CheckDeath();
         }
     }
@@ -203,7 +201,6 @@ public class Health : MonoBehaviour
         {
             currentHealth = maximumHealth;
         }
-        GameManager.UpdateUIElements();
         CheckDeath();
     }
 
@@ -345,9 +342,6 @@ public class Health : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
-        if (GameManager.instance != null && gameObject.tag == "Player")
-        {
-            GameManager.instance.GameOver();
-        }
+        
     }
 }

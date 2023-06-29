@@ -27,7 +27,6 @@ public class ExtraLifePickup : Pickup
         {
             Health playerHealth = collision.gameObject.GetComponent<Health>();
             playerHealth.AddLives(extraLives);
-            GameManager.UpdateUIElements();
         }
         base.DoOnPickup(collision);
     }

@@ -43,7 +43,6 @@ public class EnemyHealth : MonoBehaviour
             }
 
             _currentHealth = Mathf.Clamp(_currentHealth - damageAmount, 0, defaultEnemyHealth);
-            GameManager.UpdateUIElements();
             CheckDeath();
         }
     }

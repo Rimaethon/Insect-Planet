@@ -20,10 +20,6 @@ public class HealthDisplay : UIelement
 
     private void Start()
     {
-        if (targetHealth == null && (GameManager.instance != null && GameManager.instance.player != null))
-        {
-            targetHealth = GameManager.instance.player.GetComponentInChildren<Health>();
-        }
         UpdateUI();
     }
 

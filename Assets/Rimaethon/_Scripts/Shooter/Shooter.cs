@@ -202,7 +202,6 @@ public class Shooter : MonoBehaviour
                 guns[i].gameObject.SetActive(false);
             }
         }
-        GameManager.UpdateUIElements();
     }
 
     /// <summary>

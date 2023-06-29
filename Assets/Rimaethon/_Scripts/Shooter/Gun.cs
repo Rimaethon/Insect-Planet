@@ -222,7 +222,6 @@ public class Gun : MonoBehaviour
         {
             StartCoroutine(Reload());
         }
-        GameManager.UpdateUIElements();
     }
 
     /// <summary>

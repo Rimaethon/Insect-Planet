@@ -185,7 +185,6 @@ public class AmmoTracker : MonoBehaviour
             gun.roundsLoaded = amountToReload;
             return amountToReload;
         }
-        GameManager.UpdateUIElements();
         return 0;
     }
 
@@ -202,7 +201,6 @@ public class AmmoTracker : MonoBehaviour
         {
             _instance[gun.ammunitionID] = Mathf.Clamp(_instance[gun.ammunitionID] - (gun.useAmmo ? 1 : 0), 0, MAXAMMO);
         }
-        GameManager.UpdateUIElements();
     }
 
     /// <summary>
@@ -219,7 +217,6 @@ public class AmmoTracker : MonoBehaviour
         {
             _instance[ammoID] = Mathf.Clamp((_instance[ammoID] + amount), 0, MAXAMMO);
         }
-        GameManager.UpdateUIElements();
     }
     #endregion
 }

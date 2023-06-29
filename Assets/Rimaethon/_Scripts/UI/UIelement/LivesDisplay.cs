@@ -27,9 +27,9 @@ public class LivesDisplay : UIelement
     /// </summary>
     public override void UpdateUI()
     {
-        if (GameManager.instance != null && GameManager.instance.player != null)
+        if (GameManager.instance != null)
         {
-            Health playerHealth = GameManager.instance.player.GetComponent<Health>();
+            Health playerHealth = GetComponent<Health>();
             if (playerHealth != null)
             {
                 SetChildImageNumber(playerHealth.currentLives - 1);

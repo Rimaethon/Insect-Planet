@@ -24,7 +24,6 @@ public class ScoreDisplay : UIelement
     {
         if (displayText != null)
         {
-            displayText.text = "Score: " + GameManager.score.ToString();
         }
     }
 

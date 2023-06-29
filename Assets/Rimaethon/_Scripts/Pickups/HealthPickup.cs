@@ -27,7 +27,6 @@ public class HealthPickup : Pickup
         {
             Health playerHealth = collision.gameObject.GetComponent<Health>();
             playerHealth.ReceiveHealing(healingAmount);
-            GameManager.UpdateUIElements();
         }
         base.DoOnPickup(collision);
     }

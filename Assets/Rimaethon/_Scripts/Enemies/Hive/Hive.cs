@@ -48,6 +48,5 @@ public class Hive : Enemy
     /// </summary>
     private void OnDestroy()
     {
-        GameManager.instance.LevelCleared();
     }
 }
