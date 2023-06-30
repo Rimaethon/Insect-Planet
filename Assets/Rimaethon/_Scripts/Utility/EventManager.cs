@@ -1,22 +1,27 @@
 using System;
 using System.Collections.Generic;
-using Rimaethon._Scripts.Managers;
+using System.Linq;
 using UnityEngine;
 
 namespace Rimaethon._Scripts.Utility
 {
-    public class EventManager : IEventManager
+    public class EventManager
     {
         
+        #region Fields
+        private readonly Dictionary<GameEvents, List<Delegate>> _eventHandlers = new Dictionary<GameEvents, List<Delegate>>();
+        private readonly Dictionary<object, List<GameEvents>> _eventSubscriptions = new Dictionary<object, List<GameEvents>>();
+        private readonly Dictionary<GameEvents, int> _eventPriorities = new Dictionary<GameEvents, int>();
+        private readonly Queue<Action> _eventQueue = new Queue<Action>();
+        private bool _isProcessingEvent;
+        
+        #endregion
+        
+        
+        #region Singleton
+
         private static EventManager _instance;
 
-        private readonly Dictionary<GameStates, List<Delegate>> _eventHandlers =
-            new Dictionary<GameStates, List<Delegate>>();
-
-        // Private constructor to prevent outside instantiation
-        private EventManager() {}
-
-        // Public static property to access the instance
         public static EventManager Instance
         {
             get
@@ -29,133 +34,184 @@ namespace Rimaethon._Scripts.Utility
             }
         }
 
-        public void AddHandler(GameStates gameStates, Action handler)
+        private EventManager() { }
+
+        #endregion
+
+        #region Event Handlers
+
+
+        public void AddHandler(GameEvents gameEvent, Action handler)
         {
-            if (!_eventHandlers.ContainsKey(gameStates))
+            // Add handler to the event handlers dictionary
+            if (!_eventHandlers.ContainsKey(gameEvent))
             {
-                _eventHandlers[gameStates] = new List<Delegate>();
+                _eventHandlers[gameEvent] = new List<Delegate>();
             }
 
-            _eventHandlers[gameStates].Add(handler);
-            Debug.Log($"Added handler {handler.Method.Name} for game state {gameStates}");
-        }
+            _eventHandlers[gameEvent].Add(handler);
+            Debug.Log($"Added handler {handler.Method.Name} for game event {gameEvent}");
 
-        public void AddHandler<T>(GameStates gameStates, Action<T> handler)
-        {
-            if (!_eventHandlers.ContainsKey(gameStates))
+            // Store the handler and game event in a dictionary
+            if (!_eventSubscriptions.ContainsKey(handler))
             {
-                _eventHandlers[gameStates] = new List<Delegate>();
+                _eventSubscriptions[handler] = new List<GameEvents>();
             }
 
-            _eventHandlers[gameStates].Add(handler);
-            Debug.Log($"Added handler {handler.Method.Name} for game state {gameStates}");
+            _eventSubscriptions[handler].Add(gameEvent);
+            Debug.Log($"Subscribed handler {handler.Method.Name} to game event {gameEvent}");
         }
 
-        public void AddHandler<T1, T2>(GameStates gameStates, Action<T1, T2> handler)
+        // AddHandler overloads for different parameter types
+
+        public void RemoveHandler(GameEvents gameEvent, Action handler)
         {
-            if (!_eventHandlers.ContainsKey(gameStates))
+            // Remove the handler from the event handlers dictionary
+            if (_eventHandlers.TryGetValue(gameEvent, out var handlers))
             {
-                _eventHandlers[gameStates] = new List<Delegate>();
-            }
+                handlers.Remove(handler);
+                Debug.Log($"Removed handler {handler.Method.Name} for game event {gameEvent}");
 
-            _eventHandlers[gameStates].Add(handler);
-            Debug.Log($"Added handler {handler.Method.Name} for game state {gameStates}");
-        }
-
-        public void RemoveHandler(GameStates gameStates, Action handler)
-        {
-            if (_eventHandlers.ContainsKey(gameStates))
-            {
-                _eventHandlers[gameStates].Remove(handler);
-                Debug.Log($"Removed handler {handler.Method.Name} for game state {gameStates}");
-
-                if (_eventHandlers[gameStates].Count == 0)
+                if (handlers.Count == 0)
                 {
-                    _eventHandlers.Remove(gameStates);
-                    Debug.Log($"No more handlers for game state {gameStates}");
+                    _eventHandlers.Remove(gameEvent);
+                    Debug.Log($"No more handlers for game event {gameEvent}");
+                }
+            }
+
+            // Remove the handler from the subscriptions dictionary
+            if (_eventSubscriptions.TryGetValue(handler, out var subscriptions))
+            {
+                subscriptions.Remove(gameEvent);
+                Debug.Log($"Unsubscribed handler {handler.Method.Name} from game event {gameEvent}");
+
+                if (subscriptions.Count == 0)
+                {
+                    _eventSubscriptions.Remove(handler);
+                    Debug.Log($"No more subscriptions for handler {handler.Method.Name}");
                 }
             }
         }
 
-        public void RemoveHandler<T>(GameStates gameStates, Action<T> handler)
-        {
-            if (_eventHandlers.ContainsKey(gameStates))
-            {
-                _eventHandlers[gameStates].Remove(handler);
-                Debug.Log($"Removed handler {handler.Method.Name} for game state {gameStates}");
+        // RemoveHandler overloads for different parameter types
 
-                if (_eventHandlers[gameStates].Count == 0)
+        #endregion
+
+        #region Event Subscriptions
+
+
+        public void Subscribe(object subscriber, GameEvents gameEvents)
+        {
+            // Add subscription to the subscriptions dictionary
+            if (!_eventSubscriptions.ContainsKey(subscriber))
+            {
+                _eventSubscriptions[subscriber] = new List<GameEvents>();
+            }
+
+            _eventSubscriptions[subscriber].Add(gameEvents);
+            Debug.Log($"Subscribed {subscriber.GetType().Name} to game event {gameEvents}");
+        }
+
+        public void Unsubscribe(object subscriber, GameEvents gameEvents)
+        {
+            if (_eventSubscriptions.ContainsKey(subscriber))
+            {
+                _eventSubscriptions[subscriber].Remove(gameEvents);
+                Debug.Log($"Unsubscribed {subscriber.GetType().Name} from game event {gameEvents}");
+
+                if (_eventSubscriptions[subscriber].Count == 0)
                 {
-                    _eventHandlers.Remove(gameStates);
-                    Debug.Log($"No more handlers for game state {gameStates}");
+                    _eventSubscriptions.Remove(subscriber);
+                    Debug.Log($"No more subscriptions for {subscriber.GetType().Name}");
                 }
             }
         }
 
-        public void RemoveHandler<T1, T2>(GameStates gameStates, Action<T1, T2> handler)
-        {
-            if (_eventHandlers.ContainsKey(gameStates))
-            {
-                _eventHandlers[gameStates].Remove(handler);
-                Debug.Log($"Removed handler {handler.Method.Name} for game state {gameStates}");
+        #endregion
 
-                if (_eventHandlers[gameStates].Count == 0)
-                {
-                    _eventHandlers.Remove(gameStates);
-                    Debug.Log($"No more handlers for game state {gameStates}");
-                }
+        #region Event Priorities
+
+
+        public void SetEventPriority(GameEvents gameEvents, int priority)
+        {
+            _eventPriorities[gameEvents] = priority;
+        }
+
+        #endregion
+
+        #region Event Broadcasting
+
+
+
+        public void Broadcast(GameEvents gameEvents)
+        {
+            // Enqueue the event for processing
+            _eventQueue.Enqueue(() => ProcessEvent(gameEvents));
+            ProcessEventQueueWithPriority();
+        }
+
+        // Broadcast overloads for different parameter types
+
+        private void ProcessEventQueueWithPriority()
+        {
+            // If an event is already being processed, wait for the next frame to continue
+            if (_isProcessingEvent) return;
+
+            // Sort the event queue based on priority
+            List<Action> sortedEvents = new List<Action>(_eventQueue);
+            sortedEvents.Sort((a, b) => GetEventPriority(b) - GetEventPriority(a));
+
+            // Process events in the sorted queue
+            while (sortedEvents.Count > 0)
+            {
+                Action eventAction = sortedEvents[0];
+                sortedEvents.RemoveAt(0);
+                eventAction.DynamicInvoke();
             }
         }
 
-        public void Broadcast(GameStates gameStates)
+        private int GetEventPriority(Action eventAction)
         {
-            if (_eventHandlers.ContainsKey(gameStates))
+            foreach (var eventHandlers in _eventHandlers)
             {
-                foreach (Delegate handler in _eventHandlers[gameStates])
+                if (eventHandlers.Value.Contains(eventAction))
                 {
-                    if (handler is Action action)
+                    if (_eventPriorities.TryGetValue(eventHandlers.Key, out int priority))
                     {
-                        action();
-                        Debug.Log($"Broadcasted event for game state {gameStates} to handler {handler.Method.Name}");
+                        return priority;
                     }
+                    break;
                 }
             }
+            return 0; // Default priority if not found
         }
 
-        public void Broadcast<T>(GameStates gameStates, T arg)
+        private void ProcessEvent(GameEvents gameEvents, params object[] args)
         {
-            if (_eventHandlers.ContainsKey(gameStates))
+            _isProcessingEvent = true;
+
+            // Invoke handlers for the event
+            if (_eventHandlers.TryGetValue(gameEvents, out var eventHandler))
             {
-                foreach (Delegate handler in _eventHandlers[gameStates])
+                foreach (Delegate handler in eventHandler)
                 {
-                    if (handler is Action<T> action)
-                    {
-                        action(arg);
-                        Debug.Log(
-                            $"Broadcasted event for game state {gameStates} with argument {arg} to handler {handler.Method.Name}");
-                    }
+                    handler.DynamicInvoke(args);
+                    Debug.Log($"Broadcasted event {gameEvents.ToString()} with arguments {string.Join(", ", args.Select(arg => arg.ToString()))} to handler {handler.Method.Name}");
                 }
             }
+
+            // Notify subscribers of the event
+            foreach (var subscriber in _eventSubscriptions)
+            {
+                if (subscriber.Value.Contains(gameEvents))
+                {
+                    Debug.Log($"Broadcasted event {gameEvents.ToString()} with arguments {string.Join(", ", args.Select(arg => arg.ToString()))} to subscriber {subscriber.Key.GetType().Name}");
+                }
+            }
+
+            _isProcessingEvent = false;
         }
 
-        public void Broadcast<T1, T2>(GameStates gameStates, T1 arg1, T2 arg2)
-        {
-            if (_eventHandlers.ContainsKey(gameStates))
-            {
-                foreach (Delegate handler in _eventHandlers[gameStates])
-                {
-                    if (handler is Action<T1, T2> action)
-                    {
-                        Debug.Log(
-                            $"Broadcasting event {gameStates.ToString()} with arguments {arg1.ToString()} and {arg2.ToString()}");
-                        action(arg1, arg2);
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogWarning($"No event handlers found for {gameStates.ToString()}");
-            }
-        }
+        #endregion
     }
 }

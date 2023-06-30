@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using Rimaethon._Scripts.Utility;
 using UnityEngine;
+using UnityEngine.Serialization;
 
- public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
     {
         public static GameManager instance;
-        public GameStates State;
+        [FormerlySerializedAs("State")] public GameEvents @event;
 
 
 
@@ -21,52 +22,52 @@ using UnityEngine;
         private void Awake()
         {
             instance = this;
-            UpdateGameState(GameStates.OnBeforeGameStart);
+            UpdateGameState(GameEvents.OnBeforeGameStart);
         }
 
      
 
 
-        public void UpdateGameState(GameStates newState)
+        public void UpdateGameState(GameEvents newEvent)
         {
-            State = newState;
-            switch (newState)
+            @event = newEvent;
+            switch (newEvent)
             {
-                case GameStates.OnBeforeGameStart:
+                case GameEvents.OnBeforeGameStart:
                     Debug.Log("I called OnBeforeGameStart");
                     
                     break;
-                case GameStates.OnGameStart:
-                    EventManager.Instance.Broadcast(GameStates.OnGameStart);
+                case GameEvents.OnGameStart:
+                    EventManager.Instance.Broadcast(GameEvents.OnGameStart);
                     Debug.Log("I called OnGameStart");
                     break;
-                case GameStates.OnObjectsInstantiated:
+                case GameEvents.OnObjectsInstantiated:
                     break;
-                case GameStates.OnCharacterLevelChange:
+                case GameEvents.OnCharacterLevelChange:
                     // Do something for OnCharacterLevelChange state
                     break;
-                case GameStates.OnCollectingBrick:
+                case GameEvents.OnCollectingBrick:
                     
                     break;
-                case GameStates.OnPuttingBrick:
+                case GameEvents.OnPuttingBrick:
                     // Do something for OnPuttingBrick state
                     break;
-                case GameStates.OnClimbingStair:
+                case GameEvents.OnClimbingStair:
                     // Do something for OnClimbingStair state
                     break;
-                case GameStates.OnOpeningDoor:
+                case GameEvents.OnOpeningDoor:
                     // Do something for OnOpeningDoor state
                     break;
-                case GameStates.OnUpdateUI:
+                case GameEvents.OnUpdateUI:
                     // Do something for OnUpdateUI state
                     break;
-                case GameStates.OnCharacterDeath:
+                case GameEvents.OnCharacterDeath:
                     // Do something for OnCharacterDeath state
                     break;
-                case GameStates.OnLosing:
+                case GameEvents.OnLosing:
                     // Do something for OnLosing state
                     break;
-                case GameStates.OnWinning:
+                case GameEvents.OnWinning:
                     // Do something for OnWinning state
                     break;
                 default:
