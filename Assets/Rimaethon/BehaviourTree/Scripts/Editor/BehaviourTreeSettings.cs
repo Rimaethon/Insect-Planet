@@ -7,7 +7,8 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
 // Create a new type of Settings Asset.
-class BehaviourTreeSettings : ScriptableObject {
+internal class BehaviourTreeSettings : ScriptableObject
+{
     public VisualTreeAsset behaviourTreeXml;
     public StyleSheet behaviourTreeStyle;
     public VisualTreeAsset nodeXml;
@@ -16,13 +17,13 @@ class BehaviourTreeSettings : ScriptableObject {
     public TextAsset scriptTemplateDecoratorNode;
     public string newNodeBasePath = "Assets/";
 
-    static BehaviourTreeSettings FindSettings(){
+    private static BehaviourTreeSettings FindSettings()
+    {
         var guids = AssetDatabase.FindAssets("t:BehaviourTreeSettings");
-        if (guids.Length > 1) {
-            Debug.LogWarning($"Found multiple settings files, using the first.");
-        }
+        if (guids.Length > 1) Debug.LogWarning($"Found multiple settings files, using the first.");
 
-        switch (guids.Length) {
+        switch (guids.Length)
+        {
             case 0:
                 return null;
             default:
@@ -31,42 +32,52 @@ class BehaviourTreeSettings : ScriptableObject {
         }
     }
 
-    internal static BehaviourTreeSettings GetOrCreateSettings() {
+    internal static BehaviourTreeSettings GetOrCreateSettings()
+    {
         var settings = FindSettings();
-        if (settings == null) {
-            settings = ScriptableObject.CreateInstance<BehaviourTreeSettings>();
+        if (settings == null)
+        {
+            settings = CreateInstance<BehaviourTreeSettings>();
             AssetDatabase.CreateAsset(settings, "Assets");
             AssetDatabase.SaveAssets();
         }
+
         return settings;
     }
 
-    internal static SerializedObject GetSerializedSettings() {
+    internal static SerializedObject GetSerializedSettings()
+    {
         return new SerializedObject(GetOrCreateSettings());
     }
 }
 
 // Register a SettingsProvider using UIElements for the drawing framework:
-static class MyCustomSettingsUIElementsRegister {
+internal static class MyCustomSettingsUIElementsRegister
+{
     [SettingsProvider]
-    public static SettingsProvider CreateMyCustomSettingsProvider() {
+    public static SettingsProvider CreateMyCustomSettingsProvider()
+    {
         // First parameter is the path in the Settings window.
         // Second parameter is the scope of this setting: it only appears in the Settings window for the Project scope.
-        var provider = new SettingsProvider("Project/MyCustomUIElementsSettings", SettingsScope.Project) {
+        var provider = new SettingsProvider("Project/MyCustomUIElementsSettings", SettingsScope.Project)
+        {
             label = "BehaviourTree",
             // activateHandler is called when the user clicks on the Settings item in the Settings window.
-            activateHandler = (searchContext, rootElement) => {
+            activateHandler = (searchContext, rootElement) =>
+            {
                 var settings = BehaviourTreeSettings.GetSerializedSettings();
 
                 // rootElement is a VisualElement. If you add any children to it, the OnGUI function
                 // isn't called because the SettingsProvider uses the UIElements drawing framework.
-                var title = new Label() {
+                var title = new Label()
+                {
                     text = "Behaviour Tree Settings"
                 };
                 title.AddToClassList("title");
                 rootElement.Add(title);
 
-                var properties = new VisualElement() {
+                var properties = new VisualElement()
+                {
                     style =
                     {
                         flexDirection = FlexDirection.Column
@@ -78,7 +89,7 @@ static class MyCustomSettingsUIElementsRegister {
                 properties.Add(new InspectorElement(settings));
 
                 rootElement.Bind(settings);
-            },
+            }
         };
 
         return provider;

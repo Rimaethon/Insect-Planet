@@ -6,15 +6,20 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 
-namespace TheKiwiCoder {
-    public class BlackboardView : VisualElement {
-        public new class UxmlFactory : UxmlFactory<BlackboardView, VisualElement.UxmlTraits> { }
-
-        public BlackboardView() {
-
+namespace TheKiwiCoder
+{
+    public class BlackboardView : VisualElement
+    {
+        public new class UxmlFactory : UxmlFactory<BlackboardView, UxmlTraits>
+        {
         }
 
-        internal void Bind(SerializedBehaviourTree serializer) {
+        public BlackboardView()
+        {
+        }
+
+        internal void Bind(SerializedBehaviourTree serializer)
+        {
             Clear();
 
             var blackboardProperty = serializer.Blackboard;
@@ -22,7 +27,7 @@ namespace TheKiwiCoder {
             blackboardProperty.isExpanded = true;
 
             // Property field
-            PropertyField field = new PropertyField();
+            var field = new PropertyField();
             field.BindProperty(blackboardProperty);
             Add(field);
         }
