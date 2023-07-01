@@ -7,25 +7,30 @@ using UnityEngine;
 /// </summary>
 public class WaypointMover : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("A list of transforms to move between")]
+    [Header("Settings")] [Tooltip("A list of transforms to move between")]
     public List<Transform> waypoints;
+
     [Tooltip("How fast to move the platform")]
     public float moveSpeed = 1f;
+
     [Tooltip("How long to wait when arriving at a waypoint")]
     public float waitTime = 3f;
 
     // The time at which movement is resumed
     private float timeToStartMovingAgain = 0f;
+
     // Whether or not the waypoint mover is stopped
     [HideInInspector] public bool stopped = false;
 
     // The previous waypoint or the starting position
     private Vector3 previousTarget;
+
     // The current waypoint being moved to
     private Vector3 currentTarget;
+
     // The index of the current Target in the waypoints list
     private int currentTargetIndex;
+
     // The current direction being travelled in
     [HideInInspector] public Vector3 travelDirection;
 
@@ -37,7 +42,7 @@ public class WaypointMover : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void Start()
+    private void Start()
     {
         InitializeInformation();
     }
@@ -50,7 +55,7 @@ public class WaypointMover : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         ProcessMovementState();
     }
@@ -63,16 +68,12 @@ public class WaypointMover : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void ProcessMovementState()
+    private void ProcessMovementState()
     {
         if (stopped)
-        {
             StartCheck();
-        }
         else
-        {
             Travel();
-        }
     }
 
 
@@ -84,17 +85,14 @@ public class WaypointMover : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void StartCheck()
+    private void StartCheck()
     {
         if (Time.time >= timeToStartMovingAgain)
         {
             stopped = false;
             previousTarget = currentTarget;
             currentTargetIndex += 1;
-            if (currentTargetIndex >= waypoints.Count)
-            {
-                currentTargetIndex = 0;
-            }
+            if (currentTargetIndex >= waypoints.Count) currentTargetIndex = 0;
             currentTarget = waypoints[currentTargetIndex].position;
             CalculateTravelInformation();
         }
@@ -109,9 +107,9 @@ public class WaypointMover : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void InitializeInformation()
+    private void InitializeInformation()
     {
-        previousTarget = this.transform.position;
+        previousTarget = transform.position;
         currentTargetIndex = 0;
         if (waypoints.Count > 0)
         {
@@ -119,10 +117,10 @@ public class WaypointMover : MonoBehaviour
         }
         else
         {
-            waypoints.Add(this.transform);        
+            waypoints.Add(transform);
             currentTarget = previousTarget;
         }
-        
+
         CalculateTravelInformation();
     }
 
@@ -134,7 +132,7 @@ public class WaypointMover : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void CalculateTravelInformation()
+    private void CalculateTravelInformation()
     {
         travelDirection = (currentTarget - previousTarget).normalized;
     }
@@ -147,37 +145,39 @@ public class WaypointMover : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void Travel()
+    private void Travel()
     {
         Debug.Log("travel called");
         transform.Translate(travelDirection * moveSpeed * Time.deltaTime);
-        bool overX = false;
-        bool overY = false;
-        bool overZ = false;
+        var overX = false;
+        var overY = false;
+        var overZ = false;
 
-        Vector3 directionFromCurrentPositionToTarget = currentTarget - transform.position;
+        var directionFromCurrentPositionToTarget = currentTarget - transform.position;
 
-        if (directionFromCurrentPositionToTarget.x == 0 || Mathf.Sign(directionFromCurrentPositionToTarget.x) != Mathf.Sign(travelDirection.x))
+        if (directionFromCurrentPositionToTarget.x == 0 ||
+            Mathf.Sign(directionFromCurrentPositionToTarget.x) != Mathf.Sign(travelDirection.x))
         {
             overX = true;
             transform.position = new Vector3(currentTarget.x, transform.position.y, transform.position.z);
         }
-        if (directionFromCurrentPositionToTarget.y == 0 || Mathf.Sign(directionFromCurrentPositionToTarget.y) != Mathf.Sign(travelDirection.y))
+
+        if (directionFromCurrentPositionToTarget.y == 0 ||
+            Mathf.Sign(directionFromCurrentPositionToTarget.y) != Mathf.Sign(travelDirection.y))
         {
             overY = true;
             transform.position = new Vector3(transform.position.x, currentTarget.y, transform.position.z);
         }
-        if (directionFromCurrentPositionToTarget.z == 0 || Mathf.Sign(directionFromCurrentPositionToTarget.z) != Mathf.Sign(travelDirection.z))
+
+        if (directionFromCurrentPositionToTarget.z == 0 ||
+            Mathf.Sign(directionFromCurrentPositionToTarget.z) != Mathf.Sign(travelDirection.z))
         {
             overZ = true;
             transform.position = new Vector3(transform.position.x, transform.position.y, currentTarget.z);
         }
 
         // If we are over the x, y, and z of our target we need to stop
-        if (overX && overY && overZ)
-        {
-            BeginWait();
-        }
+        if (overX && overY && overZ) BeginWait();
     }
 
     /// <summary>
@@ -188,7 +188,7 @@ public class WaypointMover : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void BeginWait()
+    private void BeginWait()
     {
         stopped = true;
         timeToStartMovingAgain = Time.time + waitTime;

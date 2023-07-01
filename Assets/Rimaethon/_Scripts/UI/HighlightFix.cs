@@ -20,11 +20,11 @@ public class HighlightFix : MonoBehaviour, IPointerEnterHandler, IDeselectHandle
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!EventSystem.current.alreadySelecting)
-            EventSystem.current.SetSelectedGameObject(this.gameObject);
+            EventSystem.current.SetSelectedGameObject(gameObject);
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        this.GetComponent<Selectable>().OnPointerExit(null);
+        GetComponent<Selectable>().OnPointerExit(null);
     }
 }

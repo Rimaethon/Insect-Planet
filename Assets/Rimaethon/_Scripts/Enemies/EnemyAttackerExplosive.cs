@@ -7,9 +7,9 @@ using UnityEngine;
 /// </summary>
 public class EnemyAttackerExplosive : EnemyAttacker
 {
-    [Header("ExplosionSettings")]
-    [Tooltip("Whether or not this enemy dies when it explodes.")]
+    [Header("ExplosionSettings")] [Tooltip("Whether or not this enemy dies when it explodes.")]
     public bool dieOnExplosion = true;
+
     [Tooltip("The gameobject which creates the explosion effect.")]
     public GameObject explostionEffect = null;
 
@@ -31,6 +31,7 @@ public class EnemyAttackerExplosive : EnemyAttacker
             yield return null;
             t += Time.deltaTime;
         }
+
         SpawnExplosion();
         OnAttackEnd();
     }
@@ -47,8 +48,9 @@ public class EnemyAttackerExplosive : EnemyAttacker
     {
         if (explostionEffect != null)
         {
-            GameObject obj = Instantiate(explostionEffect, transform.position, transform.rotation, null);
+            var obj = Instantiate(explostionEffect, transform.position, transform.rotation, null);
         }
+
         TryDie();
     }
 
@@ -62,9 +64,6 @@ public class EnemyAttackerExplosive : EnemyAttacker
     /// </summary>
     private void TryDie()
     {
-        if (dieOnExplosion)
-        {
-            Destructable.DoDestroy(this.gameObject);
-        }
+        if (dieOnExplosion) Destructable.DoDestroy(gameObject);
     }
 }

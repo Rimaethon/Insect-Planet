@@ -11,21 +11,15 @@ public class GroundEnemy : Enemy
     public bool lineOfSightToStop = true;
     public bool alwaysFacePlayer = true;
 
-   
+
     protected override void Setup()
     {
         base.Setup();
-        if (agent == null)
-        {
-            agent = GetComponent<NavMeshAgent>();
-        }
-        if (agent != null)
-        {
-            agent.updateRotation = !alwaysFacePlayer;
-        }
+        if (agent == null) agent = GetComponent<NavMeshAgent>();
+        if (agent != null) agent.updateRotation = !alwaysFacePlayer;
     }
 
-   
+
     public void GoToTaget(Vector3 target, float timeToSpend)
     {
         agent.SetDestination(target);
@@ -33,8 +27,8 @@ public class GroundEnemy : Enemy
         timeToStopTrying = Time.time + timeToSpend;
     }
 
-    bool travelingToSpecificTarget = false;
-    float timeToStopTrying = 0;
+    private bool travelingToSpecificTarget = false;
+    private float timeToStopTrying = 0;
 
 
     protected override void HandleMovement()
@@ -45,7 +39,7 @@ public class GroundEnemy : Enemy
             enemyRigidbody.angularVelocity = Vector3.zero;
         }
 
-        Quaternion desiredRotation = CalculateDesiredRotation();
+        var desiredRotation = CalculateDesiredRotation();
         transform.rotation = desiredRotation;
 
         if (travelingToSpecificTarget)
@@ -66,35 +60,25 @@ public class GroundEnemy : Enemy
         }
     }
 
-   
-    bool NavMeshAgentDestinationReached()
+
+    private bool NavMeshAgentDestinationReached()
     {
         // Check if we've reached the destination
         if (!agent.pathPending)
-        {
             if (agent.remainingDistance <= agent.stoppingDistance)
-            {
                 if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
-                {
                     return true;
-                }
-            }
-        }
         return false;
     }
 
-  
-    bool ShouldMove()
+
+    private bool ShouldMove()
     {
-      
-        bool attackMove = moveWhileAttacking == true || isAttacking == false;
+        var attackMove = moveWhileAttacking == true || isAttacking == false;
 
-        bool hasLineOfSight = true;
+        var hasLineOfSight = true;
 
-        if (needsLineOfSightToMove)
-        {
-            hasLineOfSight = HasLineOfSight();
-        }
+        if (needsLineOfSightToMove) hasLineOfSight = HasLineOfSight();
 
         if (agent != null && target != null && canMove && attackMove && hasLineOfSight)
         {
@@ -119,31 +103,28 @@ public class GroundEnemy : Enemy
         {
             isIdle = true;
         }
+
         return false;
     }
 
 
     protected override Vector3 CalculateDesiredMovement()
     {
-        if (agent != null)
-        {
-            return agent.desiredVelocity * Time.deltaTime;
-        }
+        if (agent != null) return agent.desiredVelocity * Time.deltaTime;
         return base.CalculateDesiredMovement();
     }
 
- 
+
     protected override Quaternion CalculateDesiredRotation()
     {
         if (target != null)
-        {
             if (alwaysFacePlayer)
             {
-                Quaternion result = Quaternion.LookRotation(target.position - transform.position, transform.up);
+                var result = Quaternion.LookRotation(target.position - transform.position, transform.up);
                 result = Quaternion.Euler(0, result.eulerAngles.y, 0);
                 return result;
             }
-        }
+
         return base.CalculateDesiredRotation();
     }
 }

@@ -7,17 +7,26 @@ namespace Rimaethon._Scripts.Utility
 {
     public class EventManager
     {
-        
-        #region Fields
-        private readonly Dictionary<GameEvents, List<Delegate>> _eventHandlers = new Dictionary<GameEvents, List<Delegate>>();
-        private readonly Dictionary<object, List<GameEvents>> _eventSubscriptions = new Dictionary<object, List<GameEvents>>();
-        private readonly Dictionary<GameEvents, int> _eventPriorities = new Dictionary<GameEvents, int>();
-        private readonly Queue<Action> _eventQueue = new Queue<Action>();
-        private bool _isProcessingEvent;
-        
+        #region Event Priorities
+
+        public void SetEventPriority(GameEvents gameEvents, int priority)
+        {
+            _eventPriorities[gameEvents] = priority;
+        }
+
         #endregion
-        
-        
+
+        #region Fields
+
+        private readonly Dictionary<GameEvents, List<Delegate>> _eventHandlers = new();
+        private readonly Dictionary<object, List<GameEvents>> _eventSubscriptions = new();
+        private readonly Dictionary<GameEvents, int> _eventPriorities = new();
+        private readonly Queue<Action> _eventQueue = new();
+        private bool _isProcessingEvent;
+
+        #endregion
+
+
         #region Singleton
 
         private static EventManager _instance;
@@ -26,37 +35,29 @@ namespace Rimaethon._Scripts.Utility
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = new EventManager();
-                }
+                if (_instance == null) _instance = new EventManager();
                 return _instance;
             }
         }
 
-        private EventManager() { }
+        private EventManager()
+        {
+        }
 
         #endregion
 
         #region Event Handlers
 
-
         public void AddHandler(GameEvents gameEvent, Action handler)
         {
             // Add handler to the event handlers dictionary
-            if (!_eventHandlers.ContainsKey(gameEvent))
-            {
-                _eventHandlers[gameEvent] = new List<Delegate>();
-            }
+            if (!_eventHandlers.ContainsKey(gameEvent)) _eventHandlers[gameEvent] = new List<Delegate>();
 
             _eventHandlers[gameEvent].Add(handler);
             Debug.Log($"Added handler {handler.Method.Name} for game event {gameEvent}");
 
             // Store the handler and game event in a dictionary
-            if (!_eventSubscriptions.ContainsKey(handler))
-            {
-                _eventSubscriptions[handler] = new List<GameEvents>();
-            }
+            if (!_eventSubscriptions.ContainsKey(handler)) _eventSubscriptions[handler] = new List<GameEvents>();
 
             _eventSubscriptions[handler].Add(gameEvent);
             Debug.Log($"Subscribed handler {handler.Method.Name} to game event {gameEvent}");
@@ -99,14 +100,10 @@ namespace Rimaethon._Scripts.Utility
 
         #region Event Subscriptions
 
-
         public void Subscribe(object subscriber, GameEvents gameEvents)
         {
             // Add subscription to the subscriptions dictionary
-            if (!_eventSubscriptions.ContainsKey(subscriber))
-            {
-                _eventSubscriptions[subscriber] = new List<GameEvents>();
-            }
+            if (!_eventSubscriptions.ContainsKey(subscriber)) _eventSubscriptions[subscriber] = new List<GameEvents>();
 
             _eventSubscriptions[subscriber].Add(gameEvents);
             Debug.Log($"Subscribed {subscriber.GetType().Name} to game event {gameEvents}");
@@ -129,19 +126,7 @@ namespace Rimaethon._Scripts.Utility
 
         #endregion
 
-        #region Event Priorities
-
-
-        public void SetEventPriority(GameEvents gameEvents, int priority)
-        {
-            _eventPriorities[gameEvents] = priority;
-        }
-
-        #endregion
-
         #region Event Broadcasting
-
-
 
         public void Broadcast(GameEvents gameEvents)
         {
@@ -158,13 +143,13 @@ namespace Rimaethon._Scripts.Utility
             if (_isProcessingEvent) return;
 
             // Sort the event queue based on priority
-            List<Action> sortedEvents = new List<Action>(_eventQueue);
+            var sortedEvents = new List<Action>(_eventQueue);
             sortedEvents.Sort((a, b) => GetEventPriority(b) - GetEventPriority(a));
 
             // Process events in the sorted queue
             while (sortedEvents.Count > 0)
             {
-                Action eventAction = sortedEvents[0];
+                var eventAction = sortedEvents[0];
                 sortedEvents.RemoveAt(0);
                 eventAction.DynamicInvoke();
             }
@@ -173,16 +158,12 @@ namespace Rimaethon._Scripts.Utility
         private int GetEventPriority(Action eventAction)
         {
             foreach (var eventHandlers in _eventHandlers)
-            {
                 if (eventHandlers.Value.Contains(eventAction))
                 {
-                    if (_eventPriorities.TryGetValue(eventHandlers.Key, out int priority))
-                    {
-                        return priority;
-                    }
+                    if (_eventPriorities.TryGetValue(eventHandlers.Key, out var priority)) return priority;
                     break;
                 }
-            }
+
             return 0; // Default priority if not found
         }
 
@@ -192,22 +173,18 @@ namespace Rimaethon._Scripts.Utility
 
             // Invoke handlers for the event
             if (_eventHandlers.TryGetValue(gameEvents, out var eventHandler))
-            {
-                foreach (Delegate handler in eventHandler)
+                foreach (var handler in eventHandler)
                 {
                     handler.DynamicInvoke(args);
-                    Debug.Log($"Broadcasted event {gameEvents.ToString()} with arguments {string.Join(", ", args.Select(arg => arg.ToString()))} to handler {handler.Method.Name}");
+                    Debug.Log(
+                        $"Broadcasted event {gameEvents.ToString()} with arguments {string.Join(", ", args.Select(arg => arg.ToString()))} to handler {handler.Method.Name}");
                 }
-            }
 
             // Notify subscribers of the event
             foreach (var subscriber in _eventSubscriptions)
-            {
                 if (subscriber.Value.Contains(gameEvents))
-                {
-                    Debug.Log($"Broadcasted event {gameEvents.ToString()} with arguments {string.Join(", ", args.Select(arg => arg.ToString()))} to subscriber {subscriber.Key.GetType().Name}");
-                }
-            }
+                    Debug.Log(
+                        $"Broadcasted event {gameEvents.ToString()} with arguments {string.Join(", ", args.Select(arg => arg.ToString()))} to subscriber {subscriber.Key.GetType().Name}");
 
             _isProcessingEvent = false;
         }

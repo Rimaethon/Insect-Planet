@@ -9,10 +9,13 @@ public class PickupAnimation : MonoBehaviour
 {
     [Tooltip("The height difference between the resting position of the object and it's maximum or minimum height.")]
     public float oscillationHeight = 0.5f;
+
     [Tooltip("The speed at which the object oscilates up and down.")]
     public float oscillationSpeed = 2.0f;
+
     [Tooltip("The speed at which the object rotates per second (in degrees)")]
     public float rotationSpeed = 90.0f;
+
     // The starting position of the object.
     private Vector3 startPosition;
 
@@ -35,7 +38,10 @@ public class PickupAnimation : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
-        transform.localPosition = startPosition + (Vector3.up * oscillationHeight * Mathf.Cos(Time.timeSinceLevelLoad * oscillationSpeed));
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + Vector3.up * Time.deltaTime * rotationSpeed);
+        transform.localPosition = startPosition +
+                                  Vector3.up * oscillationHeight *
+                                  Mathf.Cos(Time.timeSinceLevelLoad * oscillationSpeed);
+        transform.rotation =
+            Quaternion.Euler(transform.rotation.eulerAngles + Vector3.up * Time.deltaTime * rotationSpeed);
     }
 }

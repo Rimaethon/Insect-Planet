@@ -7,77 +7,89 @@ using UnityEngine;
 /// </summary>
 public class Gun : MonoBehaviour
 {
-    [Header("Aim Settings")]
-    [Tooltip("The gameobject to raycast forward from")]
+    [Header("Aim Settings")] [Tooltip("The gameobject to raycast forward from")]
     public GameObject raycastFrom;
+
     [Tooltip("The minimum distance away this gun will look towards when adjusting aim")]
     public float minimumDistanceToAim = 10f;
+
     [Tooltip("The maximum distance away this gun will look towards when adjusting aim")]
     public float maxDistanceToAim = 1000f;
-    [Header("Enemy Aiming")]
-    [Tooltip("Whether or not this gun always shoots towards an enemy target")]
+
+    [Header("Enemy Aiming")] [Tooltip("Whether or not this gun always shoots towards an enemy target")]
     public bool alwaysShootAtTarget = true;
+
     [Tooltip("The enemy whos target will be used")]
     public Enemy enemy;
 
-    [Header("Prefab Settings")]
-    [Tooltip("The projectile game object to instantiate when firing this gun")]
+    [Header("Prefab Settings")] [Tooltip("The projectile game object to instantiate when firing this gun")]
     public GameObject projectileGameObject;
+
     [Tooltip("Whether or not the fired projectile should be a child of the fire location")]
     public bool childProjectileToFireLocation = false;
+
     [Tooltip("The effect prefab to instantiate when firing this gun")]
     public GameObject fireEffect;
 
-    [Header("Fire settings")]
-    [Tooltip("The transform whos location this fires from")]
+    [Header("Fire settings")] [Tooltip("The transform whos location this fires from")]
     public Transform fireLocationTransform;
+
     [Tooltip("How long to wait before being able to fire again, if no animator is set")]
     public float fireDelay = 0.02f;
+
     [Tooltip("The fire type of the weapon")]
     public FireType fireType = FireType.semiAutomatic;
-    
+
     // enum for setting the fire type
-    public enum FireType { semiAutomatic, automatic };
+    public enum FireType
+    {
+        semiAutomatic,
+        automatic
+    };
 
     // The time when this gun will be able to fire again
     private float ableToFireAgainTime = 0;
 
     [Tooltip("The number of projectiles to fire when firing")]
     public int maximumToFire = 1;
-    [Tooltip("The maximum degree (eular angle) of spread shots can be fired in")]
-    [Range(0, 45)]
+
+    [Tooltip("The maximum degree (eular angle) of spread shots can be fired in")] [Range(0, 45)]
     public float maximumSpreadDegree = 0;
 
-    [Header("Equipping settings")]
-    [Tooltip("Whether or not this gun is available for use")]
+    [Header("Equipping settings")] [Tooltip("Whether or not this gun is available for use")]
     public bool available = false;
 
-    [Header("Animation Settings")]
-    [Tooltip("The animator that animates this gun.")]
+    [Header("Animation Settings")] [Tooltip("The animator that animates this gun.")]
     public Animator gunAnimator = null;
+
     [Tooltip("Shoot animator trigger name")]
     public string shootTriggerName = "Shoot";
+
     [Tooltip("The animation state anme when the gun is idle (used to handle when we are able to fire again)")]
     public string idleAnimationName = "Idle";
 
-    [Header("Ammo Settings")]
-    [Tooltip("Whether this gun requires ammunition.")]
+    [Header("Ammo Settings")] [Tooltip("Whether this gun requires ammunition.")]
     public bool useAmmo = false;
+
     [Tooltip("The ID of ammo that can be used with this gun.")]
     public int ammunitionID = 0;
+
     [Tooltip("Whether this gun must be reloaded.")]
     public bool mustReload = false;
+
     [Tooltip("The number of shots that can be fired without reloading. \n" +
-        "A magazine size of 1 means the player must reload after every shot.")]
+             "A magazine size of 1 means the player must reload after every shot.")]
     public int magazineSize = 1;
+
     [Tooltip("The number of shots currently loaded into this gun")]
     public int roundsLoaded = 0;
+
     [Tooltip("The time it takes to reload")]
     public float reloadTime = 1.0f;
 
-    [Header("UI Display Settings")]
-    [Tooltip("The weapon Image to display on the UI")]
+    [Header("UI Display Settings")] [Tooltip("The weapon Image to display on the UI")]
     public Sprite weaponImage;
+
     [Tooltip("The ammo image to display on the UI")]
     public Sprite ammoImage;
 
@@ -108,7 +120,7 @@ public class Gun : MonoBehaviour
         {
             raycastFrom = gameObject;
             Debug.LogWarning("The gun script on: " + name + " does not have a raycast from set. \n" +
-                "This can cause aiming to be inaccurate.");
+                             "This can cause aiming to be inaccurate.");
         }
     }
 
@@ -143,8 +155,9 @@ public class Gun : MonoBehaviour
         }
 
         RaycastHit hitInformation;
-        Vector3 aimAtPosition = raycastFrom.transform.position + raycastFrom.transform.forward * maxDistanceToAim;
-        bool hitSomething = Physics.Raycast(raycastFrom.transform.position, raycastFrom.transform.forward, out hitInformation);
+        var aimAtPosition = raycastFrom.transform.position + raycastFrom.transform.forward * maxDistanceToAim;
+        var hitSomething = Physics.Raycast(raycastFrom.transform.position, raycastFrom.transform.forward,
+            out hitInformation);
         if (!hitSomething || hitInformation.distance > maxDistanceToAim || hitInformation.transform.tag == "Projectile")
         {
             fireLocationTransform.LookAt(aimAtPosition);
@@ -171,41 +184,32 @@ public class Gun : MonoBehaviour
     /// </summary>
     public void Fire()
     {
-        bool canFire = false;
+        var canFire = false;
 
         // use the animator for fire delay if possible
         // otherwise use the timing set in the inspector
         if (gunAnimator != null)
-        {
             canFire = gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(idleAnimationName);
-        }
         else
-        {
             canFire = ableToFireAgainTime <= Time.time;
-        }
 
         if (canFire && HasAmmo())
         {
             if (projectileGameObject != null)
-            {
-                for (int i = 0; i < maximumToFire; i++)
+                for (var i = 0; i < maximumToFire; i++)
                 {
-                    float fireDegreeX = Random.Range(-maximumSpreadDegree, maximumSpreadDegree);
-                    float fireDegreeY = Random.Range(-maximumSpreadDegree, maximumSpreadDegree);
-                    Vector3 fireRotationInEular = fireLocationTransform.rotation.eulerAngles + new Vector3(fireDegreeX, fireDegreeY, 0);
-                    GameObject projectile = Instantiate(projectileGameObject, fireLocationTransform.position, 
+                    var fireDegreeX = Random.Range(-maximumSpreadDegree, maximumSpreadDegree);
+                    var fireDegreeY = Random.Range(-maximumSpreadDegree, maximumSpreadDegree);
+                    var fireRotationInEular = fireLocationTransform.rotation.eulerAngles +
+                                              new Vector3(fireDegreeX, fireDegreeY, 0);
+                    var projectile = Instantiate(projectileGameObject, fireLocationTransform.position,
                         Quaternion.Euler(fireRotationInEular), null);
-                    if (childProjectileToFireLocation)
-                    {
-                        projectile.transform.SetParent(fireLocationTransform);
-                    }
+                    if (childProjectileToFireLocation) projectile.transform.SetParent(fireLocationTransform);
                 }
-            }
 
             if (fireEffect != null)
-            {
-                Instantiate(fireEffect, fireLocationTransform.position, fireLocationTransform.rotation, fireLocationTransform);
-            }
+                Instantiate(fireEffect, fireLocationTransform.position, fireLocationTransform.rotation,
+                    fireLocationTransform);
 
             ableToFireAgainTime = Time.time + fireDelay;
             PlayShootAnimation();
@@ -236,13 +240,9 @@ public class Gun : MonoBehaviour
         if (useAmmo)
         {
             if (mustReload)
-            {
                 return roundsLoaded > 0;
-            }
             else
-            {
                 return AmmoTracker.HasAmmo(this);
-            }
         }
         else
         {
@@ -268,6 +268,7 @@ public class Gun : MonoBehaviour
                 t += Time.deltaTime;
                 yield return null;
             }
+
             AmmoTracker.Reload(this);
         }
     }
@@ -282,9 +283,6 @@ public class Gun : MonoBehaviour
     /// </summary>
     public void PlayShootAnimation()
     {
-        if (gunAnimator != null)
-        {
-            gunAnimator.SetTrigger(shootTriggerName);
-        }
+        if (gunAnimator != null) gunAnimator.SetTrigger(shootTriggerName);
     }
 }

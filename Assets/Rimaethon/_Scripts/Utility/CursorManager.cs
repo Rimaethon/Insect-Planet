@@ -8,10 +8,14 @@ using UnityEngine;
 public class CursorManager : MonoBehaviour
 {
     // An enum that defines the cursor state, used when setting the cursor state to be different values
-    public enum CursorState { FPS, Menu, FPSVisable};
+    public enum CursorState
+    {
+        FPS,
+        Menu,
+        FPSVisable
+    };
 
-    [Header("Settings")]
-    [Tooltip("The state to start the cursor in in this scene")]
+    [Header("Settings")] [Tooltip("The state to start the cursor in in this scene")]
     public CursorState startState = CursorState.FPS;
 
     // An instance of this to be referenced by other scripts
@@ -56,16 +60,13 @@ public class CursorManager : MonoBehaviour
         }
         else if (cursorState == CursorState.FPSVisable)
         {
-
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
         }
         else if (cursorState == CursorState.Menu)
         {
-
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
         }
-
     }
 }

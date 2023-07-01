@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 using Insect_Planet._Scripts.ObjectManagers;
+
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject objectToSpawn;
@@ -14,7 +15,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        
     }
 
     private void Update()
@@ -30,24 +30,25 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnObject()
     {
-        GameObject spawnedObject = ObjectPool.Spawn( objectToSpawn,gameObject.transform,gameObject.transform.localPosition, transform.rotation);
+        var spawnedObject = ObjectPool.Spawn(objectToSpawn, gameObject.transform, gameObject.transform.localPosition,
+            transform.rotation);
         StartCoroutine(ScaleUpObject(spawnedObject));
 
-        
-        Rigidbody rb = spawnedObject.GetComponent<Rigidbody>();
+
+        var rb = spawnedObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 launchDirection = transform.forward; // Change the launch direction as desired
+            var launchDirection = transform.forward; // Change the launch direction as desired
             rb.AddForce(launchDirection * launchForce, ForceMode.Impulse);
         }
     }
 
     private IEnumerator ScaleUpObject(GameObject obj)
     {
-        Vector3 initialScale = obj.transform.localScale;
-        Vector3 targetScale = initialScale * 2f; // Change the scale factor as desired
+        var initialScale = obj.transform.localScale;
+        var targetScale = initialScale * 2f; // Change the scale factor as desired
 
-        float t = 0f;
+        var t = 0f;
         while (t < 1f)
         {
             t += Time.deltaTime * scaleSpeed;

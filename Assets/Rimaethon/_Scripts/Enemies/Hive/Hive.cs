@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class Hive : Enemy
 {
-
     /// <summary>
     /// Description:
     /// Standard Unity function called once before the first Update call

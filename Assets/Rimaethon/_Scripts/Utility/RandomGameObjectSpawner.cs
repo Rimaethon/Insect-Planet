@@ -8,8 +8,7 @@ using UnityEngine;
 /// </summary>
 public class RandomGameObjectSpawner : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("The gameobjects to spawn from randomly")]
+    [Header("Settings")] [Tooltip("The gameobjects to spawn from randomly")]
     public List<GameObject> gameObjects;
 
     /// <summary>
@@ -19,7 +18,7 @@ public class RandomGameObjectSpawner : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void Start()
+    private void Start()
     {
         SpawnRandom();
     }
@@ -33,9 +32,9 @@ public class RandomGameObjectSpawner : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void SpawnRandom()
+    private void SpawnRandom()
     {
-        int randomIndex = Random.Range(0, gameObjects.Count);
+        var randomIndex = Random.Range(0, gameObjects.Count);
         Instantiate(gameObjects[randomIndex], transform.position, transform.rotation, transform);
     }
 }

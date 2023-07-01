@@ -8,11 +8,12 @@ using UnityEngine.UI;
 /// </summary>
 public class LivesDisplay : UIelement
 {
-    [Header("Settings")]
-    [Tooltip("The prefab image to use when displaying lives remaining")]
+    [Header("Settings")] [Tooltip("The prefab image to use when displaying lives remaining")]
     public GameObject livesDisplayImage = null;
+
     [Tooltip("The prefab to use to display the number")]
     public GameObject numberDisplay = null;
+
     [Tooltip("The maximum number of images to display before switching to just a number")]
     public int maximumNumberToDisplay = 3;
 
@@ -29,11 +30,8 @@ public class LivesDisplay : UIelement
     {
         if (GameManager.instance != null)
         {
-            Health playerHealth = GetComponent<Health>();
-            if (playerHealth != null)
-            {
-                SetChildImageNumber(playerHealth.currentLives - 1);
-            }
+            var playerHealth = GetComponent<Health>();
+            if (playerHealth != null) SetChildImageNumber(playerHealth.currentLives - 1);
         }
     }
 
@@ -49,24 +47,18 @@ public class LivesDisplay : UIelement
     /// <param name="number">The number of images that this object should have as children</param>
     private void SetChildImageNumber(int number)
     {
-        for (int i = transform.childCount - 1; i >= 0; i--)
-        {
-            Destroy(transform.GetChild(i).gameObject);
-        }
+        for (var i = transform.childCount - 1; i >= 0; i--) Destroy(transform.GetChild(i).gameObject);
 
         if (livesDisplayImage != null)
         {
             if (maximumNumberToDisplay >= number)
             {
-                for (int i = 0; i < number; i++)
-                {
-                    Instantiate(livesDisplayImage, transform);
-                }
+                for (var i = 0; i < number; i++) Instantiate(livesDisplayImage, transform);
             }
             else
             {
                 Instantiate(livesDisplayImage, transform);
-                GameObject createdNumberDisp = Instantiate(numberDisplay, transform);
+                var createdNumberDisp = Instantiate(numberDisplay, transform);
                 createdNumberDisp.GetComponent<Text>().text = number.ToString();
             }
         }

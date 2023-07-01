@@ -11,29 +11,32 @@ using UnityEngine.Events;
 /// </summary>
 public class Health : MonoBehaviour
 {
-    [Header("Team Settings")]
-    [Tooltip("The team associated with this damage")]
+    [Header("Team Settings")] [Tooltip("The team associated with this damage")]
     public int teamId = 0;
 
-    [Header("Health Settings")]
-    [Tooltip("The default health value")]
+    [Header("Health Settings")] [Tooltip("The default health value")]
     public int defaultHealth = 1;
-    [Tooltip("The maximum health value")]
-    public int maximumHealth = 1;
+
+    [Tooltip("The maximum health value")] public int maximumHealth = 1;
+
     [Tooltip("The current in game health value")]
     public int currentHealth = 1;
+
     [Tooltip("Invulnerability duration, in seconds, after taking damage")]
     public float invincibilityTime = 3f;
+
     [Tooltip("Whether or not this health is always invincible")]
     public bool isAlwaysInvincible = false;
 
-    [Header("Lives settings")]
-    [Tooltip("Whether or not to use lives")]
+    [Header("Lives settings")] [Tooltip("Whether or not to use lives")]
     public bool useLives = false;
+
     [Tooltip("Current number of lives this health has")]
     public int currentLives = 3;
+
     [Tooltip("The maximum number of lives this health has")]
     public int maximumLives = 5;
+
     [Tooltip("The amount of time to wait before respawning")]
     public float respawnWaitTime = 3f;
 
@@ -45,7 +48,7 @@ public class Health : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void Start()
+    private void Start()
     {
         SetRespawnPoint(transform.position);
     }
@@ -58,14 +61,14 @@ public class Health : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void Update()
+    private void Update()
     {
         InvincibilityCheck();
         RespawnCheck();
     }
 
     private float respawnTime;
-    
+
     /// <summary>
     /// Description:
     /// Checks to see if the health gameobject should be respawned yet and only respawns it if the alloted time has passed
@@ -77,16 +80,13 @@ public class Health : MonoBehaviour
     private void RespawnCheck()
     {
         if (respawnWaitTime != 0 && currentHealth <= 0 && currentLives > 0)
-        {
             if (Time.time >= respawnTime)
-            {
                 Respawn();
-            }
-        }
     }
 
     // The specific game time when the health can be damged again
     private float timeToBecomeDamagableAgain = 0;
+
     // Whether or not the health is invincible
     private bool isInvincableFromDamage = false;
 
@@ -101,14 +101,12 @@ public class Health : MonoBehaviour
     /// </summary>
     private void InvincibilityCheck()
     {
-        if (timeToBecomeDamagableAgain <= Time.time)
-        {
-            isInvincableFromDamage = false;
-        }
+        if (timeToBecomeDamagableAgain <= Time.time) isInvincableFromDamage = false;
     }
 
     // The position that the health's gameobject will respawn at
     private Vector3 respawnPosition;
+
     /// <summary>
     /// Description:
     /// Changes the respawn position to a new position
@@ -131,7 +129,7 @@ public class Health : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void Respawn()
+    private void Respawn()
     {
         if (GetComponent<CharacterController>() != null)
         {
@@ -139,20 +137,20 @@ public class Health : MonoBehaviour
             transform.position = respawnPosition;
             GetComponent<CharacterController>().enabled = true;
         }
-        if (gameObject.GetComponent<PlayerController>() != null && gameObject.GetComponent<PlayerController>().playerShooter != null)
+
+        if (gameObject.GetComponent<PlayerController>() != null &&
+            gameObject.GetComponent<PlayerController>().playerShooter != null)
         {
-            Shooter playerShooter = gameObject.GetComponent<PlayerController>().playerShooter;
-            foreach(Gun gun in playerShooter.guns)
+            var playerShooter = gameObject.GetComponent<PlayerController>().playerShooter;
+            foreach (var gun in playerShooter.guns)
             {
-                Vector3 rotation = gun.transform.localRotation.eulerAngles;
+                var rotation = gun.transform.localRotation.eulerAngles;
                 gun.transform.localRotation = Quaternion.Euler(new Vector3(0, rotation.y, rotation.z));
             }
         }
+
         // Do on respawn events
-        if (eventsOnRespawn != null)
-        {
-            eventsOnRespawn.Invoke();
-        }
+        if (eventsOnRespawn != null) eventsOnRespawn.Invoke();
 
         currentHealth = defaultHealth;
     }
@@ -174,10 +172,7 @@ public class Health : MonoBehaviour
         }
         else
         {
-            if (hitEffect != null)
-            {
-                Instantiate(hitEffect, transform.position, transform.rotation, null);
-            }
+            if (hitEffect != null) Instantiate(hitEffect, transform.position, transform.rotation, null);
             timeToBecomeDamagableAgain = Time.time + invincibilityTime;
             isInvincableFromDamage = true;
             currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maximumHealth);
@@ -197,10 +192,7 @@ public class Health : MonoBehaviour
     public void ReceiveHealing(int healingAmount)
     {
         currentHealth += healingAmount;
-        if (currentHealth > maximumHealth)
-        {
-            currentHealth = maximumHealth;
-        }
+        if (currentHealth > maximumHealth) currentHealth = maximumHealth;
         CheckDeath();
     }
 
@@ -218,22 +210,22 @@ public class Health : MonoBehaviour
         if (useLives)
         {
             currentLives += bonusLives;
-            if (currentLives > maximumLives)
-            {
-                currentLives = maximumLives;
-            }
+            if (currentLives > maximumLives) currentLives = maximumLives;
         }
     }
 
-    [Header("Effects & Polish")]
-    [Tooltip("The effect to create when this health dies")]
+    [Header("Effects & Polish")] [Tooltip("The effect to create when this health dies")]
     public GameObject deathEffect;
+
     [Tooltip("The effect to create when this health is damaged (but does not die)")]
     public GameObject hitEffect;
+
     [Tooltip("The component which turns on enemy physics")]
     public RagdollHandler ragdollHandler = null;
+
     [Tooltip("A list of events that occur when the health becomes 0 or lower")]
     public UnityEvent eventsOnDeath;
+
     [Tooltip("A list of events that occur on respawn")]
     public UnityEvent eventsOnRespawn;
 
@@ -247,13 +239,14 @@ public class Health : MonoBehaviour
     /// bool
     /// </summary>
     /// <returns>bool: A boolean value representing if the health has died or not (true for dead)</returns>
-    bool CheckDeath()
+    private bool CheckDeath()
     {
         if (currentHealth <= 0)
         {
             Die();
             return true;
         }
+
         return false;
     }
 
@@ -266,25 +259,16 @@ public class Health : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void Die()
+    private void Die()
     {
         if (deathEffect != null)
         {
-            if (ragdollHandler != null)
-            {
-                ragdollHandler.EnableRagdoll();
-            }
-            if (deathEffect != null)
-            {
-                Instantiate(deathEffect, transform.position, transform.rotation, null);
-            }
+            if (ragdollHandler != null) ragdollHandler.EnableRagdoll();
+            if (deathEffect != null) Instantiate(deathEffect, transform.position, transform.rotation, null);
         }
 
         // Do on death events
-        if (eventsOnDeath != null)
-        {
-            eventsOnDeath.Invoke();
-        }
+        if (eventsOnDeath != null) eventsOnDeath.Invoke();
 
         if (useLives)
         {
@@ -292,44 +276,29 @@ public class Health : MonoBehaviour
             if (currentLives > 0)
             {
                 if (respawnWaitTime == 0)
-                {
                     Respawn();
-                }
                 else
-                {
                     respawnTime = Time.time + respawnWaitTime;
-                } 
             }
             else
             {
                 if (respawnWaitTime != 0)
-                {
                     respawnTime = Time.time + respawnWaitTime;
-                }
                 else if (ragdollHandler != null)
-                {
                     ragdollHandler.EnableRagdoll();
-                }
                 else
-                {
-                    Destructable.DoDestroy(this.gameObject);
-                }
+                    Destructable.DoDestroy(gameObject);
                 GameOver();
             }
-            
         }
         else
         {
             GameOver();
             if (ragdollHandler != null)
-            {
                 ragdollHandler.EnableRagdoll();
-            }
             else
-            {
-                Destructable.DoDestroy(this.gameObject);
-            }
-        }      
+                Destructable.DoDestroy(gameObject);
+        }
     }
 
     /// <summary>
@@ -342,6 +311,5 @@ public class Health : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
-        
     }
 }

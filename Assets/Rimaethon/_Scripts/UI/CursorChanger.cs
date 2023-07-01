@@ -7,8 +7,7 @@ using UnityEngine;
 /// </summary>
 public class CursorChanger : MonoBehaviour
 {
-    [Header("Settings:")]
-    [Tooltip("The cursor to change to")]
+    [Header("Settings:")] [Tooltip("The cursor to change to")]
     public Texture2D newCursorSprite;
 
     /// <summary>
@@ -19,7 +18,7 @@ public class CursorChanger : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void Start()
+    private void Start()
     {
         ChangeCursor();
     }
@@ -32,12 +31,12 @@ public class CursorChanger : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void ChangeCursor()
+    private void ChangeCursor()
     {
         Cursor.lockState = CursorLockMode.Confined;
 
         // The location that clicking actually hits, also positions the clicker
-        Vector2 hotSpot = new Vector2();
+        var hotSpot = new Vector2();
         // Dividing the width and height by 2 will center it
         hotSpot.x = newCursorSprite.width / 2;
         hotSpot.y = newCursorSprite.height / 2;

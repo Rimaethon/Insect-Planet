@@ -43,6 +43,7 @@ public class EnemyAttackerRanged : EnemyAttacker
             yield return null;
             t += Time.deltaTime;
         }
+
         OnAttackEnd();
     }
 }

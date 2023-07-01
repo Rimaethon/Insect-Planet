@@ -9,19 +9,25 @@ public class GunSmokeHandler : MonoBehaviour
 {
     // Delegate that is invoked when a gun fires
     public delegate void OnGunFireDelegate(Gun gun);
+
     // static instance of the delegate to be invoked when a gun fires
     public static OnGunFireDelegate OnGunFire = delegate { };
 
     [Tooltip("The gun that this script manages smoke for")]
     public Gun gun = null;
+
     [Tooltip("The particle system that creates the smoke effect")]
     public ParticleSystem gunSmokeParticles = null;
+
     [Tooltip("The curve which defines how many particles should be emitted for each given heat value")]
-    public AnimationCurve SmokeVSHeat = new AnimationCurve();
+    public AnimationCurve SmokeVSHeat = new();
+
     // The current heat of the gun.
     private float gunHeat = 0;
+
     [Tooltip("The amount to increase the gun's heat by when fired.")]
     public float heatIncrementOnFire = 0.15f;
+
     [Tooltip("The rate at which 'heat' leaves the gun and smoke fades.")]
     public float heatDissipationRate = 0.1f;
 
@@ -68,10 +74,7 @@ public class GunSmokeHandler : MonoBehaviour
     /// <param name="firedGun">The gun that was fired, to be compared with this script's gun.</param>
     public void OnFire(Gun firedGun)
     {
-        if (firedGun == gun)
-        {
-            gunHeat += heatIncrementOnFire;
-        }
+        if (firedGun == gun) gunHeat += heatIncrementOnFire;
     }
 
     /// <summary>
@@ -84,9 +87,9 @@ public class GunSmokeHandler : MonoBehaviour
     {
         if (gunSmokeParticles != null)
         {
-            int expectedParticles = (int)SmokeVSHeat.Evaluate(gunHeat);
-            ParticleSystem.EmissionModule emmission = gunSmokeParticles.emission;
-            ParticleSystem.MinMaxCurve rateCurve = new ParticleSystem.MinMaxCurve();
+            var expectedParticles = (int)SmokeVSHeat.Evaluate(gunHeat);
+            var emmission = gunSmokeParticles.emission;
+            var rateCurve = new ParticleSystem.MinMaxCurve();
             rateCurve.constant = expectedParticles;
             emmission.rateOverTime = rateCurve;
         }

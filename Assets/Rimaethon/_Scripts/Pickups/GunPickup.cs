@@ -7,8 +7,7 @@ using UnityEngine;
 /// </summary>
 public class GunPickup : Pickup
 {
-    [Header("Gun Pickup Settings")]
-    [Tooltip("The index of the gun to make available in the shooter script")]
+    [Header("Gun Pickup Settings")] [Tooltip("The index of the gun to make available in the shooter script")]
     public int gunIndexToMakeAvailable = 0;
 
     /// <summary>
@@ -22,11 +21,8 @@ public class GunPickup : Pickup
     /// <param name="collision">The collider that is picking this up</param>
     public override void DoOnPickup(Collider collision)
     {
-        Shooter shooter = collision.gameObject.GetComponentInChildren<Shooter>();
-        if (collision.tag == "Player" && shooter != null)
-        {
-            shooter.MakeGunAvailable(gunIndexToMakeAvailable);
-        }
+        var shooter = collision.gameObject.GetComponentInChildren<Shooter>();
+        if (collision.tag == "Player" && shooter != null) shooter.MakeGunAvailable(gunIndexToMakeAvailable);
         base.DoOnPickup(collision);
     }
 }

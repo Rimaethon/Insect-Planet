@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheKiwiCoder {
+namespace TheKiwiCoder
+{
     [System.Serializable]
-    public class Failure : DecoratorNode {
-        protected override void OnStart() {
+    public class Failure : DecoratorNode
+    {
+        protected override void OnStart()
+        {
         }
 
-        protected override void OnStop() {
+        protected override void OnStop()
+        {
         }
 
-        protected override State OnUpdate() {
+        protected override State OnUpdate()
+        {
             var state = child.Update();
-            if (state == State.Success) {
-                return State.Failure;
-            }
+            if (state == State.Success) return State.Failure;
             return state;
         }
     }

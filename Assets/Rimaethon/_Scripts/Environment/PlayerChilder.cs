@@ -62,10 +62,7 @@ public class PlayerChilder : MonoBehaviour
     /// <param name="collision">The collision to make no longer a child</param>
     private void DeChild(Collider collision)
     {
-        if (collision.tag == "Player")
-        {
-            collision.gameObject.transform.SetParent(null);
-        }
+        if (collision.tag == "Player") collision.gameObject.transform.SetParent(null);
     }
 
 
@@ -80,9 +77,6 @@ public class PlayerChilder : MonoBehaviour
     /// <param name="collision">The collision whos transform will be childed</param>
     private void MakeAChildOfAttachedTransform(Collider collision)
     {
-        if (collision.tag == "Player")
-        {
-            collision.gameObject.transform.SetParent(transform);
-        } 
+        if (collision.tag == "Player") collision.gameObject.transform.SetParent(transform);
     }
 }

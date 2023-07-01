@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-
     // A global instance for scripts to reference
     public static InputManager instance;
 
@@ -21,18 +20,14 @@ public class InputManager : MonoBehaviour
     {
         // Set up the instance of this
         if (instance == null)
-        {
             instance = this;
-        }
         else
-        {
-            Destructable.DoDestroy(this.gameObject);
-        }
+            Destructable.DoDestroy(gameObject);
     }
 
-    [Header("Player Movement Input")]
-    [Tooltip("The horizontal movmeent input of the player.")]
+    [Header("Player Movement Input")] [Tooltip("The horizontal movmeent input of the player.")]
     public float horizontalMoveAxis;
+
     [Tooltip("The vertical movement input of the player.")]
     public float verticalMoveAxis;
 
@@ -47,16 +42,15 @@ public class InputManager : MonoBehaviour
     /// <param name="callbackContext">The context of the movement input</param>
     public void ReadMovementInput(InputAction.CallbackContext context)
     {
-        Vector2 inputVector = context.ReadValue<Vector2>();
+        var inputVector = context.ReadValue<Vector2>();
         horizontalMoveAxis = inputVector.x;
         verticalMoveAxis = inputVector.y;
     }
 
-    [Header("Look Around input")]
-    [Tooltip("The horizontal look input")]
+    [Header("Look Around input")] [Tooltip("The horizontal look input")]
     public float horizontalLookAxis;
-    [Tooltip("The vertical look input")]
-    public float verticalLookAxis;
+
+    [Tooltip("The vertical look input")] public float verticalLookAxis;
 
     /// <summary>
     /// Description:
@@ -69,14 +63,14 @@ public class InputManager : MonoBehaviour
     /// <param name="callbackContext">The context of the look input</param>
     public void ReadLookInput(InputAction.CallbackContext context)
     {
-        Vector2 inputVector = context.ReadValue<Vector2>();
+        var inputVector = context.ReadValue<Vector2>();
         horizontalLookAxis = inputVector.x;
         verticalLookAxis = inputVector.y;
     }
 
-    [Header("Player Fire Input")]
-    [Tooltip("Whether or not the fire button was pressed this frame")]
+    [Header("Player Fire Input")] [Tooltip("Whether or not the fire button was pressed this frame")]
     public bool firePressed;
+
     [Tooltip("Whether or not the fire button is being held down")]
     public bool fireHeld;
 
@@ -111,9 +105,9 @@ public class InputManager : MonoBehaviour
         firePressed = false;
     }
 
-    [Header("Player Jump Input")]
-    [Tooltip("Whether or not the jump button was pressed this fame")]
+    [Header("Player Jump Input")] [Tooltip("Whether or not the jump button was pressed this fame")]
     public bool jumpPressed;
+
     [Tooltip("Whether or not the jump button is being held down")]
     public bool jumpHeld;
 
@@ -148,8 +142,7 @@ public class InputManager : MonoBehaviour
         jumpPressed = false;
     }
 
-    [Header("Pause Input")]
-    [Tooltip("Whether or not the pause button was pressed this frame")]
+    [Header("Pause Input")] [Tooltip("Whether or not the pause button was pressed this frame")]
     public bool pausePressed;
 
     /// <summary>
@@ -182,8 +175,7 @@ public class InputManager : MonoBehaviour
         pausePressed = false;
     }
 
-    [Header("Cycle weapon input")]
-    [Tooltip("The input from the axis that cycles weapons")]
+    [Header("Cycle weapon input")] [Tooltip("The input from the axis that cycles weapons")]
     public float cycleWeaponInput;
 
     /// <summary>
@@ -197,19 +189,14 @@ public class InputManager : MonoBehaviour
     /// <param name="callbackContext">The context of the cycle weapon input</param>
     public void ReadCycleWeaponInput(InputAction.CallbackContext context)
     {
-        Vector2 mouseScrollInput = context.ReadValue<Vector2>();
+        var mouseScrollInput = context.ReadValue<Vector2>();
         if (mouseScrollInput.y == 0)
-        {
             cycleWeaponInput = 0;
-        }
         else
-        {
             cycleWeaponInput = Mathf.Sign(mouseScrollInput.y);
-        }
     }
 
-    [Header("Next weapon input")]
-    [Tooltip("Whether or not the next weapon button was pressed this frame")]
+    [Header("Next weapon input")] [Tooltip("Whether or not the next weapon button was pressed this frame")]
     public bool nextWeaponPressed;
 
     /// <summary>
@@ -242,8 +229,7 @@ public class InputManager : MonoBehaviour
         nextWeaponPressed = false;
     }
 
-    [Header("Previous weapon input")]
-    [Tooltip("Whether or not the previous weapon button was pressed this frame")]
+    [Header("Previous weapon input")] [Tooltip("Whether or not the previous weapon button was pressed this frame")]
     public bool previousWeaponPressed;
 
     /// <summary>

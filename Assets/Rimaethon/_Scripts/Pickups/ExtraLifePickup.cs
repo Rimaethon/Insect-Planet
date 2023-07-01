@@ -7,8 +7,7 @@ using UnityEngine;
 /// </summary>
 public class ExtraLifePickup : Pickup
 {
-    [Header("Extra Life Settings")]
-    [Tooltip("How many Lives to give")]
+    [Header("Extra Life Settings")] [Tooltip("How many Lives to give")]
     public int extraLives = 1;
 
     /// <summary>
@@ -25,9 +24,10 @@ public class ExtraLifePickup : Pickup
     {
         if (collision.tag == "Player" && collision.gameObject.GetComponent<Health>() != null)
         {
-            Health playerHealth = collision.gameObject.GetComponent<Health>();
+            var playerHealth = collision.gameObject.GetComponent<Health>();
             playerHealth.AddLives(extraLives);
         }
+
         base.DoOnPickup(collision);
     }
 }

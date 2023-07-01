@@ -8,9 +8,8 @@ using UnityEngine;
 public class KeyPickup : Pickup
 {
     [Header("Key Settings")]
-
     [Tooltip("The ID of the key used to determine which doors it unlocks (unlocks doors with matching IDs)\n" +
-        "A key ID of 0 allows the player to open unlocked doors, and is therefore pointless.")]
+             "A key ID of 0 allows the player to open unlocked doors, and is therefore pointless.")]
     public int keyID = 0;
 
     /// <summary>
@@ -24,10 +23,7 @@ public class KeyPickup : Pickup
     /// <param name="collision">The collider that picked up this key</param>
     public override void DoOnPickup(Collider collision)
     {
-        if (collision.tag == "Player" && collision.gameObject.GetComponent<Health>() != null)
-        {
-            KeyRing.AddKey(keyID);
-        }
+        if (collision.tag == "Player" && collision.gameObject.GetComponent<Health>() != null) KeyRing.AddKey(keyID);
         base.DoOnPickup(collision);
     }
 }

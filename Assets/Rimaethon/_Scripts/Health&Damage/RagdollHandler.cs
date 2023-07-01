@@ -10,8 +10,10 @@ public class RagdollHandler : MonoBehaviour
 {
     [Tooltip("The animator that contolls the parts to be made into a ragdoll")]
     public Animator ragdollAnimator = null;
+
     [Tooltip("The list of components to disable when this script is activated")]
-    public List<Component> componentsToDisable = new List<Component>();
+    public List<Component> componentsToDisable = new();
+
     [Tooltip("A timed object destroyer which will be turned on when made into a ragdoll")]
     public TimedObjectDestroyer timedDestroyer = null;
 
@@ -23,37 +25,32 @@ public class RagdollHandler : MonoBehaviour
     /// </summary>
     public void EnableRagdoll()
     {
-        Vector3 position = transform.position;
-        foreach (Component c in componentsToDisable)
-        {
-            Destroy(c);
-        }
+        var position = transform.position;
+        foreach (var c in componentsToDisable) Destroy(c);
         if (ragdollAnimator != null)
         {
             ragdollAnimator.enabled = false;
-            List<Collider> colliders = ragdollAnimator.GetComponentsInChildren<Collider>().ToList();
-            foreach (Collider c in colliders)
+            var colliders = ragdollAnimator.GetComponentsInChildren<Collider>().ToList();
+            foreach (var c in colliders)
             {
                 Component test = null;
                 if (c.enabled && !c.gameObject.TryGetComponent(typeof(Rigidbody), out test))
                 {
-                    Rigidbody r = c.gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
+                    var r = c.gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
                     r.MovePosition(position);
                     r.freezeRotation = false;
                     r.useGravity = true;
                 }
                 else if (c.enabled && test != null)
                 {
-                    Rigidbody r = c.gameObject.GetComponent<Rigidbody>();
+                    var r = c.gameObject.GetComponent<Rigidbody>();
                     r.freezeRotation = false;
                     r.useGravity = true;
                 }
             }
         }
-        if (timedDestroyer != null)
-        {
-            timedDestroyer.enabled = true;
-        }
+
+        if (timedDestroyer != null) timedDestroyer.enabled = true;
         StartCoroutine(MoveToPositionNextFrame(position));
     }
 

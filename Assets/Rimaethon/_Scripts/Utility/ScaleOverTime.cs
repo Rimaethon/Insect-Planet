@@ -7,15 +7,18 @@ using UnityEngine;
 /// </summary>
 public class ScaleOverTime : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("The curve along which this object will be scaled")]
-    public AnimationCurve scaleCurve = new AnimationCurve();
+    [Header("Settings")] [Tooltip("The curve along which this object will be scaled")]
+    public AnimationCurve scaleCurve = new();
+
     [Tooltip("How fast this object goes through the scale curve.")]
     public float scaleSpeed = 1.0f;
+
     [Tooltip("Whether the scale curve should be looped")]
     public bool looping = true;
+
     // The base scale of this game object
     private Vector3 baseScale = Vector3.one;
+
     // The time that the animation started
     private float startTime = 0;
 
@@ -59,7 +62,7 @@ public class ScaleOverTime : MonoBehaviour
     /// </summary>
     public void Scale()
     {
-        float curveTime = GetCurveTime();
+        var curveTime = GetCurveTime();
         transform.localScale = baseScale * scaleCurve.Evaluate(curveTime);
     }
 
@@ -74,11 +77,8 @@ public class ScaleOverTime : MonoBehaviour
     /// <returns>float: The time at which to evaluate the scale curve.</returns>
     public float GetCurveTime()
     {
-        float curveTime = (Time.timeSinceLevelLoad - startTime) * scaleSpeed;
-        if (looping)
-        {
-            curveTime = curveTime % scaleSpeed;
-        }
+        var curveTime = (Time.timeSinceLevelLoad - startTime) * scaleSpeed;
+        if (looping) curveTime = curveTime % scaleSpeed;
         curveTime = Mathf.Clamp(curveTime, 0, 1);
         return curveTime;
     }

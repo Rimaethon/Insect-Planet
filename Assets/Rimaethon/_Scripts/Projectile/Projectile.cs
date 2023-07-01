@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
     // The speed of this projectile in units per second
     [Tooltip("The distance this projectile will move each second.")]
     public float projectileSpeed = 3.0f;
-    
+
     /// <summary>
     /// Description:
     /// Every frame, move the projectile in the direction it is heading

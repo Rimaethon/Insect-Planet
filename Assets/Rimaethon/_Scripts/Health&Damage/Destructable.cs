@@ -8,10 +8,11 @@ using UnityEngine.Events;
 /// </summary>
 public class Destructable : MonoBehaviour
 {
-    [Tooltip("A prefab or gameobject to create in this game object's place before destruction.")]
-    [SerializeField] private GameObject destroyEffect = null;
+    [Tooltip("A prefab or gameobject to create in this game object's place before destruction.")] [SerializeField]
+    private GameObject destroyEffect = null;
+
     [Tooltip("An event to call when this object is destroyed")]
-    public UnityEvent onDestroyEvent = new UnityEvent();
+    public UnityEvent onDestroyEvent = new();
 
     /// <summary>
     /// Description:
@@ -25,13 +26,11 @@ public class Destructable : MonoBehaviour
     {
         if (destroyEffect != null)
         {
-            GameObject obj = Instantiate(destroyEffect, transform.position, transform.rotation, null);
+            var obj = Instantiate(destroyEffect, transform.position, transform.rotation, null);
         }
-        if (onDestroyEvent != null)
-        {
-            onDestroyEvent.Invoke();
-        }
-        Destroy(this.gameObject);
+
+        if (onDestroyEvent != null) onDestroyEvent.Invoke();
+        Destroy(gameObject);
     }
 
     /// <summary>
@@ -46,14 +45,10 @@ public class Destructable : MonoBehaviour
     /// <param name="target"></param>
     public static void DoDestroy(GameObject target)
     {
-        Destructable destructable = target.GetComponent<Destructable>();
+        var destructable = target.GetComponent<Destructable>();
         if (destructable != null)
-        {
             destructable.DestroyWithEffect();
-        }
         else
-        {
             Destroy(target);
-        }
     }
 }

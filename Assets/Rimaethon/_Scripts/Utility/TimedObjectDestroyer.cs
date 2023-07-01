@@ -7,8 +7,7 @@ using UnityEngine;
 /// </summary>
 public class TimedObjectDestroyer : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("The lifetime of this gameobject")]
+    [Header("Settings")] [Tooltip("The lifetime of this gameobject")]
     public float lifetime = 5.0f;
 
     // The amount of time this gameobject has already existed in play mode
@@ -33,7 +32,7 @@ public class TimedObjectDestroyer : MonoBehaviour
         // Ensures that the quitting flag gets set correctly to avoid work as the application quits
         quitting = true;
         DetachChildren();
-        DestroyImmediate(this.gameObject);
+        DestroyImmediate(gameObject);
     }
 
     /// <summary>
@@ -44,14 +43,14 @@ public class TimedObjectDestroyer : MonoBehaviour
     /// Return: 
     /// void (no return)
     /// </summary>
-    void Update()
+    private void Update()
     {
         // Every frame, increment the amount of time that this gameobject has been alive,
         // or if it has exceeded it's maximum lifetime, destroy it
         if (timeAlive > lifetime)
         {
             DetachChildren();
-            Destructable.DoDestroy(this.gameObject);
+            Destructable.DoDestroy(gameObject);
         }
         else
         {
@@ -71,16 +70,14 @@ public class TimedObjectDestroyer : MonoBehaviour
     {
         if (destroyChildrenOnDeath && !quitting && Application.isPlaying)
         {
-            int childCount = transform.childCount;
-            for (int i = childCount - 1; i >= 0; i--)
+            var childCount = transform.childCount;
+            for (var i = childCount - 1; i >= 0; i--)
             {
-                GameObject childObject = transform.GetChild(i).gameObject;
-                if (childObject != null)
-                {
-                    Destructable.DoDestroy(childObject);
-                }
+                var childObject = transform.GetChild(i).gameObject;
+                if (childObject != null) Destructable.DoDestroy(childObject);
             }
         }
+
         transform.DetachChildren();
     }
 }

@@ -7,9 +7,8 @@ using UnityEngine;
 /// </summary>
 public class EnemyAttackerMelee : EnemyAttacker
 {
-    [Header("Melee Settings")]
-    [Tooltip("The list of colliders to turn on/off when making melee attacks")]
-    public List<Collider> weaponColliders = new List<Collider>();
+    [Header("Melee Settings")] [Tooltip("The list of colliders to turn on/off when making melee attacks")]
+    public List<Collider> weaponColliders = new();
 
     /// <summary>
     /// Description:
@@ -30,6 +29,7 @@ public class EnemyAttackerMelee : EnemyAttacker
             yield return null;
             t += Time.deltaTime;
         }
+
         SetWeaponColliders(false);
         OnAttackEnd();
     }
@@ -45,12 +45,8 @@ public class EnemyAttackerMelee : EnemyAttacker
     /// <param name="activation">Whether to turn colliders on, or to turn them off</param>
     protected void SetWeaponColliders(bool activation)
     {
-        foreach (Collider c in weaponColliders)
-        {
+        foreach (var c in weaponColliders)
             if (c != null)
-            {
                 c.enabled = activation;
-            }
-        }
     }
 }

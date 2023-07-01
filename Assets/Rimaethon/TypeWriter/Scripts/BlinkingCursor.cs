@@ -6,7 +6,7 @@ public class BlinkingCursor : MonoBehaviour
     private IEnumerator coroutine;
     private Renderer rend;
 
-    void Start()
+    private void Start()
     {
         rend = GetComponent<SpriteRenderer>();
         coroutine = BlinkCursor(0.25f);
@@ -19,13 +19,9 @@ public class BlinkingCursor : MonoBehaviour
         {
             yield return new WaitForSeconds(waitTime);
             if (rend.enabled == true)
-            {
                 rend.enabled = false;
-            }
             else
-            {
                 rend.enabled = true;
-            }
         }
     }
 }

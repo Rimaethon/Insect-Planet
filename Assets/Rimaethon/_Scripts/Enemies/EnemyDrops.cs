@@ -10,11 +10,13 @@ public class EnemyDrops : MonoBehaviour
 {
     [Tooltip("The number of items to spawn")]
     public int numberOfDrops = 1;
+
     [Tooltip("The prefabs which can be spawned by this script")]
-    public List<GameObject> drops = new List<GameObject>();
+    public List<GameObject> drops = new();
+
     [Tooltip("The percentage probability that each drop will spawn. \n" +
-        "MUST BE THE SAME LENGTH AS THE LIST OF DROPS.")]
-    public List<float> dropPercentages = new List<float>();
+             "MUST BE THE SAME LENGTH AS THE LIST OF DROPS.")]
+    public List<float> dropPercentages = new();
 
     /// <summary>
     /// Description:
@@ -40,30 +42,28 @@ public class EnemyDrops : MonoBehaviour
     public void SpawnRandomDrop()
     {
         if (drops.Count == dropPercentages.Count)
-        {
-            for (int i = 0; i < numberOfDrops; i++)
+            for (var i = 0; i < numberOfDrops; i++)
             {
                 GameObject selectedDrop = null;
-                List<(GameObject, float)> sortableList = drops.Zip(dropPercentages, (a, b) => { return (a, b); }).ToList();
+                List<(GameObject, float)> sortableList =
+                    drops.Zip(dropPercentages, (a, b) => { return (a, b); }).ToList();
                 sortableList.Sort((a, b) => { return a.Item2.CompareTo(b.Item2); });
-                for (int j = sortableList.Count - 1; j >= 0; j--)
+                for (var j = sortableList.Count - 1; j >= 0; j--)
                 {
-                    float rand = Random.value;
+                    var rand = Random.value;
                     if (sortableList[j].Item2 >= rand)
                     {
                         selectedDrop = sortableList[j].Item1;
                         break;
                     }
                 }
+
                 if (selectedDrop != null)
                 {
-                    GameObject drop = Instantiate(selectedDrop, transform.position, transform.rotation, null);
+                    var drop = Instantiate(selectedDrop, transform.position, transform.rotation, null);
                 }
             }
-        }
         else
-        {
             Debug.LogError("Drops percentage list and drops list do not contain the same number of items!");
-        }
     }
 }

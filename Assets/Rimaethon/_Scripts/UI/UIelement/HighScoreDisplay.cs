@@ -8,8 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class HighScoreDisplay : UIelement
 {
-    [Header("References")]
-    [Tooltip("The text that displays the high score")]
+    [Header("References")] [Tooltip("The text that displays the high score")]
     public Text displayText = null;
 
     /// <summary>

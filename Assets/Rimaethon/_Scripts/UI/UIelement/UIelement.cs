@@ -18,7 +18,5 @@ public class UIelement : MonoBehaviour
     /// </summary>
     public virtual void UpdateUI()
     {
-
     }
 }
-

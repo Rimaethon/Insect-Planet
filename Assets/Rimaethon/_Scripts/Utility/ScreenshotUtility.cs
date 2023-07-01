@@ -34,47 +34,59 @@ public class ScreenshotUtility : MonoBehaviour
     public static ScreenshotUtility screenShotUtility;
 
     #region Public Variables
-    [Header("Settings")]
-    [Tooltip("Should the screenshot utility run only in the editor.")]
+
+    [Header("Settings")] [Tooltip("Should the screenshot utility run only in the editor.")]
     public bool runOnlyInEditor = true;
+
     [Tooltip("What key is mapped to take the screenshot.")]
     public string m_ScreenshotKey = "c";
+
     [Tooltip("What is the scale factor for the screenshot. Standard is 1, 2x size is 2, etc..")]
     public int m_ScaleFactor = 1;
+
     [Tooltip("Include image size in filename.")]
     public bool includeImageSizeInFilename = true;
+
     #endregion
 
     [Header("Private Variables")]
+
     #region Private Variables
+
     // The number of screenshots taken
     [Tooltip("Use the Reset Counter contextual menu item to reset this.")]
     [SerializeField]
     private int m_ImageCount = 0;
+
     #endregion
 
     #region Constants
+
     // The key used to get/set the number of images
     private const string ImageCntKey = "IMAGE_CNT";
+
     #endregion
 
     /// <summary>
     /// This sets up the screenshot utility and allows it to persist through scenes.
     /// </summary>
-    void Awake()
+    private void Awake()
     {
         if (screenShotUtility != null)
-        { // this gameobject must already have been setup in a previous scene, so just destroy this game object
-            Destroy(this.gameObject);
+        {
+            // this gameobject must already have been setup in a previous scene, so just destroy this game object
+            Destroy(gameObject);
         }
         else if (runOnlyInEditor && !Application.isEditor)
-        { // chose not to work if this is running outside the editor so destroy it
-            Destroy(this.gameObject);
+        {
+            // chose not to work if this is running outside the editor so destroy it
+            Destroy(gameObject);
         }
         else
-        { // this is the first time we are setting up the screenshot utility
-          // setup reference to ScreenshotUtility class
-            screenShotUtility = this.GetComponent<ScreenshotUtility>();
+        {
+            // this is the first time we are setting up the screenshot utility
+            // setup reference to ScreenshotUtility class
+            screenShotUtility = GetComponent<ScreenshotUtility>();
 
             // keep this gameobject around as new scenes load
             DontDestroyOnLoad(gameObject);
@@ -83,26 +95,20 @@ public class ScreenshotUtility : MonoBehaviour
             m_ImageCount = PlayerPrefs.GetInt(ImageCntKey);
 
             // if there is not a "Screenshots" directory in the Project folder, create one
-            if (!Directory.Exists("Screenshots"))
-            {
-                Directory.CreateDirectory("Screenshots");
-            }
+            if (!Directory.Exists("Screenshots")) Directory.CreateDirectory("Screenshots");
         }
     }
 
     /// <summary>
     /// Called once per frame. Handles the input to do TakeScreenshot action.
     /// </summary>
-    void Update()
+    private void Update()
     {
         // this is the way to check for input using the old Unity Input
         //    if (Input.GetKeyDown(m_ScreenshotKey.ToLower()))
 
         // But, we will use the new Unity Input System to check for input on the Keyboard
-        if (Keyboard.current.FindKeyOnCurrentKeyboardLayout(m_ScreenshotKey).wasPressedThisFrame)
-        {
-            TakeScreenshot();
-        }
+        if (Keyboard.current.FindKeyOnCurrentKeyboardLayout(m_ScreenshotKey).wasPressedThisFrame) TakeScreenshot();
     }
 
     /// <summary>
@@ -126,15 +132,12 @@ public class ScreenshotUtility : MonoBehaviour
         PlayerPrefs.SetInt(ImageCntKey, ++m_ImageCount);
 
         // Adjusts the height and width for the file name
-        int width = Screen.width * m_ScaleFactor;
-        int height = Screen.height * m_ScaleFactor;
+        var width = Screen.width * m_ScaleFactor;
+        var height = Screen.height * m_ScaleFactor;
 
         // Determine the pathname/filename for the file
-        string pathname = "Screenshots/Screenshot_";
-        if (includeImageSizeInFilename)
-        {
-            pathname += width + "x" + height + "_";
-        }
+        var pathname = "Screenshots/Screenshot_";
+        if (includeImageSizeInFilename) pathname += width + "x" + height + "_";
         pathname += m_ImageCount + ".png";
 
         // Take the actual screenshot and save it

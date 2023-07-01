@@ -9,13 +9,15 @@ using UnityEngine;
 /// </summary>
 public class Shooter : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("The list of guns this shooter can potentially have access to")]
-    public List<Gun> guns = new List<Gun>();
+    [Header("Settings")] [Tooltip("The list of guns this shooter can potentially have access to")]
+    public List<Gun> guns = new();
+
     [Tooltip("The index in the available gun list of the gun currently equipped")]
     public int equippedGunIndex = 0;
+
     [Tooltip("The input manager that this reads input from")]
     public InputManager inputManager;
+
     [Tooltip("Whether or not this shooter is controlled by the player")]
     public bool isPlayerControlled = false;
 
@@ -27,7 +29,7 @@ public class Shooter : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void Start()
+    private void Start()
     {
         SetUpInput();
         SetUpGuns();
@@ -41,7 +43,7 @@ public class Shooter : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void Update()
+    private void Update()
     {
         CheckInput();
     }
@@ -54,50 +56,29 @@ public class Shooter : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void CheckInput()
+    private void CheckInput()
     {
-        if (!isPlayerControlled)
-        {
-            return;
-        }
+        if (!isPlayerControlled) return;
 
         // Do nothing when paused
-        if (Time.timeScale == 0)
-        {
-            return;
-        }
+        if (Time.timeScale == 0) return;
 
         if (guns.Count > 0)
         {
             if (guns[equippedGunIndex].fireType == Gun.FireType.semiAutomatic)
             {
-                if (inputManager.firePressed)
-                {
-                    FireEquippedGun();
-                }
+                if (inputManager.firePressed) FireEquippedGun();
             }
             else if (guns[equippedGunIndex].fireType == Gun.FireType.automatic)
             {
-                if (inputManager.firePressed || inputManager.fireHeld)
-                {
-                    FireEquippedGun();
-                }
+                if (inputManager.firePressed || inputManager.fireHeld) FireEquippedGun();
             }
 
-            if (inputManager.cycleWeaponInput != 0)
-            {
-                CycleEquippedGun();
-            }
+            if (inputManager.cycleWeaponInput != 0) CycleEquippedGun();
 
-            if (inputManager.nextWeaponPressed)
-            {
-                GoToNextWeapon();
-            }
+            if (inputManager.nextWeaponPressed) GoToNextWeapon();
 
-            if (inputManager.previousWeaponPressed)
-            {
-                GoToPreviousWeapon();
-            }
+            if (inputManager.previousWeaponPressed) GoToPreviousWeapon();
         }
     }
 
@@ -111,15 +92,12 @@ public class Shooter : MonoBehaviour
     /// </summary>
     public void GoToNextWeapon()
     {
-        List<Gun> availableGuns = guns.Where(item => item.available == true).ToList();
-        int maximumAvailableGunIndex = availableGuns.Count - 1;
-        int equippedAvailableGunIndex = availableGuns.IndexOf(guns[equippedGunIndex]);
+        var availableGuns = guns.Where(item => item.available == true).ToList();
+        var maximumAvailableGunIndex = availableGuns.Count - 1;
+        var equippedAvailableGunIndex = availableGuns.IndexOf(guns[equippedGunIndex]);
 
         equippedAvailableGunIndex += 1;
-        if (equippedAvailableGunIndex > maximumAvailableGunIndex)
-        {
-            equippedAvailableGunIndex = 0;
-        }
+        if (equippedAvailableGunIndex > maximumAvailableGunIndex) equippedAvailableGunIndex = 0;
 
         EquipGun(guns.IndexOf(availableGuns[equippedAvailableGunIndex]));
     }
@@ -134,15 +112,12 @@ public class Shooter : MonoBehaviour
     /// </summary>
     public void GoToPreviousWeapon()
     {
-        List<Gun> availableGuns = guns.Where(item => item.available == true).ToList();
-        int maximumAvailableGunIndex = availableGuns.Count - 1;
-        int equippedAvailableGunIndex = availableGuns.IndexOf(guns[equippedGunIndex]);
+        var availableGuns = guns.Where(item => item.available == true).ToList();
+        var maximumAvailableGunIndex = availableGuns.Count - 1;
+        var equippedAvailableGunIndex = availableGuns.IndexOf(guns[equippedGunIndex]);
 
         equippedAvailableGunIndex -= 1;
-        if (equippedAvailableGunIndex < 0)
-        {
-            equippedAvailableGunIndex = maximumAvailableGunIndex;
-        }
+        if (equippedAvailableGunIndex < 0) equippedAvailableGunIndex = maximumAvailableGunIndex;
 
         EquipGun(guns.IndexOf(availableGuns[equippedAvailableGunIndex]));
     }
@@ -156,27 +131,21 @@ public class Shooter : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void CycleEquippedGun()
+    private void CycleEquippedGun()
     {
-        float cycleInput = inputManager.cycleWeaponInput;
-        List<Gun> availableGuns = guns.Where(item => item.available == true).ToList();
-        int maximumAvailableGunIndex = availableGuns.Count - 1;
-        int equippedAvailableGunIndex = availableGuns.IndexOf(guns[equippedGunIndex]);
+        var cycleInput = inputManager.cycleWeaponInput;
+        var availableGuns = guns.Where(item => item.available == true).ToList();
+        var maximumAvailableGunIndex = availableGuns.Count - 1;
+        var equippedAvailableGunIndex = availableGuns.IndexOf(guns[equippedGunIndex]);
         if (cycleInput < 0)
         {
             equippedAvailableGunIndex += 1;
-            if (equippedAvailableGunIndex > maximumAvailableGunIndex)
-            {
-                equippedAvailableGunIndex = 0;
-            }
+            if (equippedAvailableGunIndex > maximumAvailableGunIndex) equippedAvailableGunIndex = 0;
         }
         else if (cycleInput > 0)
         {
             equippedAvailableGunIndex -= 1;
-            if (equippedAvailableGunIndex < 0)
-            {
-                equippedAvailableGunIndex = maximumAvailableGunIndex;
-            }
+            if (equippedAvailableGunIndex < 0) equippedAvailableGunIndex = maximumAvailableGunIndex;
         }
 
         EquipGun(guns.IndexOf(availableGuns[equippedAvailableGunIndex]));
@@ -195,13 +164,9 @@ public class Shooter : MonoBehaviour
     {
         equippedGunIndex = gunIndex;
         guns[equippedGunIndex].gameObject.SetActive(true);
-        for (int i = 0; i < guns.Count; i++)
-        {
+        for (var i = 0; i < guns.Count; i++)
             if (equippedGunIndex != i)
-            {
                 guns[i].gameObject.SetActive(false);
-            }
-        }
     }
 
     /// <summary>
@@ -212,22 +177,16 @@ public class Shooter : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void SetUpGuns()
+    private void SetUpGuns()
     {
-        foreach(Gun gun in guns)
-        {
+        foreach (var gun in guns)
             if (gun != null)
             {
                 if (gun.available && guns[equippedGunIndex] == gun)
-                {
                     gun.gameObject.SetActive(true);
-                }
                 else
-                {
                     gun.gameObject.SetActive(false);
-                }
             }
-        }
     }
 
     /// <summary>
@@ -238,16 +197,12 @@ public class Shooter : MonoBehaviour
     /// Return:
     /// void (no return)
     /// </summary>
-    void SetUpInput()
+    private void SetUpInput()
     {
+        if (inputManager == null) inputManager = FindObjectOfType<InputManager>();
         if (inputManager == null)
-        {
-            inputManager = FindObjectOfType<InputManager>();
-        }
-        if (inputManager == null)
-        {
-            Debug.LogError("There is no input manager in the scene, the shooter script requires an input manager in order to work for the player");
-        }
+            Debug.LogError(
+                "There is no input manager in the scene, the shooter script requires an input manager in order to work for the player");
     }
 
     /// <summary>
@@ -260,10 +215,7 @@ public class Shooter : MonoBehaviour
     /// </summary>
     public void FireEquippedGun()
     {
-        if (guns[equippedGunIndex] != null && guns[equippedGunIndex].available)
-        {
-            guns[equippedGunIndex].Fire();
-        }   
+        if (guns[equippedGunIndex] != null && guns[equippedGunIndex].available) guns[equippedGunIndex].Fire();
     }
 
     /// <summary>

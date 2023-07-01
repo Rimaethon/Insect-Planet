@@ -2,41 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheKiwiCoder {
+namespace TheKiwiCoder
+{
     [System.Serializable]
-    public class Repeat : DecoratorNode {
-
+    public class Repeat : DecoratorNode
+    {
         public bool restartOnSuccess = true;
         public bool restartOnFailure = false;
 
-        protected override void OnStart() {
-
+        protected override void OnStart()
+        {
         }
 
-        protected override void OnStop() {
-
+        protected override void OnStop()
+        {
         }
 
-        protected override State OnUpdate() {
-            switch (child.Update()) {
+        protected override State OnUpdate()
+        {
+            switch (child.Update())
+            {
                 case State.Running:
                     break;
                 case State.Failure:
-                    if (restartOnFailure) {
+                    if (restartOnFailure)
                         return State.Running;
-                    } else {
+                    else
                         return State.Failure;
-                    }
                 case State.Success:
-                    if (restartOnSuccess) {
+                    if (restartOnSuccess)
                         return State.Running;
-                    } else {
+                    else
                         return State.Success;
-                    }
             }
+
             return State.Running;
         }
     }
-
-    
 }

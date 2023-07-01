@@ -11,24 +11,20 @@ public class EnemyHealth : MonoBehaviour
     [Header("Enemy Health Settings")] [SerializeField]
     private float defaultEnemyHealth = 1f;
 
-     [SerializeField] private float _currentHealth;
+    [SerializeField] private float _currentHealth;
 
 
-   
-    void Start()
+    private void Start()
     {
         _currentHealth = defaultEnemyHealth;
     }
 
-   
-    void Update()
+
+    private void Update()
     {
-        
     }
 
 
-
-   
     public void TakeDamage(int damageAmount)
     {
         if (_currentHealth <= 0)
@@ -37,17 +33,13 @@ public class EnemyHealth : MonoBehaviour
         }
         else
         {
-            if (hitEffect != null)
-            {
-                Instantiate(hitEffect, transform.position, transform.rotation, null);
-            }
+            if (hitEffect != null) Instantiate(hitEffect, transform.position, transform.rotation, null);
 
             _currentHealth = Mathf.Clamp(_currentHealth - damageAmount, 0, defaultEnemyHealth);
             CheckDeath();
         }
     }
 
- 
 
     public GameObject deathEffect;
 
@@ -56,7 +48,7 @@ public class EnemyHealth : MonoBehaviour
     public RagdollHandler ragdollHandler = null;
 
 
-    bool CheckDeath()
+    private bool CheckDeath()
     {
         if (_currentHealth <= 0)
         {
@@ -67,22 +59,15 @@ public class EnemyHealth : MonoBehaviour
         return false;
     }
 
-    void Die()
+    private void Die()
     {
         if (deathEffect != null)
         {
-            if (ragdollHandler != null)
-            {
-                ragdollHandler.EnableRagdoll();
-            }
+            if (ragdollHandler != null) ragdollHandler.EnableRagdoll();
 
-            if (deathEffect != null)
-            {
-                Instantiate(deathEffect, transform.position, transform.rotation, null);
-            }
+            if (deathEffect != null) Instantiate(deathEffect, transform.position, transform.rotation, null);
 
             // Do on death events
         }
-
     }
 }

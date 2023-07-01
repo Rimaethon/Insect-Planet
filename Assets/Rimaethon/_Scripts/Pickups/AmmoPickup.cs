@@ -9,6 +9,7 @@ public class AmmoPickup : Pickup
 {
     [Tooltip("The ID of the ammunition to be added.")]
     public int ammunitionID = 0;
+
     [Tooltip("The amount of ammunition to add.")]
     public int amount = 1;
 
@@ -21,10 +22,7 @@ public class AmmoPickup : Pickup
     /// <param name="collision">The collider that is attempting to pick up this pickup</param>
     public override void DoOnPickup(Collider collision)
     {
-        if (collision.tag == "Player")
-        {
-            AmmoTracker.AddAmmunition(ammunitionID, amount);
-        }
+        if (collision.tag == "Player") AmmoTracker.AddAmmunition(ammunitionID, amount);
         base.DoOnPickup(collision);
     }
 }

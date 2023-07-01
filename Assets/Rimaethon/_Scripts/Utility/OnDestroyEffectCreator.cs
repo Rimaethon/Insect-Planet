@@ -10,6 +10,7 @@ public class OnDestroyEffectCreator : MonoBehaviour
 {
     [Tooltip("The effect to create when destroyed.")]
     public GameObject destroyEffect = null;
+
     // Flag which tells whether the application is shutting down (avoids errors)
     public static bool quitting = false;
 
@@ -54,7 +55,7 @@ public class OnDestroyEffectCreator : MonoBehaviour
     {
         if (destroyEffect != null)
         {
-            GameObject obj = Instantiate(destroyEffect, transform.position, transform.rotation, null);
+            var obj = Instantiate(destroyEffect, transform.position, transform.rotation, null);
         }
     }
 }

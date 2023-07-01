@@ -8,8 +8,7 @@ using UnityEngine;
 /// </summary>
 public class Pickup : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("The effect to create when this pickup is collected")]
+    [Header("Settings")] [Tooltip("The effect to create when this pickup is collected")]
     public GameObject pickUpEffect;
 
     /// <summary>
@@ -39,11 +38,8 @@ public class Pickup : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            if (pickUpEffect != null)
-            {
-                Instantiate(pickUpEffect, transform.position, Quaternion.identity, null);
-            }
-            Destructable.DoDestroy(this.gameObject);
+            if (pickUpEffect != null) Instantiate(pickUpEffect, transform.position, Quaternion.identity, null);
+            Destructable.DoDestroy(gameObject);
         }
     }
 }

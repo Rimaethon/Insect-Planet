@@ -7,14 +7,15 @@ using UnityEngine;
 /// </summary>
 public abstract class EnemyAttacker : MonoBehaviour
 {
-    [Header("Attack Settings")]
-    [Tooltip("The amount of time needed to complete an attack.")]
+    [Header("Attack Settings")] [Tooltip("The amount of time needed to complete an attack.")]
     public float attackDuration = 0.5f;
+
     [Tooltip("The minimum amount of time between attacks.")]
     public float cooldownDuration = 1.0f;
-    [Header("Timing by animation clip")]
-    [Tooltip("The attack animation clip to use for timing")]
+
+    [Header("Timing by animation clip")] [Tooltip("The attack animation clip to use for timing")]
     public AnimationClip attackClip;
+
     // Whether or not the enemy can attack
     private bool canAttack = true;
 
@@ -31,12 +32,9 @@ public abstract class EnemyAttacker : MonoBehaviour
         SetDurationByClip();
     }
 
-    void SetDurationByClip()
+    private void SetDurationByClip()
     {
-        if (attackClip != null)
-        {
-            attackDuration = attackClip.length;
-        }
+        if (attackClip != null) attackDuration = attackClip.length;
     }
 
     /// <summary>
@@ -70,6 +68,7 @@ public abstract class EnemyAttacker : MonoBehaviour
             StartCoroutine("PerformAttack");
             return true;
         }
+
         return false;
     }
 
@@ -107,6 +106,7 @@ public abstract class EnemyAttacker : MonoBehaviour
             yield return null;
             t += Time.deltaTime;
         }
+
         canAttack = true;
     }
 

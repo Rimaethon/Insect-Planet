@@ -8,8 +8,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class LevelLoadTrigger : MonoBehaviour
 {
-    [Header("Settings")]
-    public string nameOfSceneToLoad;
+    [Header("Settings")] public string nameOfSceneToLoad;
 
     /// <summary>
     /// Description:
@@ -22,10 +21,6 @@ public class LevelLoadTrigger : MonoBehaviour
     /// <param name="other">The collider that caused the function call</param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
-        {
-            SceneManager.LoadScene(nameOfSceneToLoad);
-        }
+        if (other.tag == "Player") SceneManager.LoadScene(nameOfSceneToLoad);
     }
-
 }

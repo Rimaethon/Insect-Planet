@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheKiwiCoder {
-
+namespace TheKiwiCoder
+{
     [System.Serializable]
-    public abstract class Node {
-        public enum State {
+    public abstract class Node
+    {
+        public enum State
+        {
             Running,
             Failure,
             Success
@@ -21,16 +23,18 @@ namespace TheKiwiCoder {
         [TextArea] public string description;
         public bool drawGizmos = false;
 
-        public State Update() {
-
-            if (!started) {
+        public State Update()
+        {
+            if (!started)
+            {
                 OnStart();
                 started = true;
             }
 
             state = OnUpdate();
 
-            if (state != State.Running) {
+            if (state != State.Running)
+            {
                 OnStop();
                 started = false;
             }
@@ -38,15 +42,19 @@ namespace TheKiwiCoder {
             return state;
         }
 
-        public void Abort() {
-            BehaviourTree.Traverse(this, (node) => {
+        public void Abort()
+        {
+            BehaviourTree.Traverse(this, (node) =>
+            {
                 node.started = false;
                 node.state = State.Running;
                 node.OnStop();
             });
         }
 
-        public virtual void OnDrawGizmos() { }
+        public virtual void OnDrawGizmos()
+        {
+        }
 
         protected abstract void OnStart();
         protected abstract void OnStop();

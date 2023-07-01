@@ -16,52 +16,40 @@ public class MoveToDestination : MonoBehaviour
     private float particleSystemRadiusTransitionTime = 0.5f;
 
     private Vector3 targetPosition;
-    private float currentSpeed=50;
+    private float currentSpeed = 50;
     private float timer;
     private float shapeRadius;
     private bool isLoweringStarted;
-    private int LoweringStepCount=30;
+    private int LoweringStepCount = 30;
 
-    void Start()
+    private void Start()
     {
         targetPosition = targetObject.position;
-        
     }
 
-    void Update()
+    private void Update()
     {
-        Vector3 direction = targetPosition - transform.position;
-        float distance = direction.magnitude;
+        var direction = targetPosition - transform.position;
+        var distance = direction.magnitude;
 
         if (distance > 0.01f)
         {
-            if (timer < accelerationTime)
-            {
-                timer += Time.deltaTime;
-                //Debug.Log("timer is "+ timer+"acceleration time is"+accelerationTime);
-            }
+            if (timer < accelerationTime) timer += Time.deltaTime;
+            //Debug.Log("timer is "+ timer+"acceleration time is"+accelerationTime);
 
-
-            Vector3 movement = direction.normalized * (currentSpeed * Time.deltaTime);
+            var movement = direction.normalized * (currentSpeed * Time.deltaTime);
             transform.position += movement;
 
-            if (timer > accelerationTime)
-            {
-                StartCoroutine(AdjustFloatWithTime());
-            }
-
+            if (timer > accelerationTime) StartCoroutine(AdjustFloatWithTime());
         }
-
-        
     }
-    
-    IEnumerator AdjustFloatWithTime()
+
+    private IEnumerator AdjustFloatWithTime()
     {
-        
         float loweringSubject = 1;
 
-        ParticleSystem.ShapeModule shapeModule = flame.shape;
-        for (int i = 0; i < LoweringStepCount; i++)
+        var shapeModule = flame.shape;
+        for (var i = 0; i < LoweringStepCount; i++)
         {
             loweringSubject += 1;
             shapeModule.radius = loweringSubject;
@@ -70,14 +58,11 @@ public class MoveToDestination : MonoBehaviour
         }
 
         currentSpeed = 400;
-        for (int i = 0; i < LoweringStepCount; i++) 
+        for (var i = 0; i < LoweringStepCount; i++)
         {
             loweringSubject -= 1;
             shapeModule.radius = loweringSubject;
             yield return new WaitForSeconds(0.01f);
         }
-
-        
     }
-
 }

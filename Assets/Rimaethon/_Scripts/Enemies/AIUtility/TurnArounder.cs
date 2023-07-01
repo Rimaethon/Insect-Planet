@@ -8,17 +8,18 @@ using UnityEngine;
 /// </summary>
 public class TurnArounder : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("Whether or not this script is running")]
+    [Header("Settings")] [Tooltip("Whether or not this script is running")]
     public bool on;
+
     [Tooltip("A transform location to travel towards")]
     public Transform targetLocationTransform;
-    [Min(0)]
-    [Tooltip("How far away from the target to vary from when assigning the target location of an AI agent")]
+
+    [Min(0)] [Tooltip("How far away from the target to vary from when assigning the target location of an AI agent")]
     public float locationVariance = 0;
-    [Min(0)]
-    [Tooltip("The minimum amount of time the AI should spend trying to get to the target")]
+
+    [Min(0)] [Tooltip("The minimum amount of time the AI should spend trying to get to the target")]
     public float minimumAmountOfTimeToTry = 1f;
+
     [Tooltip("The maximum amount of time the AI should spend trying to get to the target")]
     public float maximumAmountofTimetToTry = 5f;
 
@@ -32,18 +33,16 @@ public class TurnArounder : MonoBehaviour
     /// void (no return)
     /// </summary>
     /// <param name="collision">The collider that we might want to adjust the AI for</param>
-    void AssignNewLocation(Collider collision)
+    private void AssignNewLocation(Collider collision)
     {
         GroundEnemy groundEnemy = null;
-        if (collision.attachedRigidbody != null)
-        {
-            groundEnemy = collision.attachedRigidbody.GetComponent<GroundEnemy>();
-        }
+        if (collision.attachedRigidbody != null) groundEnemy = collision.attachedRigidbody.GetComponent<GroundEnemy>();
         if (on && groundEnemy != null)
         {
             Debug.Log("Turn around");
-            Vector3 targetLocation = targetLocationTransform.position +
-                new Vector3(Random.Range(-locationVariance, locationVariance), 0, Random.Range(-locationVariance, locationVariance));
+            var targetLocation = targetLocationTransform.position +
+                                 new Vector3(Random.Range(-locationVariance, locationVariance), 0,
+                                     Random.Range(-locationVariance, locationVariance));
             groundEnemy.GoToTaget(targetLocation, Random.Range(minimumAmountOfTimeToTry, maximumAmountofTimetToTry));
         }
     }

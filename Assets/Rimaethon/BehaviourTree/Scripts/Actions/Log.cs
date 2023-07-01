@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheKiwiCoder {
+namespace TheKiwiCoder
+{
     [System.Serializable]
     public class Log : ActionNode
     {
         public string message;
 
-        protected override void OnStart() {
+        protected override void OnStart()
+        {
         }
 
-        protected override void OnStop() {
+        protected override void OnStop()
+        {
         }
 
-        protected override State OnUpdate() {
+        protected override State OnUpdate()
+        {
             Debug.Log($"{message}");
             return State.Success;
         }
