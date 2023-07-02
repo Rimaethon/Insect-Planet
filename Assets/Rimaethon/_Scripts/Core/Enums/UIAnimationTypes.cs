@@ -7,4 +7,11 @@ namespace Rimaethon._Scripts.Core.Enums
         ScaleUp,
         Flip
     }
+
+    public enum AnimationStates
+    {
+
+        Opening,
+        Closing
+    }
 }
