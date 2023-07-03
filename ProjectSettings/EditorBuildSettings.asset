@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Rimaethon/_Scenes/MainGame/Scene_MainGame.unity
-    guid: f2322ee790550fb4282ed732e9ad0fbb
-  - enabled: 1
     path: Assets/Rimaethon/_Scenes/CinematicScene.unity
     guid: d9dc2222459d25e4e81865b834e0e92e
+  - enabled: 1
+    path: Assets/Rimaethon/_Scenes/MainGame/Scene_MainGame.unity
+    guid: f2322ee790550fb4282ed732e9ad0fbb
   - enabled: 1
     path: Assets/Rimaethon/_Scenes/Level1.unity
     guid: 9db98970693f24b4f9162fd4fc43dee7
