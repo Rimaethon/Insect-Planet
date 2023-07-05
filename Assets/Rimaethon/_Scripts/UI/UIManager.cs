@@ -11,7 +11,7 @@ namespace Rimaethon._Scripts.UI
         {
         }
 
-        void LoadScene(int sceneID)
+        public void LoadScene(int sceneID)
         { 
             EventManager.Instance.Broadcast<int>(GameEvents.OnSceneChange,sceneID);
         }
