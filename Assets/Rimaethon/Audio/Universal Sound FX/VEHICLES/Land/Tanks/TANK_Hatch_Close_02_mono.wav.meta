@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 06b8b515c28ed6c42bf0ce32aaf163b5
+labels:
+- usfx
+- imphenzia
+- mono
+- tank
+- hatch
+- metal
+- close
+- shut
+- armor
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

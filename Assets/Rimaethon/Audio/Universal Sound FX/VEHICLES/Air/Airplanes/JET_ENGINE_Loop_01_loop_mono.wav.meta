@@ -1,0 +1,32 @@
+fileFormatVersion: 2
+guid: d803675e8205f4d4eb4f95ce77f9a5b9
+labels:
+- usfx
+- imphenzia
+- vehicle
+- plane
+- aircraft
+- jet
+- flyby
+- flight
+- airplane
+- mono
+- loop
+- engine
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,41 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+namespace Rimaethon._Scripts.UI
 {
-    private float scaleUpAmount=1.2f
-    
-    
-    void Start()
+    public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField] private float scaleUpAmount = 1.2f;
+        private RectTransform _buttonRectTransform;
+        private float _scaleDuration=0.2f;
+
+
+        private void Awake()
+        {
+            _buttonRectTransform = gameObject.GetComponent<RectTransform>();
+        }
         
-    }
 
-    void Update()
-    {
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+           LeanTween.scale(_buttonRectTransform, _buttonRectTransform.localScale * scaleUpAmount,
+                    _scaleDuration)
+                .setEase(LeanTweenType.easeInOutSine);
+           
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+             LeanTween.scale(_buttonRectTransform, Vector3.one, _scaleDuration)
+                .setEase(LeanTweenType.easeInOutSine);
+        }
         
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        LTDescr tween = LeanTween.scale(gameObject, gameObject.RectTransormscaleUpAmount, scaleDuration)
-            .setEase(LeanTweenType.easeInOutSine)
-            .setOnComplete(UnScaleButton);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
-    }
     
     
-    private void UnScaleButton()
-    {
-        // Scale down the button
-        LTDescr tween = LeanTween.scale(button.gameObject, Vector3.one, scaleDuration)
-            .setEase(LeanTweenType.easeInOutSine);
+        
     }
 }
 

@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 0fd9a8df428df8c409349f167d042454
+labels:
+- usfx
+- imphenzia
+- mono
+- train
+- vehicle
+- commuter
+- passby
+- railway
+- railroad
+- rail
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

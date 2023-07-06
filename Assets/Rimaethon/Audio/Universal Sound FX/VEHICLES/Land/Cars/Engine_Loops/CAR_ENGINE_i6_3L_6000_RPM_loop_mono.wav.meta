@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 94edc1849816ab34c84854a26a558f8e
+labels:
+- usfx
+- imphenzia
+- vehicle
+- car
+- engine
+- mono
+- rpm
+- loop
+- motor
+- petrol
+- gas
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

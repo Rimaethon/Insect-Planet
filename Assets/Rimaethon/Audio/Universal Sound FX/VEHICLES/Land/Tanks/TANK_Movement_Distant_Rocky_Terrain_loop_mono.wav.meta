@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: d8d081867e8642a42bca579ed845cad5
+labels:
+- usfx
+- imphenzia
+- mono
+- loop
+- tank
+- vehicle
+- military
+- drive
+- belt
+- drive
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

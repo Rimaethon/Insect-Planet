@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 7dcc452ba5e44a34c94959247e6f75c5
+labels:
+- usfx
+- imphenzia
+- stereo
+- loop
+- airplane
+- propeller
+- engine
+- motor
+- aircraft
+- fly
+- cockpit
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

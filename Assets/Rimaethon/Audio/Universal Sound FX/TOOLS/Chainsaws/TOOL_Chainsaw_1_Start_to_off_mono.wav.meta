@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: b29b57412e4857c47a9f566c5be9c5e4
+labels:
+- usfx
+- imphenzia
+- tool
+- chainsaw
+- motor
+- lumber
+- lumberjack
+- tree
+- mono
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

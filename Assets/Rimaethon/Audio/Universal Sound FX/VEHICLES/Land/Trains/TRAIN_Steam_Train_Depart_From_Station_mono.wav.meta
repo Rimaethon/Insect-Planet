@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: e2226983ccddf7e4581133ffa730f5f4
+labels:
+- usfx
+- imphenzia
+- vehicle
+- train
+- steam
+- locomotive
+- enginemono
+- station
+- train station
+- rail
+- railroad
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
