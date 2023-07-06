@@ -11,29 +11,37 @@ namespace Rimaethon._Scripts.UI
         private Vector3 panelClosePosition;
         private RectTransform panelRectTransform;
         
-
-
-       
+        
 
         void PauseGame()
         {
         }
-
-        public void ClosePanelVertically(GameObject panel)
+        public void HandlePanel(GameObject panel)
         {
-            panelRectTransform=panel.GetComponent<RectTransform>();
-            var position = panelRectTransform.anchoredPosition;
-            panelClosePosition =new Vector2(position.x,position.y-1000f);
-            LeanTween.move(panelRectTransform,panelClosePosition,0.5f).setOnComplete(()=>{panel.SetActive(false);});
+            if (panel.activeSelf)
+            {
+                ClosePanelVertically(panel);
+            }
+            else
+            {
+                OpenPanelVertically(panel);
+            }
         }
 
-        public void OpenPanelVertically(GameObject panel)
+        private void ClosePanelVertically(GameObject panel)
+        {
+            panelRectTransform=panel.GetComponent<RectTransform>();
+           
+            LeanTween.moveY(panelRectTransform, -1300, 0.5f).setOnComplete(() => panel.SetActive(false));
+            
+
+        }
+
+        private void OpenPanelVertically(GameObject panel)
         {
             panel.SetActive(true);
             panelRectTransform=panel.GetComponent<RectTransform>();
-            var position = panelRectTransform.anchoredPosition;
-            panelClosePosition =new Vector2(position.x,position.y+1000f);
-            LeanTween.move(panelRectTransform,position,0.5f);
+            LeanTween.moveY(panelRectTransform, 0, 0.5f);
         }
         public void LoadScene(int sceneID)
         { 
