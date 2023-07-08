@@ -3,38 +3,33 @@ using UnityEngine;
 
 namespace Rimaethon._Scripts.UI
 {
-    public class UIPanel : MonoBehaviour
+    public class UIPanel : UIPage
     {
-        private List<UIPage> _subsetPages=new List<UIPage>();
         [SerializeField] private Transform relatedUIPages;
         private UIPage _currentPage;
-        
-        
-        public void ClosePanel()
-        {
-            foreach (var page in _subsetPages)
-            {
-                page.ClosePage();
-            }
-        }
-        
- 
-            
-        
+        private readonly List<UIPage> _subsetPages = new();
+
+
         private void Awake()
         {
             FindChildPages();
         }
-    
+
+
+        public void ClosePanel()
+        {
+            foreach (var page in _subsetPages) page.ClosePage();
+        }
+
         private void FindChildPages()
         {
             foreach (Transform child in relatedUIPages)
-            {
                 if (child.GetComponent<UIPage>())
                 {
                     _subsetPages.Add(child.GetComponent<UIPage>());
+                    child.GetComponent<UIPage>().ClosePage();
+
                 }
-            }
         }
     }
 }
