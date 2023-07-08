@@ -1,17 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
     [Header("Team Settings")] [Tooltip("The team associated with this damage")]
-    public int teamId = 0;
+    public int teamId;
 
 
     [Header("Enemy Health Settings")] [SerializeField]
     private float defaultEnemyHealth = 1f;
 
     [SerializeField] private float _currentHealth;
+
+
+    public GameObject deathEffect;
+
+    public GameObject hitEffect;
+
+    public RagdollHandler ragdollHandler;
 
 
     private void Start()
@@ -27,25 +32,13 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        if (_currentHealth <= 0)
-        {
-            return;
-        }
-        else
-        {
-            if (hitEffect != null) Instantiate(hitEffect, transform.position, transform.rotation, null);
+        if (_currentHealth <= 0) return;
 
-            _currentHealth = Mathf.Clamp(_currentHealth - damageAmount, 0, defaultEnemyHealth);
-            CheckDeath();
-        }
+        if (hitEffect != null) Instantiate(hitEffect, transform.position, transform.rotation, null);
+
+        _currentHealth = Mathf.Clamp(_currentHealth - damageAmount, 0, defaultEnemyHealth);
+        CheckDeath();
     }
-
-
-    public GameObject deathEffect;
-
-    public GameObject hitEffect;
-
-    public RagdollHandler ragdollHandler = null;
 
 
     private bool CheckDeath()

@@ -1,22 +1,21 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// EnemyAttacker subclass for ranged enemies
+///     EnemyAttacker subclass for ranged enemies
 /// </summary>
 public class EnemyAttackerRanged : EnemyAttacker
 {
     [Tooltip("The shooter component that this enemy will use to shoot")]
-    public Shooter shooter = null;
+    public Shooter shooter;
 
     /// <summary>
-    /// Description:
-    /// Returns whether an attack can be made currently
-    /// Input: 
-    /// none
-    /// Return: 
-    /// bool
+    ///     Description:
+    ///     Returns whether an attack can be made currently
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     bool
     /// </summary>
     /// <returns></returns>
     protected override bool AttackPossible()
@@ -25,12 +24,12 @@ public class EnemyAttackerRanged : EnemyAttacker
     }
 
     /// <summary>
-    /// Description:
-    /// Coroutine which fires a gun
-    /// Input: 
-    /// none
-    /// Return: 
-    /// IEnumerator
+    ///     Description:
+    ///     Coroutine which fires a gun
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     IEnumerator
     /// </summary>
     /// <returns>IEnumerator: Coroutine that performs the attaack</returns>
     protected override IEnumerator PerformAttack()

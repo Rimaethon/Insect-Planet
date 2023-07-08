@@ -1,21 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Class which tracks the amount of ammo that belongs to the player.
+///     Class which tracks the amount of ammo that belongs to the player.
 /// </summary>
 public class AmmoTracker : MonoBehaviour
 {
     #region Variables
 
     // Instance of this class which acts as a singleton
-    public static AmmoTracker _instance = null;
+    public static AmmoTracker _instance;
 
     // Dictionary containing all of the ammo stored by this ammo tracker
-    private Dictionary<int, int> _ammo = new();
+    private readonly Dictionary<int, int> _ammo = new();
 
     // Accessor for the dictionary storing ammo.
     public int this[int ammoID]
@@ -55,10 +54,10 @@ public class AmmoTracker : MonoBehaviour
     #region GameObject Functions
 
     /// <summary>
-    /// Description:
-    /// When this script starts up, do setup work
-    /// Inputs: N/A
-    /// Outputs: N/A
+    ///     Description:
+    ///     When this script starts up, do setup work
+    ///     Inputs: N/A
+    ///     Outputs: N/A
     /// </summary>
     private void Awake()
     {
@@ -67,10 +66,10 @@ public class AmmoTracker : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// When the application stops playing, save ammo values to player prefs
-    /// Inputs: N/A
-    /// Outputs: N/A
+    ///     Description:
+    ///     When the application stops playing, save ammo values to player prefs
+    ///     Inputs: N/A
+    ///     Outputs: N/A
     /// </summary>
     private void OnApplicationQuit()
     {
@@ -87,10 +86,10 @@ public class AmmoTracker : MonoBehaviour
     #region Singleton Behavior
 
     /// <summary>
-    /// Description:
-    /// Sets up this gameobject as a singleton and sets it as AmmoTracker._instance
-    /// Inputs: N/A
-    /// Outputs: N/A
+    ///     Description:
+    ///     Sets up this gameobject as a singleton and sets it as AmmoTracker._instance
+    ///     Inputs: N/A
+    ///     Outputs: N/A
     /// </summary>
     private void SetupAsSingleton()
     {
@@ -108,10 +107,10 @@ public class AmmoTracker : MonoBehaviour
     #region Saving & Loading
 
     /// <summary>
-    /// Description:
-    /// Saves ammo to player prefs
-    /// Inputs: N/A
-    /// Outputs: N/A
+    ///     Description:
+    ///     Saves ammo to player prefs
+    ///     Inputs: N/A
+    ///     Outputs: N/A
     /// </summary>
     public static void SaveStoredAmmo()
     {
@@ -120,7 +119,7 @@ public class AmmoTracker : MonoBehaviour
             var storedAmmoIDs = new List<int>();
             foreach (var keyValPair in _instance._ammo)
             {
-                var prefName = AMMOPLAYERPREFSSTRING + keyValPair.Key.ToString();
+                var prefName = AMMOPLAYERPREFSSTRING + keyValPair.Key;
                 PlayerPrefs.SetInt(prefName, keyValPair.Value);
                 storedAmmoIDs.Add(keyValPair.Key);
             }
@@ -130,10 +129,10 @@ public class AmmoTracker : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Loads ammo values from player prefs
-    /// Inputs: N/A
-    /// Outputs: N/A
+    ///     Description:
+    ///     Loads ammo values from player prefs
+    ///     Inputs: N/A
+    ///     Outputs: N/A
     /// </summary>
     public static void LoadStoredAmmo()
     {
@@ -155,10 +154,10 @@ public class AmmoTracker : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// Description:
-    /// Determines whether the player has ammo which works with the parameter gun
-    /// Inputs: Gun gun
-    /// Outputs: bool
+    ///     Description:
+    ///     Determines whether the player has ammo which works with the parameter gun
+    ///     Inputs: Gun gun
+    ///     Outputs: bool
     /// </summary>
     /// <param name="gun">The gun to test for ammo with</param>
     /// <returns>Whether there is ammo that works with the gun</returns>
@@ -169,10 +168,10 @@ public class AmmoTracker : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Supplies the parameter gun with ammo
-    /// Inputs: Gun gun
-    /// Outputs: int
+    ///     Description:
+    ///     Supplies the parameter gun with ammo
+    ///     Inputs: Gun gun
+    ///     Outputs: int
     /// </summary>
     /// <param name="gun">The gun to reload</param>
     /// <returns>The ammount of ammo placed in the gun</returns>
@@ -189,10 +188,10 @@ public class AmmoTracker : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Should be called when a gun fires to decrement the ammount of ammunition for it
-    /// Inputs: Gun gun
-    /// Outputs: N/A
+    ///     Description:
+    ///     Should be called when a gun fires to decrement the ammount of ammunition for it
+    ///     Inputs: Gun gun
+    ///     Outputs: N/A
     /// </summary>
     /// <param name="gun">The gun that is being fired</param>
     public static void OnFire(Gun gun)
@@ -202,10 +201,10 @@ public class AmmoTracker : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Adds ammunition to the player's reserves
-    /// Inputs: int ammoID, int amount
-    /// Outputs: N/A
+    ///     Description:
+    ///     Adds ammunition to the player's reserves
+    ///     Inputs: int ammoID, int amount
+    ///     Outputs: N/A
     /// </summary>
     /// <param name="ammoID">The ID of ammunition to add</param>
     /// <param name="amount">The ammount of ammunition to add</param>

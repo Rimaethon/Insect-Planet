@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TurretEnemy : Enemy
 {
-    public Transform rotationPivotX = null;
-    public Transform rotationPivotY = null;
-    public Transform rotationPivotZ = null;
+    public Transform rotationPivotX;
+    public Transform rotationPivotY;
+    public Transform rotationPivotZ;
 
     protected override Vector3 CalculateDesiredMovement()
     {

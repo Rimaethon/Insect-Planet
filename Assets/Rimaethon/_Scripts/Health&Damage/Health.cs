@@ -1,18 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// This class handles the health state of a game object.
-/// 
-/// Implementation Notes: 2D Rigidbodies must be set to never sleep for this to interact with trigger stay damage
+///     This class handles the health state of a game object.
+///     Implementation Notes: 2D Rigidbodies must be set to never sleep for this to interact with trigger stay damage
 /// </summary>
 public class Health : MonoBehaviour
 {
     [Header("Team Settings")] [Tooltip("The team associated with this damage")]
-    public int teamId = 0;
+    public int teamId;
 
     [Header("Health Settings")] [Tooltip("The default health value")]
     public int defaultHealth = 1;
@@ -26,10 +22,10 @@ public class Health : MonoBehaviour
     public float invincibilityTime = 3f;
 
     [Tooltip("Whether or not this health is always invincible")]
-    public bool isAlwaysInvincible = false;
+    public bool isAlwaysInvincible;
 
     [Header("Lives settings")] [Tooltip("Whether or not to use lives")]
-    public bool useLives = false;
+    public bool useLives;
 
     [Tooltip("Current number of lives this health has")]
     public int currentLives = 3;
@@ -40,13 +36,39 @@ public class Health : MonoBehaviour
     [Tooltip("The amount of time to wait before respawning")]
     public float respawnWaitTime = 3f;
 
+    [Header("Effects & Polish")] [Tooltip("The effect to create when this health dies")]
+    public GameObject deathEffect;
+
+    [Tooltip("The effect to create when this health is damaged (but does not die)")]
+    public GameObject hitEffect;
+
+    [Tooltip("The component which turns on enemy physics")]
+    public RagdollHandler ragdollHandler;
+
+    [Tooltip("A list of events that occur when the health becomes 0 or lower")]
+    public UnityEvent eventsOnDeath;
+
+    [Tooltip("A list of events that occur on respawn")]
+    public UnityEvent eventsOnRespawn;
+
+    // Whether or not the health is invincible
+    private bool isInvincableFromDamage;
+
+    // The position that the health's gameobject will respawn at
+    private Vector3 respawnPosition;
+
+    private float respawnTime;
+
+    // The specific game time when the health can be damged again
+    private float timeToBecomeDamagableAgain;
+
     /// <summary>
-    /// Description:
-    /// Standard Unity function called once before the first Update call
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called once before the first Update call
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Start()
     {
@@ -54,12 +76,12 @@ public class Health : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Standard Unity function called once very frame
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called once very frame
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Update()
     {
@@ -67,15 +89,13 @@ public class Health : MonoBehaviour
         RespawnCheck();
     }
 
-    private float respawnTime;
-
     /// <summary>
-    /// Description:
-    /// Checks to see if the health gameobject should be respawned yet and only respawns it if the alloted time has passed
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Checks to see if the health gameobject should be respawned yet and only respawns it if the alloted time has passed
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void RespawnCheck()
     {
@@ -84,36 +104,27 @@ public class Health : MonoBehaviour
                 Respawn();
     }
 
-    // The specific game time when the health can be damged again
-    private float timeToBecomeDamagableAgain = 0;
-
-    // Whether or not the health is invincible
-    private bool isInvincableFromDamage = false;
-
     /// <summary>
-    /// Description:
-    /// Checks against the current time and the time when the health can be damaged again.
-    /// Removes invicibility if the time frame has passed
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Checks against the current time and the time when the health can be damaged again.
+    ///     Removes invicibility if the time frame has passed
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void InvincibilityCheck()
     {
         if (timeToBecomeDamagableAgain <= Time.time) isInvincableFromDamage = false;
     }
 
-    // The position that the health's gameobject will respawn at
-    private Vector3 respawnPosition;
-
     /// <summary>
-    /// Description:
-    /// Changes the respawn position to a new position
-    /// Input:
-    /// Vector3 newRespawnPosition
-    /// Returns:
-    /// void (no return)
+    ///     Description:
+    ///     Changes the respawn position to a new position
+    ///     Input:
+    ///     Vector3 newRespawnPosition
+    ///     Returns:
+    ///     void (no return)
     /// </summary>
     /// <param name="newRespawnPosition">The new position to respawn at</param>
     public void SetRespawnPoint(Vector3 newRespawnPosition)
@@ -122,12 +133,12 @@ public class Health : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Repositions the health's game object to the respawn position and resets the current health to the default value
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Repositions the health's game object to the respawn position and resets the current health to the default value
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Respawn()
     {
@@ -156,37 +167,32 @@ public class Health : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Applies damage to the health unless the health is invincible.
-    /// Input:
-    /// int damageAmount
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Applies damage to the health unless the health is invincible.
+    ///     Input:
+    ///     int damageAmount
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="damageAmount">The amount of damage to take</param>
     public void TakeDamage(int damageAmount)
     {
-        if (isInvincableFromDamage || currentHealth <= 0 || isAlwaysInvincible)
-        {
-            return;
-        }
-        else
-        {
-            if (hitEffect != null) Instantiate(hitEffect, transform.position, transform.rotation, null);
-            timeToBecomeDamagableAgain = Time.time + invincibilityTime;
-            isInvincableFromDamage = true;
-            currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maximumHealth);
-            CheckDeath();
-        }
+        if (isInvincableFromDamage || currentHealth <= 0 || isAlwaysInvincible) return;
+
+        if (hitEffect != null) Instantiate(hitEffect, transform.position, transform.rotation, null);
+        timeToBecomeDamagableAgain = Time.time + invincibilityTime;
+        isInvincableFromDamage = true;
+        currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maximumHealth);
+        CheckDeath();
     }
 
     /// <summary>
-    /// Description:
-    /// Applies healing to the health, capped out at the maximum health.
-    /// Input:
-    /// int healingAmount
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Applies healing to the health, capped out at the maximum health.
+    ///     Input:
+    ///     int healingAmount
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="healingAmount">How much healing to apply</param>
     public void ReceiveHealing(int healingAmount)
@@ -197,12 +203,12 @@ public class Health : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Gives the health script more lives if the health is using lives
-    /// Input:
-    /// int bonusLives
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Gives the health script more lives if the health is using lives
+    ///     Input:
+    ///     int bonusLives
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="bonusLives">The number of lives to add</param>
     public void AddLives(int bonusLives)
@@ -214,29 +220,14 @@ public class Health : MonoBehaviour
         }
     }
 
-    [Header("Effects & Polish")] [Tooltip("The effect to create when this health dies")]
-    public GameObject deathEffect;
-
-    [Tooltip("The effect to create when this health is damaged (but does not die)")]
-    public GameObject hitEffect;
-
-    [Tooltip("The component which turns on enemy physics")]
-    public RagdollHandler ragdollHandler = null;
-
-    [Tooltip("A list of events that occur when the health becomes 0 or lower")]
-    public UnityEvent eventsOnDeath;
-
-    [Tooltip("A list of events that occur on respawn")]
-    public UnityEvent eventsOnRespawn;
-
     /// <summary>
-    /// Description:
-    /// Checks if the health is dead or not. If it is, true is returned, false otherwise.
-    /// Calls Die() if the health is dead.
-    /// Input:
-    /// none
-    /// Return:
-    /// bool
+    ///     Description:
+    ///     Checks if the health is dead or not. If it is, true is returned, false otherwise.
+    ///     Calls Die() if the health is dead.
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     bool
     /// </summary>
     /// <returns>bool: A boolean value representing if the health has died or not (true for dead)</returns>
     private bool CheckDeath()
@@ -251,13 +242,14 @@ public class Health : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Handles the death of the health. If a death effect is set, it is created. If lives are being used, the health is respawned.
-    /// If lives are not being used or the lives are 0 then the health's game object is destroyed.
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Handles the death of the health. If a death effect is set, it is created. If lives are being used, the health is
+    ///     respawned.
+    ///     If lives are not being used or the lives are 0 then the health's game object is destroyed.
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Die()
     {
@@ -302,12 +294,12 @@ public class Health : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Tries to notify the game manager that the game is over
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
+    ///     Description:
+    ///     Tries to notify the game manager that the game is over
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     public void GameOver()
     {

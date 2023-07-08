@@ -1,19 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-/// <summary>
-/// This script handles the "hive" or the boss of the game
+﻿/// <summary>
+///     This script handles the "hive" or the boss of the game
 /// </summary>
 public class Hive : Enemy
 {
     /// <summary>
-    /// Description:
-    /// Standard Unity function called once before the first Update call
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called once before the first Update call
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Start()
     {
@@ -22,12 +18,12 @@ public class Hive : Enemy
     }
 
     /// <summary>
-    /// Description:
-    /// Standard Unity function called once every frame
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called once every frame
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void LateUpdate()
     {
@@ -38,12 +34,12 @@ public class Hive : Enemy
     }
 
     /// <summary>
-    /// Description:
-    /// Standard Unity function called right before the script is destroyed
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called right before the script is destroyed
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void OnDestroy()
     {

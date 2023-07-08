@@ -1,12 +1,18 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This class handles the setup of a gun
+///     This class handles the setup of a gun
 /// </summary>
 public class Gun : MonoBehaviour
 {
+    // enum for setting the fire type
+    public enum FireType
+    {
+        semiAutomatic,
+        automatic
+    }
+
     [Header("Aim Settings")] [Tooltip("The gameobject to raycast forward from")]
     public GameObject raycastFrom;
 
@@ -26,7 +32,7 @@ public class Gun : MonoBehaviour
     public GameObject projectileGameObject;
 
     [Tooltip("Whether or not the fired projectile should be a child of the fire location")]
-    public bool childProjectileToFireLocation = false;
+    public bool childProjectileToFireLocation;
 
     [Tooltip("The effect prefab to instantiate when firing this gun")]
     public GameObject fireEffect;
@@ -40,27 +46,17 @@ public class Gun : MonoBehaviour
     [Tooltip("The fire type of the weapon")]
     public FireType fireType = FireType.semiAutomatic;
 
-    // enum for setting the fire type
-    public enum FireType
-    {
-        semiAutomatic,
-        automatic
-    };
-
-    // The time when this gun will be able to fire again
-    private float ableToFireAgainTime = 0;
-
     [Tooltip("The number of projectiles to fire when firing")]
     public int maximumToFire = 1;
 
     [Tooltip("The maximum degree (eular angle) of spread shots can be fired in")] [Range(0, 45)]
-    public float maximumSpreadDegree = 0;
+    public float maximumSpreadDegree;
 
     [Header("Equipping settings")] [Tooltip("Whether or not this gun is available for use")]
-    public bool available = false;
+    public bool available;
 
     [Header("Animation Settings")] [Tooltip("The animator that animates this gun.")]
-    public Animator gunAnimator = null;
+    public Animator gunAnimator;
 
     [Tooltip("Shoot animator trigger name")]
     public string shootTriggerName = "Shoot";
@@ -69,20 +65,20 @@ public class Gun : MonoBehaviour
     public string idleAnimationName = "Idle";
 
     [Header("Ammo Settings")] [Tooltip("Whether this gun requires ammunition.")]
-    public bool useAmmo = false;
+    public bool useAmmo;
 
     [Tooltip("The ID of ammo that can be used with this gun.")]
-    public int ammunitionID = 0;
+    public int ammunitionID;
 
     [Tooltip("Whether this gun must be reloaded.")]
-    public bool mustReload = false;
+    public bool mustReload;
 
     [Tooltip("The number of shots that can be fired without reloading. \n" +
              "A magazine size of 1 means the player must reload after every shot.")]
     public int magazineSize = 1;
 
     [Tooltip("The number of shots currently loaded into this gun")]
-    public int roundsLoaded = 0;
+    public int roundsLoaded;
 
     [Tooltip("The time it takes to reload")]
     public float reloadTime = 1.0f;
@@ -93,13 +89,16 @@ public class Gun : MonoBehaviour
     [Tooltip("The ammo image to display on the UI")]
     public Sprite ammoImage;
 
+    // The time when this gun will be able to fire again
+    private float ableToFireAgainTime;
+
     /// <summary>
-    /// Description:
-    /// Standard Unity function called before Update
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called before Update
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Start()
     {
@@ -107,12 +106,25 @@ public class Gun : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Setup this script if things are not set
-    /// Input:
-    /// None
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called once every frame
+    ///     Input:
+    ///     None
+    ///     Return:
+    ///     void (no return)
+    /// </summary>
+    private void Update()
+    {
+        AdjustAim();
+    }
+
+    /// <summary>
+    ///     Description:
+    ///     Setup this script if things are not set
+    ///     Input:
+    ///     None
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Setup()
     {
@@ -125,25 +137,12 @@ public class Gun : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Standard Unity function called once every frame
-    /// Input:
-    /// None
-    /// Return:
-    /// void (no return)
-    /// </summary>
-    private void Update()
-    {
-        AdjustAim();
-    }
-
-    /// <summary>
-    /// Description:
-    /// Adjusts the guns aim to make it look at the spot the player's raycast is hitting
-    /// Input:
-    /// None
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Adjusts the guns aim to make it look at the spot the player's raycast is hitting
+    ///     Input:
+    ///     None
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     public void AdjustAim()
     {
@@ -175,12 +174,12 @@ public class Gun : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Fires the gun, creating both the projectile and fire effect
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Fires the gun, creating both the projectile and fire effect
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     public void Fire()
     {
@@ -229,10 +228,10 @@ public class Gun : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Returns whether this gun has the ammunition it needs to be able to fire.
-    /// Inputs: N/A
-    /// Outputs: bool
+    ///     Description:
+    ///     Returns whether this gun has the ammunition it needs to be able to fire.
+    ///     Inputs: N/A
+    ///     Outputs: bool
     /// </summary>
     /// <returns>Whether this gun has ammo it needs to fire.</returns>
     public bool HasAmmo()
@@ -241,20 +240,17 @@ public class Gun : MonoBehaviour
         {
             if (mustReload)
                 return roundsLoaded > 0;
-            else
-                return AmmoTracker.HasAmmo(this);
+            return AmmoTracker.HasAmmo(this);
         }
-        else
-        {
-            return true;
-        }
+
+        return true;
     }
 
     /// <summary>
-    /// Description:
-    /// Coroutine that reloads this gun
-    /// Inputs: N/A
-    /// Outputs: IEnumerator
+    ///     Description:
+    ///     Coroutine that reloads this gun
+    ///     Inputs: N/A
+    ///     Outputs: IEnumerator
     /// </summary>
     /// <returns>Coroutine</returns>
     private IEnumerator Reload()
@@ -274,12 +270,12 @@ public class Gun : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Tries to play a shoot animation on the gun
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Tries to play a shoot animation on the gun
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     public void PlayShootAnimation()
     {

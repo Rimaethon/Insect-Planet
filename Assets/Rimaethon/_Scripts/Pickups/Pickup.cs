@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 /// <summary>
-/// This is the base class for other pick up scripts to inherit from
+///     This is the base class for other pick up scripts to inherit from
 /// </summary>
 public class Pickup : MonoBehaviour
 {
@@ -12,12 +9,12 @@ public class Pickup : MonoBehaviour
     public GameObject pickUpEffect;
 
     /// <summary>
-    /// Description:
-    /// Standard unity function called when a trigger is entered by another collider
-    /// Input:
-    /// Collider collision
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard unity function called when a trigger is entered by another collider
+    ///     Input:
+    ///     Collider collision
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="collision">The collider that has entered the trigger</param>
     private void OnTriggerEnter(Collider collision)
@@ -26,12 +23,12 @@ public class Pickup : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Function called when this pickup is picked up
-    /// Input: 
-    /// Collider collision
-    /// Return: 
-    /// void (no return)
+    ///     Description:
+    ///     Function called when this pickup is picked up
+    ///     Input:
+    ///     Collider collision
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="collision">The collider that is picking up this pickup</param>
     public virtual void DoOnPickup(Collider collision)

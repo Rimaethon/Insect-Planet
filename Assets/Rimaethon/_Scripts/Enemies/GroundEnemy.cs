@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-
 
 public class GroundEnemy : Enemy
 {
@@ -10,6 +7,9 @@ public class GroundEnemy : Enemy
     public float stopDistance = 2.0f;
     public bool lineOfSightToStop = true;
     public bool alwaysFacePlayer = true;
+    private float timeToStopTrying;
+
+    private bool travelingToSpecificTarget;
 
 
     protected override void Setup()
@@ -26,9 +26,6 @@ public class GroundEnemy : Enemy
         travelingToSpecificTarget = true;
         timeToStopTrying = Time.time + timeToSpend;
     }
-
-    private bool travelingToSpecificTarget = false;
-    private float timeToStopTrying = 0;
 
 
     protected override void HandleMovement()
@@ -74,7 +71,7 @@ public class GroundEnemy : Enemy
 
     private bool ShouldMove()
     {
-        var attackMove = moveWhileAttacking == true || isAttacking == false;
+        var attackMove = moveWhileAttacking || isAttacking == false;
 
         var hasLineOfSight = true;
 
@@ -87,7 +84,8 @@ public class GroundEnemy : Enemy
                 isMoving = true;
                 return true;
             }
-            else if (lineOfSightToStop && !HasLineOfSight())
+
+            if (lineOfSightToStop && !HasLineOfSight())
             {
                 isMoving = true;
                 return true;

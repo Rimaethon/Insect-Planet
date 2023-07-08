@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +13,9 @@ namespace Insect_Planet._Scripts.ObjectManagers
             Awake,
             Start,
             CallManually
-        };
+        }
 
-        [System.Serializable]
+        [Serializable]
         public class StartupPool
         {
             public int size;

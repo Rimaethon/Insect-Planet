@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 2f;
@@ -10,14 +9,16 @@ public class PlayerController : MonoBehaviour
     public float gravity = 9.81f;
 
     public float jumpTimeLeniency = 0.1f;
-    private float timeToStopBeingLenient = 0f;
     public Shooter playerShooter;
-    private bool doubleJumpAvaliable;
     public Health playerHealth;
     public List<GameObject> disableWhileDead;
 
     public CharacterController characterController;
     public InputManager inputManager;
+    private bool doubleJumpAvaliable;
+
+    private Vector3 moveDirection;
+    private float timeToStopBeingLenient;
 
 
     private void Start()
@@ -27,13 +28,18 @@ public class PlayerController : MonoBehaviour
             foreach (var inGameObject in disableWhileDead) inGameObject.SetActive(false);
             return;
         }
-        else
-        {
-            foreach (var inGameObject in disableWhileDead) inGameObject.SetActive(true);
-        }
+
+        foreach (var inGameObject in disableWhileDead) inGameObject.SetActive(true);
 
         SetUpCharacterController();
         SetUpInputManger();
+    }
+
+
+    private void Update()
+    {
+        ProcessMovement();
+        ProcessRotation();
     }
 
     private void SetUpCharacterController()
@@ -48,15 +54,6 @@ public class PlayerController : MonoBehaviour
     {
         inputManager = InputManager.instance;
     }
-
-
-    private void Update()
-    {
-        ProcessMovement();
-        ProcessRotation();
-    }
-
-    private Vector3 moveDirection;
 
     private void ProcessMovement()
     {

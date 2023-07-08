@@ -1,26 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// A class meant to handle the destruction of a game object and handle the creation of death effects
+///     A class meant to handle the destruction of a game object and handle the creation of death effects
 /// </summary>
 public class Destructable : MonoBehaviour
 {
     [Tooltip("A prefab or gameobject to create in this game object's place before destruction.")] [SerializeField]
-    private GameObject destroyEffect = null;
+    private GameObject destroyEffect;
 
     [Tooltip("An event to call when this object is destroyed")]
     public UnityEvent onDestroyEvent = new();
 
     /// <summary>
-    /// Description:
-    /// Instantiates an effect prefab where this gameobject is, then destroys this gameobject.
-    /// Inputs:
-    /// N/A
-    /// Outputs:
-    /// N/A
+    ///     Description:
+    ///     Instantiates an effect prefab where this gameobject is, then destroys this gameobject.
+    ///     Inputs:
+    ///     N/A
+    ///     Outputs:
+    ///     N/A
     /// </summary>
     public void DestroyWithEffect()
     {
@@ -34,13 +32,13 @@ public class Destructable : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// A static destruction function to be called in place of Destroy(gameobject) to enable
-    /// effect creation when destroying an object.
-    /// Inputs:
-    /// N/A
-    /// Outputs:
-    /// N/A
+    ///     Description:
+    ///     A static destruction function to be called in place of Destroy(gameobject) to enable
+    ///     effect creation when destroying an object.
+    ///     Inputs:
+    ///     N/A
+    ///     Outputs:
+    ///     N/A
     /// </summary>
     /// <param name="target"></param>
     public static void DoDestroy(GameObject target)

@@ -4,24 +4,24 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// Class that handles transforming an object into a ragdoll
+///     Class that handles transforming an object into a ragdoll
 /// </summary>
 public class RagdollHandler : MonoBehaviour
 {
     [Tooltip("The animator that contolls the parts to be made into a ragdoll")]
-    public Animator ragdollAnimator = null;
+    public Animator ragdollAnimator;
 
     [Tooltip("The list of components to disable when this script is activated")]
     public List<Component> componentsToDisable = new();
 
     [Tooltip("A timed object destroyer which will be turned on when made into a ragdoll")]
-    public TimedObjectDestroyer timedDestroyer = null;
+    public TimedObjectDestroyer timedDestroyer;
 
     /// <summary>
-    /// Description:
-    /// destroys components, adds rigidbodies to every collider, and turns on a timed object destroyer
-    /// Inputs: N/A
-    /// Outputs: N/A
+    ///     Description:
+    ///     destroys components, adds rigidbodies to every collider, and turns on a timed object destroyer
+    ///     Inputs: N/A
+    ///     Outputs: N/A
     /// </summary>
     public void EnableRagdoll()
     {
@@ -55,10 +55,10 @@ public class RagdollHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Moves the object to a position after one frame elapses
-    /// Inputs: Vector3 position
-    /// Outputs: IEnumerator
+    ///     Description:
+    ///     Moves the object to a position after one frame elapses
+    ///     Inputs: Vector3 position
+    ///     Outputs: IEnumerator
     /// </summary>
     /// <param name="position">The position to move the object to.</param>
     /// <returns>Coroutine</returns>

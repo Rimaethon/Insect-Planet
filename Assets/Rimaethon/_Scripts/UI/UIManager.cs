@@ -1,15 +1,8 @@
-    using System.Collections;
-    using System.Collections.Generic;
-    using AYellowpaper.SerializedCollections;
-    using UnityEngine;
+using UnityEngine;
 
-    namespace Rimaethon._Scripts.UI
+namespace Rimaethon._Scripts.UI
+{
+    public class UIManager : MonoBehaviour
     {
-        public class UIManager : MonoBehaviour
-        {
-            
-                
-            
-        }
-
     }
+}

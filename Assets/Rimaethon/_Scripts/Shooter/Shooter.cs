@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// This class stores information on obtained guns and the currently equipped gun.
-/// It also reads input for firing the guns
+///     This class stores information on obtained guns and the currently equipped gun.
+///     It also reads input for firing the guns
 /// </summary>
 public class Shooter : MonoBehaviour
 {
@@ -13,21 +12,21 @@ public class Shooter : MonoBehaviour
     public List<Gun> guns = new();
 
     [Tooltip("The index in the available gun list of the gun currently equipped")]
-    public int equippedGunIndex = 0;
+    public int equippedGunIndex;
 
     [Tooltip("The input manager that this reads input from")]
     public InputManager inputManager;
 
     [Tooltip("Whether or not this shooter is controlled by the player")]
-    public bool isPlayerControlled = false;
+    public bool isPlayerControlled;
 
     /// <summary>
-    /// Description:
-    /// Standard Unity function called once before the first update
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called once before the first update
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Start()
     {
@@ -36,12 +35,12 @@ public class Shooter : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Standard Unity function called once per frame
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called once per frame
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Update()
     {
@@ -49,12 +48,12 @@ public class Shooter : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Checks input and responds accordingly
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Checks input and responds accordingly
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void CheckInput()
     {
@@ -83,16 +82,16 @@ public class Shooter : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Goes to the next weapon of the available weapons
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Goes to the next weapon of the available weapons
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     public void GoToNextWeapon()
     {
-        var availableGuns = guns.Where(item => item.available == true).ToList();
+        var availableGuns = guns.Where(item => item.available).ToList();
         var maximumAvailableGunIndex = availableGuns.Count - 1;
         var equippedAvailableGunIndex = availableGuns.IndexOf(guns[equippedGunIndex]);
 
@@ -103,16 +102,16 @@ public class Shooter : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Goes to the previous weapon of the available weapons
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Goes to the previous weapon of the available weapons
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     public void GoToPreviousWeapon()
     {
-        var availableGuns = guns.Where(item => item.available == true).ToList();
+        var availableGuns = guns.Where(item => item.available).ToList();
         var maximumAvailableGunIndex = availableGuns.Count - 1;
         var equippedAvailableGunIndex = availableGuns.IndexOf(guns[equippedGunIndex]);
 
@@ -123,18 +122,18 @@ public class Shooter : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Cycles through the available guns starting from the currently equipped gun
-    /// and moving in the direction of the mouse scroll input.
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Cycles through the available guns starting from the currently equipped gun
+    ///     and moving in the direction of the mouse scroll input.
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void CycleEquippedGun()
     {
         var cycleInput = inputManager.cycleWeaponInput;
-        var availableGuns = guns.Where(item => item.available == true).ToList();
+        var availableGuns = guns.Where(item => item.available).ToList();
         var maximumAvailableGunIndex = availableGuns.Count - 1;
         var equippedAvailableGunIndex = availableGuns.IndexOf(guns[equippedGunIndex]);
         if (cycleInput < 0)
@@ -152,12 +151,12 @@ public class Shooter : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Equips the gun from the list of guns at the given index
-    /// Input:
-    /// int gunIndex
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Equips the gun from the list of guns at the given index
+    ///     Input:
+    ///     int gunIndex
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="gunIndex">The index of the gun to make the equipped gun</param>
     public void EquipGun(int gunIndex)
@@ -170,12 +169,12 @@ public class Shooter : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Sets up the available guns for use
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Sets up the available guns for use
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void SetUpGuns()
     {
@@ -190,12 +189,12 @@ public class Shooter : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Sets up the input manager
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Sets up the input manager
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void SetUpInput()
     {
@@ -206,12 +205,12 @@ public class Shooter : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Attempts to fire the equipped gun. Fails if the gun is not available
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Attempts to fire the equipped gun. Fails if the gun is not available
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     public void FireEquippedGun()
     {
@@ -219,12 +218,12 @@ public class Shooter : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Makes a gun available to the player
-    /// Input: 
-    /// int gunIndex
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Makes a gun available to the player
+    ///     Input:
+    ///     int gunIndex
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="gunIndex">The index of the gun to make available</param>
     public void MakeGunAvailable(int gunIndex)

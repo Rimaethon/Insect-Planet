@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// A class to make projectiles move
+///     A class to make projectiles move
 /// </summary>
 public class Projectile : MonoBehaviour
 {
@@ -12,12 +10,12 @@ public class Projectile : MonoBehaviour
     public float projectileSpeed = 3.0f;
 
     /// <summary>
-    /// Description:
-    /// Every frame, move the projectile in the direction it is heading
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
+    ///     Description:
+    ///     Every frame, move the projectile in the direction it is heading
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     protected virtual void Update()
     {

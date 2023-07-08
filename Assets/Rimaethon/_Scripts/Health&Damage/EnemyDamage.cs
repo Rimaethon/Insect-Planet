@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
     [Header("Team Settings")] [Tooltip("The team associated with this damage")]
-    public int teamId = 0;
+    public int teamId;
 
     [Header("Damage Settings")] [Tooltip("How much damage to deal")]
     public int damageAmount = 1;
@@ -14,49 +12,21 @@ public class EnemyDamage : MonoBehaviour
     public bool destroyAfterDamage = true;
 
     [Tooltip("Whether or not to apply damage when triggers collide")]
-    public bool dealDamageOnTriggerEnter = false;
+    public bool dealDamageOnTriggerEnter;
 
     [Tooltip("Whether or not to apply damage when triggers stay, for damage over time")]
-    public bool dealDamageOnTriggerStay = false;
+    public bool dealDamageOnTriggerStay;
 
     [Tooltip("Whether or not to apply damage on non-trigger collider collisions")]
-    public bool dealDamageOnCollision = false;
+    public bool dealDamageOnCollision;
 
     /// <summary>
-    /// Description:
-    /// Built-in Unity function that is called whenever a trigger collider is entered by another collider
-    /// Input:
-    /// Collider collision
-    /// Return:
-    /// void (no return)
-    /// </summary>
-    /// <param name="collision">The collider that entered the trigger</param>
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (dealDamageOnTriggerEnter) DealDamage(collision);
-    }
-
-    /// <summary>
-    /// Description:
-    /// Built-in Unity function that is called every frame a trigger collider stays inside another collider
-    /// Input:
-    /// Collider collision
-    /// Return:
-    /// void (no return)
-    /// </summary>
-    /// <param name="collision">The collider that is still in the trigger</param>
-    private void OnTriggerStay(Collider collision)
-    {
-        if (dealDamageOnTriggerStay) DealDamage(collision);
-    }
-
-    /// <summary>
-    /// Description:
-    /// Built-in Unity function that is called whenever a non-trigger collider hits another non-trigger collider
-    /// Input:
-    /// Collision collision
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Built-in Unity function that is called whenever a non-trigger collider hits another non-trigger collider
+    ///     Input:
+    ///     Collision collision
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="collision">The collision that caused this function call</param>
     private void OnCollisionEnter(Collision collision)
@@ -65,12 +35,41 @@ public class EnemyDamage : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// This function deals damage to a health component if the collided with gameobject has a health component attached AND it is on a different team.
-    /// Input:
-    /// Collision collision
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Built-in Unity function that is called whenever a trigger collider is entered by another collider
+    ///     Input:
+    ///     Collider collision
+    ///     Return:
+    ///     void (no return)
+    /// </summary>
+    /// <param name="collision">The collider that entered the trigger</param>
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (dealDamageOnTriggerEnter) DealDamage(collision);
+    }
+
+    /// <summary>
+    ///     Description:
+    ///     Built-in Unity function that is called every frame a trigger collider stays inside another collider
+    ///     Input:
+    ///     Collider collision
+    ///     Return:
+    ///     void (no return)
+    /// </summary>
+    /// <param name="collision">The collider that is still in the trigger</param>
+    private void OnTriggerStay(Collider collision)
+    {
+        if (dealDamageOnTriggerStay) DealDamage(collision);
+    }
+
+    /// <summary>
+    ///     Description:
+    ///     This function deals damage to a health component if the collided with gameobject has a health component attached
+    ///     AND it is on a different team.
+    ///     Input:
+    ///     Collision collision
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="collision">The Collision that has been collided with</param>
     private void DealDamage(Collision collision)
@@ -87,12 +86,13 @@ public class EnemyDamage : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// This function deals damage to a health component if the collided with gameobject has a health component attached AND it is on a different team.
-    /// Input:
-    /// Collider collision
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     This function deals damage to a health component if the collided with gameobject has a health component attached
+    ///     AND it is on a different team.
+    ///     Input:
+    ///     Collider collision
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="collision">The Collider that has been collided with</param>
     private void DealDamage(Collider collision)

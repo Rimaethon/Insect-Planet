@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This class handles the polish effect of exploding the enemies into giblets when they die
+///     This class handles the polish effect of exploding the enemies into giblets when they die
 /// </summary>
 public class EnemyGibletSpawner : MonoBehaviour
 {
@@ -14,19 +13,19 @@ public class EnemyGibletSpawner : MonoBehaviour
     public int numberToSpawn = 5;
 
     [Min(0)] [Tooltip("The minimum force to potentially apply to a spawned giblet")]
-    public float minimumForce = 0;
+    public float minimumForce;
 
     [Min(0)] [Tooltip("The maximum force to potentially apply to a spawned giblet")]
     public float maximumForce = 30;
 
 
     /// <summary>
-    /// Description:
-    /// Standard Unity function that is called once before the first Update call
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function that is called once before the first Update call
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Start()
     {
@@ -34,12 +33,12 @@ public class EnemyGibletSpawner : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Calls SpawnGiblet numberToSpawn times
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Calls SpawnGiblet numberToSpawn times
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void SpawnGiblets()
     {
@@ -47,12 +46,12 @@ public class EnemyGibletSpawner : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Spawns a random giblet and gives it a random rotation, force and direction
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Spawns a random giblet and gives it a random rotation, force and direction
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void SpawnGiblet()
     {

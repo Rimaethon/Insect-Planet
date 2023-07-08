@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Class which manages a checkpoint
+///     Class which manages a checkpoint
 /// </summary>
 public class Checkpoint : MonoBehaviour
 {
@@ -11,7 +9,7 @@ public class Checkpoint : MonoBehaviour
     public Transform respawnLocation;
 
     [Tooltip("The animator for this checkpoint")]
-    public Animator checkpointAnimator = null;
+    public Animator checkpointAnimator;
 
     [Tooltip("The name of the parameter in the animator which determines if this checkpoint displays as active")]
     public string animatorActiveParameter = "isActive";
@@ -20,12 +18,12 @@ public class Checkpoint : MonoBehaviour
     public GameObject checkpointActivationEffect;
 
     /// <summary>
-    /// Description:
-    /// Standard unity function called when a trigger is entered by another collider
-    /// Input:
-    /// Collider collision
-    /// Returns:
-    /// void (no return)
+    ///     Description:
+    ///     Standard unity function called when a trigger is entered by another collider
+    ///     Input:
+    ///     Collider collision
+    ///     Returns:
+    ///     void (no return)
     /// </summary>
     /// <param name="collision">The collider that has entered the trigger</param>
     private void OnTriggerEnter(Collider collision)

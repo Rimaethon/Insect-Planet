@@ -1,7 +1,6 @@
-
 namespace Rimaethon._Scripts.UI
 {
-    public enum UIPageAnimationType 
+    public enum UIPageAnimationType
     {
         DoNothing,
         Slide,

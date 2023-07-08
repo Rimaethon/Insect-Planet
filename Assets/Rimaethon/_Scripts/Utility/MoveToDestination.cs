@@ -1,26 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class MoveToDestination : MonoBehaviour
 {
     public Transform targetObject;
     [SerializeField] private ParticleSystem flame;
-    private float moveSpeed = 500f;
     private float acceleration = 1f;
-    private float accelerationTime = 3f;
+    private readonly float accelerationTime = 3f;
+    private float currentSpeed = 50;
+    private bool isLoweringStarted;
+    private readonly int LoweringStepCount = 30;
+    private float moveSpeed = 500f;
     private float particleSystemRadius1 = 1f;
     private float particleSystemRadius2 = 20f;
     private float particleSystemRadiusTransitionTime = 0.5f;
+    private float shapeRadius;
 
     private Vector3 targetPosition;
-    private float currentSpeed = 50;
     private float timer;
-    private float shapeRadius;
-    private bool isLoweringStarted;
-    private int LoweringStepCount = 30;
 
     private void Start()
     {

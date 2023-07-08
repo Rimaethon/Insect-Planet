@@ -11,12 +11,12 @@ public class HiveAttack : EnemyAttacker
     [Min(1)] public int maximimumToSpawn = 5;
 
     /// <summary>
-    /// Description:
-    /// Coroutine which causes this script to attack
-    /// Input: 
-    /// none
-    /// Return: 
-    /// IEnumerator
+    ///     Description:
+    ///     Coroutine which causes this script to attack
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     IEnumerator
     /// </summary>
     /// <returns>IEnumerator: Coroutine that performs the attack</returns>
     protected override IEnumerator PerformAttack()
@@ -34,12 +34,12 @@ public class HiveAttack : EnemyAttacker
     }
 
     /// <summary>
-    /// Description:
-    /// Spawns enemies
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Spawns enemies
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void SpawnEnemies()
     {

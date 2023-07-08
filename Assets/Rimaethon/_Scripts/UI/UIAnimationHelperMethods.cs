@@ -4,9 +4,9 @@ using UnityEngine.Events;
 
 namespace Rimaethon._Scripts.UI
 {
-    public class UIAnimationHelperMethods: MonoBehaviour
+    public class UIAnimationHelperMethods : MonoBehaviour
     {
-        private static bool isAnimating = false;
+        private static bool isAnimating;
 
         public static IEnumerator ZoomIn(RectTransform Transform, float Speed, UnityEvent OnEnd)
         {
@@ -99,7 +99,8 @@ namespace Rimaethon._Scripts.UI
             isAnimating = false;
         }
 
-        public static IEnumerator SlideIn(RectTransform Transform, UIDirection UIDirection, float Speed, UnityEvent OnEnd)
+        public static IEnumerator SlideIn(RectTransform Transform, UIDirection UIDirection, float Speed,
+            UnityEvent OnEnd)
         {
             if (isAnimating)
                 yield break;
@@ -140,7 +141,8 @@ namespace Rimaethon._Scripts.UI
             isAnimating = false;
         }
 
-        public static IEnumerator SlideOut(RectTransform Transform, UIDirection UIDirection, float Speed, UnityEvent OnEnd)
+        public static IEnumerator SlideOut(RectTransform Transform, UIDirection UIDirection, float Speed,
+            UnityEvent OnEnd)
         {
             if (isAnimating)
                 yield break;

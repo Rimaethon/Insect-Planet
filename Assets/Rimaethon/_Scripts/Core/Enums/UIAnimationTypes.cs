@@ -10,7 +10,6 @@ namespace Rimaethon._Scripts.Core.Enums
 
     public enum AnimationStates
     {
-
         Opening,
         Closing
     }

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.Pool;
+﻿using System.Collections;
 using Insect_Planet._Scripts.ObjectManagers;
+using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject objectToSpawn;
-    private float spawnInterval = 5f;
-    private float scaleSpeed = 0.5f;
-    private float launchForce = 10f;
+    private readonly float launchForce = 10f;
+    private readonly float scaleSpeed = 0.5f;
+    private readonly float spawnInterval = 5f;
 
     private float timer;
 

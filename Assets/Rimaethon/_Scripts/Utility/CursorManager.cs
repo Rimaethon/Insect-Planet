@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-///  Handles management of the cursor and its state
+///     Handles management of the cursor and its state
 /// </summary>
 public class CursorManager : MonoBehaviour
 {
@@ -13,21 +11,21 @@ public class CursorManager : MonoBehaviour
         FPS,
         Menu,
         FPSVisable
-    };
-
-    [Header("Settings")] [Tooltip("The state to start the cursor in in this scene")]
-    public CursorState startState = CursorState.FPS;
+    }
 
     // An instance of this to be referenced by other scripts
     public static CursorManager instance;
 
+    [Header("Settings")] [Tooltip("The state to start the cursor in in this scene")]
+    public CursorState startState = CursorState.FPS;
+
     /// <summary>
-    /// Description:
-    /// Standard Unity function which is called when the script is loaded in
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function which is called when the script is loaded in
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Awake()
     {
@@ -43,12 +41,12 @@ public class CursorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Changes cursor mode to match the desired state
-    /// Input:
-    /// CursorState cursorState
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Changes cursor mode to match the desired state
+    ///     Input:
+    ///     CursorState cursorState
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="cursorState">The state to change to</param>
     public void ChangeCursorMode(CursorState cursorState)

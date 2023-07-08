@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// This class uses processed input from the input manager to control the vertical rotation of the camera
+///     This class uses processed input from the input manager to control the vertical rotation of the camera
 /// </summary>
 public class CameraController : MonoBehaviour
 {
@@ -17,16 +14,21 @@ public class CameraController : MonoBehaviour
     [Tooltip("Whether or not to invert the look direction")]
     public bool invert = true;
 
+    private int framesWaited;
+
     // The input manager to read input from
     private InputManager inputManager;
 
+    // Wait this many frames before starting to process the camera rotation
+    private readonly int waitForFrames = 3;
+
     /// <summary>
-    /// Description:
-    /// Standard Unity function called once before the first Update call
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called once before the first Update call
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Start()
     {
@@ -34,17 +36,13 @@ public class CameraController : MonoBehaviour
         SetUpInputManager();
     }
 
-    // Wait this many frames before starting to process the camera rotation
-    private int waitForFrames = 3;
-    private int framesWaited = 0;
-
     /// <summary>
-    /// Description:
-    /// Standard Unity function called once every frame
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called once every frame
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Update()
     {
@@ -59,12 +57,12 @@ public class CameraController : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Sets up the camera component if not already donw
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Sets up the camera component if not already donw
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void SetUpCamera()
     {
@@ -72,12 +70,12 @@ public class CameraController : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Gets the input manager from the scene
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Gets the input manager from the scene
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void SetUpInputManager()
     {
@@ -85,12 +83,12 @@ public class CameraController : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Process the vertical look input to rotate the player accordingly
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Process the vertical look input to rotate the player accordingly
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void ProcessRotation()
     {

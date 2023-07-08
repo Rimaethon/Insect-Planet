@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PortalSpeedController : MonoBehaviour
 {
@@ -13,10 +11,10 @@ public class PortalSpeedController : MonoBehaviour
     [SerializeField] private float portalBlockTime;
 
     private GameObject childObject;
-
-    private float timer;
     private float currentSpeed;
     private float rotationSpeed;
+
+    private float timer;
 
     private void Start()
     {

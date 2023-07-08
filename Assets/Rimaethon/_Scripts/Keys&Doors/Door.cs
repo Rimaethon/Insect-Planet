@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// Class which handles a door's locking and unlocking mechanism
+///     Class which handles a door's locking and unlocking mechanism
 /// </summary>
 [RequireComponent(typeof(Collider))]
 public class Door : MonoBehaviour
@@ -12,10 +10,10 @@ public class Door : MonoBehaviour
     [Header("Settings")]
     [Tooltip("The ID of the door used to determine which keys unlock it.\n" +
              "A door ID of 0 is unlocked by default.")]
-    public int doorID = 0;
+    public int doorID;
 
     [Tooltip("Whether this door is open right now.")]
-    public bool isOpen = false;
+    public bool isOpen;
 
     [Tooltip("Events to call when opening the door.")]
     public UnityEvent openEvent = new();
@@ -30,12 +28,12 @@ public class Door : MonoBehaviour
     public GameObject doorLockedEffect;
 
     /// <summary>
-    /// Description:
-    /// Built-in Unity function that is called whenever a non-trigger collider hits another non-trigger collider
-    /// Input:
-    /// Collision collision
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Built-in Unity function that is called whenever a non-trigger collider hits another non-trigger collider
+    ///     Input:
+    ///     Collision collision
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="collision">The collision that caused this function call</param>
     protected virtual void OnCollisionEnter(Collision collision)
@@ -45,12 +43,12 @@ public class Door : MonoBehaviour
 
 
     /// <summary>
-    /// Description:
-    /// Built-in Unity function that is called whenever a trigger collider is entered by another collider
-    /// Input:
-    /// Collider collision
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Built-in Unity function that is called whenever a trigger collider is entered by another collider
+    ///     Input:
+    ///     Collider collision
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="collision">The collider that entered the trigger</param>
     protected virtual void OnTriggerEnter(Collider collision)
@@ -59,12 +57,12 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Attempts to open the door with the keys at the player's disposal
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
+    ///     Description:
+    ///     Attempts to open the door with the keys at the player's disposal
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     public void AttemptToOpen()
     {
@@ -75,12 +73,12 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Tests whether the player has the key necessary to open this door
-    /// Input: 
-    /// none
-    /// Return: 
-    /// bool
+    ///     Description:
+    ///     Tests whether the player has the key necessary to open this door
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     bool
     /// </summary>
     /// <returns>bool: Whether or not the player has the necessary key</returns>
     public bool CheckPlayerHasKey()
@@ -89,12 +87,12 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Opens the door
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
+    ///     Description:
+    ///     Opens the door
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     protected virtual void Open()
     {
@@ -104,12 +102,12 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Closes the door
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
+    ///     Description:
+    ///     Closes the door
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     protected virtual void Close()
     {

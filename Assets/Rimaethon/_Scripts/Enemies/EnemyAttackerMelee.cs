@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Class which allows an enemy to make melee attacks
+///     Class which allows an enemy to make melee attacks
 /// </summary>
 public class EnemyAttackerMelee : EnemyAttacker
 {
@@ -11,12 +11,12 @@ public class EnemyAttackerMelee : EnemyAttacker
     public List<Collider> weaponColliders = new();
 
     /// <summary>
-    /// Description:
-    /// Coroutine which causes this script to enable colliders on weapons for the duration of an attack.
-    /// Input: 
-    /// none
-    /// Return: 
-    /// IEnumerator
+    ///     Description:
+    ///     Coroutine which causes this script to enable colliders on weapons for the duration of an attack.
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     IEnumerator
     /// </summary>
     /// <returns>IEnumerator: Coroutine that performs the attack</returns>
     protected override IEnumerator PerformAttack()
@@ -35,12 +35,12 @@ public class EnemyAttackerMelee : EnemyAttacker
     }
 
     /// <summary>
-    /// Description:
-    /// Turns on/off weapon colliders based on the activation parameter
-    /// Inputs: 
-    /// bool
-    /// Return: 
-    /// void (no return)
+    ///     Description:
+    ///     Turns on/off weapon colliders based on the activation parameter
+    ///     Inputs:
+    ///     bool
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="activation">Whether to turn colliders on, or to turn them off</param>
     protected void SetWeaponColliders(bool activation)

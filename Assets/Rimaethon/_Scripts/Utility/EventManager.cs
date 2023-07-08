@@ -53,7 +53,7 @@ namespace Rimaethon._Scripts.Utility
 
             Debug.Log($"Subscribed handler {handler.Method.Name} to game event {gameEvent}");
         }
-        
+
         public void AddHandler<T>(GameEvents gameEvent, Action<T> handler)
         {
             // Add handler to the event handlers dictionary
@@ -62,8 +62,6 @@ namespace Rimaethon._Scripts.Utility
 
             _eventHandlers[gameEvent].Add(handler);
             Debug.Log($"Added handler {handler.Method.Name} for game event {gameEvent}");
-
-
         }
 
         public void AddHandler<T1, T2>(GameEvents gameEvent, Action<T1, T2> handler)
@@ -74,7 +72,6 @@ namespace Rimaethon._Scripts.Utility
 
             _eventHandlers[gameEvent].Add(handler);
             Debug.Log($"Added handler {handler.Method.Name} for game event {gameEvent}");
-
         }
 
         // AddHandler overloads for different parameter types
@@ -93,10 +90,9 @@ namespace Rimaethon._Scripts.Utility
                     Debug.Log($"No more handlers for game event {gameEvent}");
                 }
             }
-
-            
         }
-          public void RemoveHandler<T>(GameEvents gameEvent, Action<T> handler)
+
+        public void RemoveHandler<T>(GameEvents gameEvent, Action<T> handler)
         {
             // Remove the handler from the event handlers dictionary
             if (_eventHandlers.TryGetValue(gameEvent, out var handlers))
@@ -110,8 +106,6 @@ namespace Rimaethon._Scripts.Utility
                     Debug.Log($"No more handlers for game event {gameEvent}");
                 }
             }
-
-         
         }
 
         public void RemoveHandler<T1, T2>(GameEvents gameEvent, Action<T1, T2> handler)
@@ -128,15 +122,12 @@ namespace Rimaethon._Scripts.Utility
                     Debug.Log($"No more handlers for game event {gameEvent}");
                 }
             }
-
-           
         }
 
         // RemoveHandler overloads for different parameter types
 
         #endregion
 
-       
 
         #region Event Broadcasting
 
@@ -145,7 +136,7 @@ namespace Rimaethon._Scripts.Utility
             _eventQueue.Enqueue(() => ProcessEvent(gameEvents));
             ProcessEventQueueWithPriority();
         }
-        
+
         public void Broadcast<T>(GameEvents gameEvent, T arg)
         {
             _eventQueue.Enqueue(() => ProcessEvent(gameEvent, arg));
@@ -200,7 +191,7 @@ namespace Rimaethon._Scripts.Utility
                     Debug.Log(
                         $"Broadcasted event {gameEvents.ToString()} with arguments {string.Join(", ", args.Select(arg => arg.ToString()))} to handler {handler.Method.Name}");
                 }
-            
+
             _isProcessingEvent = false;
         }
 

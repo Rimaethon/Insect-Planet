@@ -1,46 +1,41 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using Rimaethon._Scripts.Utility;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
-using AYellowpaper.SerializedCollections;
 
 namespace Rimaethon._Scripts.Controller
 {
-    public class AudioManager: PersistentSingleton<AudioManager>
+    public class AudioManager : PersistentSingleton<AudioManager>
     {
-        private AudioSource musicSource;
-        [SerializeField] private float fadeTime = 0.5f; 
+        [SerializeField] private float fadeTime = 0.5f;
         [SerializeField] private AudioSource soundEffectsSource;
         [SerializeField] private List<AudioClip> backgroundMusicClips;
         [SerializeField] private Slider musicVolumeSlider;
         [SerializeField] private Slider soundEffectsVolumeSlider;
-        public AYellowpaper.SerializedCollections.SerializedDictionary<string,AudioClip> soundEffectsClips;
-        
+        public SerializedDictionary<string, AudioClip> soundEffectsClips;
+        private AudioSource musicSource;
+
+
+        private void Start()
+        {
+            musicSource.volume = musicVolumeSlider.value;
+            soundEffectsSource.volume = soundEffectsVolumeSlider.value;
+            PlayRandomBackgroundMusic();
+        }
+
 
         private void OnEnable()
         {
             musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
             soundEffectsVolumeSlider.onValueChanged.AddListener(OnSoundEffectsVolumeChanged);
-            
         }
 
         private void OnDisable()
         {
             musicVolumeSlider.onValueChanged.RemoveListener(OnMusicVolumeChanged);
             soundEffectsVolumeSlider.onValueChanged.RemoveListener(OnSoundEffectsVolumeChanged);
-        }
-
-       
-        private void Start()
-        {
-            musicSource.volume = musicVolumeSlider.value;
-            soundEffectsSource.volume = soundEffectsVolumeSlider.value;
-            PlayRandomBackgroundMusic();
         }
 
         private void OnMusicVolumeChanged(float volume)
@@ -67,7 +62,7 @@ namespace Rimaethon._Scripts.Controller
 
         private IEnumerator FadeOut()
         {
-            float startVolume = musicSource.volume;
+            var startVolume = musicSource.volume;
 
             while (musicSource.volume > 0)
             {
@@ -81,7 +76,7 @@ namespace Rimaethon._Scripts.Controller
 
         private IEnumerator FadeIn()
         {
-            float targetVolume = musicSource.volume;
+            var targetVolume = musicSource.volume;
             musicSource.volume = 0.0f; // Start from silence
             musicSource.Play();
 
@@ -92,9 +87,9 @@ namespace Rimaethon._Scripts.Controller
             }
         }
 
-        public void PlaySoundEffect(AudioClip clip,Vector3 pos)
+        public void PlaySoundEffect(AudioClip clip, Vector3 pos)
         {
-            soundEffectsSource.transform.position= pos;
+            soundEffectsSource.transform.position = pos;
             soundEffectsSource.PlayOneShot(clip, soundEffectsSource.volume);
         }
 
@@ -102,8 +97,8 @@ namespace Rimaethon._Scripts.Controller
         {
             if (backgroundMusicClips.Count > 0)
             {
-                int randomIndex = Random.Range(0, backgroundMusicClips.Count);
-                AudioClip randomClip = backgroundMusicClips[randomIndex];
+                var randomIndex = Random.Range(0, backgroundMusicClips.Count);
+                var randomClip = backgroundMusicClips[randomIndex];
                 PlayMusic(randomClip);
             }
         }

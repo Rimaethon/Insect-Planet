@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This class handles moving the attached game object between waypoints
+///     This class handles moving the attached game object between waypoints
 /// </summary>
 public class WaypointMover : MonoBehaviour
 {
@@ -16,14 +15,11 @@ public class WaypointMover : MonoBehaviour
     [Tooltip("How long to wait when arriving at a waypoint")]
     public float waitTime = 3f;
 
-    // The time at which movement is resumed
-    private float timeToStartMovingAgain = 0f;
-
     // Whether or not the waypoint mover is stopped
-    [HideInInspector] public bool stopped = false;
+    [HideInInspector] public bool stopped;
 
-    // The previous waypoint or the starting position
-    private Vector3 previousTarget;
+    // The current direction being travelled in
+    [HideInInspector] public Vector3 travelDirection;
 
     // The current waypoint being moved to
     private Vector3 currentTarget;
@@ -31,16 +27,19 @@ public class WaypointMover : MonoBehaviour
     // The index of the current Target in the waypoints list
     private int currentTargetIndex;
 
-    // The current direction being travelled in
-    [HideInInspector] public Vector3 travelDirection;
+    // The previous waypoint or the starting position
+    private Vector3 previousTarget;
+
+    // The time at which movement is resumed
+    private float timeToStartMovingAgain;
 
     /// <summary>
-    /// Description:
-    /// Standard Unity function called once before the first Update call
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called once before the first Update call
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Start()
     {
@@ -48,12 +47,12 @@ public class WaypointMover : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Standard Unity function called every fixed frame update
-    /// Input:
-    /// None
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Standard Unity function called every fixed frame update
+    ///     Input:
+    ///     None
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void FixedUpdate()
     {
@@ -61,12 +60,12 @@ public class WaypointMover : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Processes current state and does movement accordingly
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Processes current state and does movement accordingly
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void ProcessMovementState()
     {
@@ -78,12 +77,12 @@ public class WaypointMover : MonoBehaviour
 
 
     /// <summary>
-    /// Description:
-    /// Checks to see if the waypoint mover can start movement again
-    /// Input:
-    /// none:
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Checks to see if the waypoint mover can start movement again
+    ///     Input:
+    ///     none:
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void StartCheck()
     {
@@ -99,13 +98,13 @@ public class WaypointMover : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Sets up the first previous target and current target
-    /// then calls CalculateTravelInformation to initilize travel direction 
-    /// Inuput:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Sets up the first previous target and current target
+    ///     then calls CalculateTravelInformation to initilize travel direction
+    ///     Inuput:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void InitializeInformation()
     {
@@ -125,12 +124,12 @@ public class WaypointMover : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Calculates the current traveling direction using the previousTarget and the currentTarget
-    /// Inuput:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Calculates the current traveling direction using the previousTarget and the currentTarget
+    ///     Inuput:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void CalculateTravelInformation()
     {
@@ -138,12 +137,12 @@ public class WaypointMover : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Translates the transform in the direction towards the next waypoint
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Translates the transform in the direction towards the next waypoint
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void Travel()
     {
@@ -181,12 +180,12 @@ public class WaypointMover : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Starts the waiting, sets up the needed variables for waiting
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
+    ///     Description:
+    ///     Starts the waiting, sets up the needed variables for waiting
+    ///     Input:
+    ///     none
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     private void BeginWait()
     {

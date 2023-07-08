@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// This class inherits from the Pickup class and will give the player extra lives when picked up
+///     This class inherits from the Pickup class and will give the player extra lives when picked up
 /// </summary>
 public class ExtraLifePickup : Pickup
 {
@@ -11,13 +9,13 @@ public class ExtraLifePickup : Pickup
     public int extraLives = 1;
 
     /// <summary>
-    /// Description:
-    /// Function called when this pickup is picked up
-    /// Gives the player that picks this up an extra life
-    /// Input: 
-    /// Collider collision
-    /// Return: 
-    /// void (no return)
+    ///     Description:
+    ///     Function called when this pickup is picked up
+    ///     Gives the player that picks this up an extra life
+    ///     Input:
+    ///     Collider collision
+    ///     Return:
+    ///     void (no return)
     /// </summary>
     /// <param name="collision">The collider that is picking up this pickup</param>
     public override void DoOnPickup(Collider collision)

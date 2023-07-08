@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Class that handles animation of a traditional pickup.
+///     Class that handles animation of a traditional pickup.
 /// </summary>
 public class PickupAnimation : MonoBehaviour
 {
@@ -20,10 +18,10 @@ public class PickupAnimation : MonoBehaviour
     private Vector3 startPosition;
 
     /// <summary>
-    /// Description:
-    /// When this script starts up, save the starting position of the object
-    /// Inputs: N/A
-    /// Outputs: N/A
+    ///     Description:
+    ///     When this script starts up, save the starting position of the object
+    ///     Inputs: N/A
+    ///     Outputs: N/A
     /// </summary>
     private void Start()
     {
@@ -31,10 +29,10 @@ public class PickupAnimation : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Every update, rotate and move the object according to the values set for this script
-    /// Inputs: N/A
-    /// Outputs: N/A
+    ///     Description:
+    ///     Every update, rotate and move the object according to the values set for this script
+    ///     Inputs: N/A
+    ///     Outputs: N/A
     /// </summary>
     private void LateUpdate()
     {

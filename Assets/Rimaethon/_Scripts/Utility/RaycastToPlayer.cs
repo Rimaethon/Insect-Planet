@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace Rimaethon._Scripts.Utility
 {
@@ -8,7 +6,7 @@ namespace Rimaethon._Scripts.Utility
     {
         [SerializeField] private Transform player;
         [SerializeField] private LayerMask obstacleLayer;
-        private int rayCount = 5;
+        private readonly int rayCount = 5;
         private Vector3 targetPoint;
 
         private void Awake()

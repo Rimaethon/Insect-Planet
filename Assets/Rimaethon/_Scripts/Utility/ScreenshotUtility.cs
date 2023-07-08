@@ -20,34 +20,27 @@
  * Last Updated: January 1, 2021
  */
 
+using System.IO;
 using UnityEngine;
-using System.Collections;
-using System.IO; // included for access to File IO such as Directory class
-using UnityEngine.InputSystem; // included for using the new Unity Input System
+using UnityEngine.InputSystem;
+// included for access to File IO such as Directory class
+
+// included for using the new Unity Input System
 
 /// <summary>
-/// Handles taking a screenshot of the game.
+///     Handles taking a screenshot of the game.
 /// </summary>
 public class ScreenshotUtility : MonoBehaviour
 {
-    // static reference to ScreenshotUtility so can be called from other scripts directly (not just through gameobject component)
-    public static ScreenshotUtility screenShotUtility;
+    #region Constants
 
-    #region Public Variables
-
-    [Header("Settings")] [Tooltip("Should the screenshot utility run only in the editor.")]
-    public bool runOnlyInEditor = true;
-
-    [Tooltip("What key is mapped to take the screenshot.")]
-    public string m_ScreenshotKey = "c";
-
-    [Tooltip("What is the scale factor for the screenshot. Standard is 1, 2x size is 2, etc..")]
-    public int m_ScaleFactor = 1;
-
-    [Tooltip("Include image size in filename.")]
-    public bool includeImageSizeInFilename = true;
+    // The key used to get/set the number of images
+    private const string ImageCntKey = "IMAGE_CNT";
 
     #endregion
+
+    // static reference to ScreenshotUtility so can be called from other scripts directly (not just through gameobject component)
+    public static ScreenshotUtility screenShotUtility;
 
     [Header("Private Variables")]
 
@@ -56,19 +49,12 @@ public class ScreenshotUtility : MonoBehaviour
     // The number of screenshots taken
     [Tooltip("Use the Reset Counter contextual menu item to reset this.")]
     [SerializeField]
-    private int m_ImageCount = 0;
-
-    #endregion
-
-    #region Constants
-
-    // The key used to get/set the number of images
-    private const string ImageCntKey = "IMAGE_CNT";
+    private int m_ImageCount;
 
     #endregion
 
     /// <summary>
-    /// This sets up the screenshot utility and allows it to persist through scenes.
+    ///     This sets up the screenshot utility and allows it to persist through scenes.
     /// </summary>
     private void Awake()
     {
@@ -100,7 +86,7 @@ public class ScreenshotUtility : MonoBehaviour
     }
 
     /// <summary>
-    /// Called once per frame. Handles the input to do TakeScreenshot action.
+    ///     Called once per frame. Handles the input to do TakeScreenshot action.
     /// </summary>
     private void Update()
     {
@@ -112,7 +98,8 @@ public class ScreenshotUtility : MonoBehaviour
     }
 
     /// <summary>
-    /// This function will reset the screenshot image counter used in the filename. The function is available through the context menu on the component in the inspector.
+    ///     This function will reset the screenshot image counter used in the filename. The function is available through the
+    ///     context menu on the component in the inspector.
     /// </summary>
     [ContextMenu("Reset Counter")]
     public void ResetCounter()
@@ -124,7 +111,7 @@ public class ScreenshotUtility : MonoBehaviour
     }
 
     /// <summary>
-    /// Take the screenshot and save the PNG file to disk in the Screenshot folder of the project.
+    ///     Take the screenshot and save the PNG file to disk in the Screenshot folder of the project.
     /// </summary>
     public void TakeScreenshot()
     {
@@ -144,4 +131,20 @@ public class ScreenshotUtility : MonoBehaviour
         ScreenCapture.CaptureScreenshot(pathname, m_ScaleFactor);
         Debug.Log("Screenshot captured at " + pathname);
     }
+
+    #region Public Variables
+
+    [Header("Settings")] [Tooltip("Should the screenshot utility run only in the editor.")]
+    public bool runOnlyInEditor = true;
+
+    [Tooltip("What key is mapped to take the screenshot.")]
+    public string m_ScreenshotKey = "c";
+
+    [Tooltip("What is the scale factor for the screenshot. Standard is 1, 2x size is 2, etc..")]
+    public int m_ScaleFactor = 1;
+
+    [Tooltip("Include image size in filename.")]
+    public bool includeImageSizeInFilename = true;
+
+    #endregion
 }

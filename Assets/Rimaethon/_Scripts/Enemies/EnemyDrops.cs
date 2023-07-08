@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// Class that handles spawning of prefabs based on random chances
+///     Class that handles spawning of prefabs based on random chances
 /// </summary>
 public class EnemyDrops : MonoBehaviour
 {
@@ -19,10 +18,10 @@ public class EnemyDrops : MonoBehaviour
     public List<float> dropPercentages = new();
 
     /// <summary>
-    /// Description:
-    /// When this script starts up, spawn drops
-    /// Inputs: N/A
-    /// Outputs: N/A
+    ///     Description:
+    ///     When this script starts up, spawn drops
+    ///     Inputs: N/A
+    ///     Outputs: N/A
     /// </summary>
     private void Start()
     {
@@ -30,14 +29,14 @@ public class EnemyDrops : MonoBehaviour
     }
 
     /// <summary>
-    /// Description:
-    /// Spawn random drops based on drop percentages
-    /// Inputs: N/A
-    /// Outputs: N/A
-    /// Disclaimer:
-    /// The drop percentages are approximate and may not reflect in-game behavior perfectly,
-    /// since the "correct" way to implement the randomization is more complex than what
-    /// happens in this function.
+    ///     Description:
+    ///     Spawn random drops based on drop percentages
+    ///     Inputs: N/A
+    ///     Outputs: N/A
+    ///     Disclaimer:
+    ///     The drop percentages are approximate and may not reflect in-game behavior perfectly,
+    ///     since the "correct" way to implement the randomization is more complex than what
+    ///     happens in this function.
     /// </summary>
     public void SpawnRandomDrop()
     {

@@ -1,22 +1,7 @@
 ﻿using UnityEngine;
 
-
 public class Enemy : MonoBehaviour
 {
-    public float moveSpeed = 2.0f;
-    public bool canMove = true;
-    protected Rigidbody enemyRigidbody;
-
-
-    public Transform target;
-    [SerializeField] private EnemyAttacker attacker;
-    [SerializeField] private float maximumAttackRange = 5.0f;
-    [SerializeField] private bool doesAttack;
-    [SerializeField] private bool lineOfSightToAttack = true;
-    [SerializeField] protected bool moveWhileAttacking = false;
-    [SerializeField] protected bool needsLineOfSightToMove = true;
-
-
     public enum ActionState
     {
         Idle,
@@ -24,13 +9,37 @@ public class Enemy : MonoBehaviour
         Attacking
     }
 
+    public float moveSpeed = 2.0f;
+    public bool canMove = true;
+
+
+    public Transform target;
+    [SerializeField] private EnemyAttacker attacker;
+    [SerializeField] private float maximumAttackRange = 5.0f;
+    [SerializeField] private bool doesAttack;
+    [SerializeField] private bool lineOfSightToAttack = true;
+    [SerializeField] protected bool moveWhileAttacking;
+    [SerializeField] protected bool needsLineOfSightToMove = true;
+
     [SerializeField] private ActionState actionState = ActionState.Idle;
 
     [SerializeField] private GameObject attackEffect;
 
-    protected bool isIdle = false;
-    protected bool isAttacking = false;
-    protected bool isMoving = false;
+    public Animator animator;
+    public string idleBooleanName;
+    public string moveBooleanName;
+    public string attackBooleanName;
+
+    public LayerMask hitWithLineOfSight;
+    private bool _hasAttackBoolean;
+
+    private bool _hasIdleBoolean;
+    private bool _hasMovingBoolean;
+    protected Rigidbody enemyRigidbody;
+    protected bool isAttacking;
+
+    protected bool isIdle;
+    protected bool isMoving;
 
 
     private void Start()
@@ -61,7 +70,7 @@ public class Enemy : MonoBehaviour
     {
         // If move while attack is set to true, we can move while attacking. Otherwise we just need to check isAttacking for
         // whether or not we move
-        var attackMove = moveWhileAttacking == true || isAttacking == false;
+        var attackMove = moveWhileAttacking || isAttacking == false;
 
         var hasLineOfSight = true;
 
@@ -140,15 +149,6 @@ public class Enemy : MonoBehaviour
         return transform.rotation;
     }
 
-    public Animator animator;
-    public string idleBooleanName;
-    public string moveBooleanName;
-    public string attackBooleanName;
-
-    private bool _hasIdleBoolean;
-    private bool _hasAttackBoolean;
-    private bool _hasMovingBoolean;
-
 
     protected void HandleAnimation()
     {
@@ -226,8 +226,6 @@ public class Enemy : MonoBehaviour
                 return true;
         return false;
     }
-
-    public LayerMask hitWithLineOfSight;
 
 
     protected virtual bool HasLineOfSight()
