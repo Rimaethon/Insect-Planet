@@ -4,5 +4,6 @@ namespace Rimaethon._Scripts.Utility
     {
         OnPlayingAudio,
         OnSceneChange,
+        OnPageChange
     }
 }
