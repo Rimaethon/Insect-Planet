@@ -56,7 +56,6 @@ namespace Rimaethon._Scripts.Utility
 
         public void AddHandler<T>(GameEvents gameEvent, Action<T> handler)
         {
-            // Add handler to the event handlers dictionary
             if (!_eventHandlers.ContainsKey(gameEvent))
                 _eventHandlers[gameEvent] = new List<Delegate>();
 
@@ -66,7 +65,6 @@ namespace Rimaethon._Scripts.Utility
 
         public void AddHandler<T1, T2>(GameEvents gameEvent, Action<T1, T2> handler)
         {
-            // Add handler to the event handlers dictionary
             if (!_eventHandlers.ContainsKey(gameEvent))
                 _eventHandlers[gameEvent] = new List<Delegate>();
 
@@ -74,11 +72,9 @@ namespace Rimaethon._Scripts.Utility
             Debug.Log($"Added handler {handler.Method.Name} for game event {gameEvent}");
         }
 
-        // AddHandler overloads for different parameter types
 
         public void RemoveHandler(GameEvents gameEvent, Action handler)
         {
-            // Remove the handler from the event handlers dictionary
             if (_eventHandlers.TryGetValue(gameEvent, out var handlers))
             {
                 handlers.Remove(handler);
@@ -94,7 +90,6 @@ namespace Rimaethon._Scripts.Utility
 
         public void RemoveHandler<T>(GameEvents gameEvent, Action<T> handler)
         {
-            // Remove the handler from the event handlers dictionary
             if (_eventHandlers.TryGetValue(gameEvent, out var handlers))
             {
                 handlers.Remove(handler);
@@ -110,7 +105,6 @@ namespace Rimaethon._Scripts.Utility
 
         public void RemoveHandler<T1, T2>(GameEvents gameEvent, Action<T1, T2> handler)
         {
-            // Remove the handler from the event handlers dictionary
             if (_eventHandlers.TryGetValue(gameEvent, out var handlers))
             {
                 handlers.Remove(handler);
@@ -154,7 +148,6 @@ namespace Rimaethon._Scripts.Utility
         {
             if (_isProcessingEvent) return;
 
-            // Sort the event queue based on priority
             var sortedEvents = new List<Action>(_eventQueue);
             sortedEvents.Sort((a, b) => GetEventPriority(b) - GetEventPriority(a));
 
@@ -176,14 +169,13 @@ namespace Rimaethon._Scripts.Utility
                     break;
                 }
 
-            return 0; // Default priority if not found
+            return 0;
         }
 
         private void ProcessEvent(GameEvents gameEvents, params object[] args)
         {
             _isProcessingEvent = true;
 
-            // Invoke handlers for the event
             if (_eventHandlers.TryGetValue(gameEvents, out var eventHandler))
                 foreach (var handler in eventHandler)
                 {
