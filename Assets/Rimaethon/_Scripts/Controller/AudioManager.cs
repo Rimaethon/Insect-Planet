@@ -20,6 +20,7 @@ namespace Rimaethon._Scripts.Controller
 
         private void Start()
         {
+            musicSource = GetComponent<AudioSource>();
             musicSource.volume = musicVolumeSlider.value;
             soundEffectsSource.volume = soundEffectsVolumeSlider.value;
             PlayRandomBackgroundMusic();
