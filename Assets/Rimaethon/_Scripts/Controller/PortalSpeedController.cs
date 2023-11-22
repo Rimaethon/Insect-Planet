@@ -1,45 +1,89 @@
+using System;
+using System.Diagnostics;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class PortalSpeedController : MonoBehaviour
 {
-    [SerializeField] private float portalStartTime;
+    [Header("Time settings")]
+   
+    [SerializeField] private int accelerationStartDelayInMilliseconds;
     [SerializeField] private float accelerationEndTime;
+    [SerializeField] private float decelerationStartTime;
     [SerializeField] private float decelerationEndTime;
+    
+    
+    [Header("Speed settings")]
     [SerializeField] private float maxRotationSpeed;
     [SerializeField] private float minRotationSpeed;
 
-    [SerializeField] private float portalBlockTime;
+    public bool isStarting;
+    private float _currentSpeed;
+    private float _rotationSpeed;
+    private float _timer;
 
-    private GameObject childObject;
-    private float currentSpeed;
-    private float rotationSpeed;
-
-    private float timer;
-
-    private void Start()
+    private CancellationTokenSource cancellationTokenSource;
+    private CancellationToken cancellationToken;
+    private bool isStarted;
+    private void Awake()
     {
-        childObject = transform.GetChild(0).gameObject;
+    cancellationTokenSource = new CancellationTokenSource();
+    cancellationToken = cancellationTokenSource.Token;
     }
 
-    private void Update()
+   
+    private void FixedUpdate()
     {
-        timer += Time.deltaTime;
-        if (portalStartTime < timer)
+        if (isStarting&&!isStarted)
         {
-            gameObject.SetActive(true);
-
-            if (timer < accelerationEndTime)
-                currentSpeed = Mathf.Lerp(0f, maxRotationSpeed, timer / accelerationEndTime);
-            else if (timer < decelerationEndTime)
-                currentSpeed = Mathf.Lerp(currentSpeed, minRotationSpeed, timer / decelerationEndTime);
-            else
-                currentSpeed = rotationSpeed;
-
-            gameObject.transform.Rotate(0, 0, currentSpeed * Time.deltaTime);
-
-            if (timer > decelerationEndTime + 1) childObject.SetActive(true);
-
-            if (timer > decelerationEndTime + portalBlockTime) childObject.SetActive(false);
+            StartPortal(cancellationToken).Forget();
+            isStarting = false;
+            isStarted = true;
+            
         }
     }
+
+    private void OnDisable()
+    {
+        if (cancellationTokenSource is { Token: { IsCancellationRequested: false } })
+        {
+            cancellationTokenSource.Cancel();
+        }
+    }
+
+ 
+    private async UniTaskVoid StartPortal(CancellationToken cancellationTokenReference )
+    {
+        
+        _timer = 0;
+
+        
+            while (_timer < accelerationEndTime&&!cancellationTokenReference.IsCancellationRequested)
+            {
+                _timer += Time.deltaTime; 
+                _currentSpeed = Mathf.Lerp(0f, maxRotationSpeed, _timer / accelerationEndTime);
+                gameObject.transform.Rotate(0, 0, _currentSpeed * Time.deltaTime);
+                await UniTask.Yield();
+
+            }
+
+            while (decelerationStartTime > _timer&&!cancellationTokenReference.IsCancellationRequested)
+            {
+                await UniTask.Yield();
+            }
+            while (_timer < decelerationEndTime&&!cancellationTokenReference.IsCancellationRequested)
+            {
+                _timer += Time.deltaTime;
+
+                _currentSpeed = Mathf.Lerp(_currentSpeed, minRotationSpeed, _timer / decelerationEndTime);
+                gameObject.transform.Rotate(0, 0, _currentSpeed * Time.deltaTime);
+                await UniTask.Yield();
+            }
+      
+
+        
+    }
+    
+    
 }
