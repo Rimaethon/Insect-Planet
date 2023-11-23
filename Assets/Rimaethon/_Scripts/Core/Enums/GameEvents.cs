@@ -4,6 +4,18 @@ namespace Rimaethon._Scripts.Utility
     {
         OnPlayingAudio,
         OnSceneChange,
-        OnPageChange
+        OnPageChange,
+        OnPlayerDead,
+        OnPlayerRespawned,
+        OnPause,
+        OnResume,
+        OnPlayerMove,
+        OnPlayerJump,
+        OnUIBack,
+        OnPlayerClick,
+        OnPlayerWeaponChange,
+        OnPlayerCycleWeapon,
+        OnPlayerLook,
+        OnPlayerCrouch
     }
 }
