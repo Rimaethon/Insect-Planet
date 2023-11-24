@@ -12,6 +12,7 @@ TagManager:
   - HazardRock
   - Bullet
   - Terrain
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Environment
   - Player
   - Terrain
-  - 
+  - InstancingCollider
   - 
   - 
   - 
