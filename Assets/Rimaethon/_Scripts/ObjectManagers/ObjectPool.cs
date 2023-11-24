@@ -189,7 +189,7 @@ namespace Insect_Planet._Scripts.ObjectManagers
                         trans.localRotation = rotation;
                         obj.SetActive(true);
                         Instance._spawnedObjects.Add(obj, prefab);
-                        obj.GetComponent<Enemy>().target = Instance.enemyTarget;
+                        obj.GetComponent<EnemyControllerBase>().target = Instance.enemyTarget;
                         return obj;
                     }
                 }
