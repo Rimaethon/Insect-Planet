@@ -1,0 +1,37 @@
+#pragma kernel cs_main
+#include <UnityShaderVariables.cginc>
+
+struct mesh_data
+{
+    float3 basePos;
+    float4x4 mat;
+};
+
+void rotate_2d(inout float2 v, const float r)
+{
+    float s, c;
+    sincos(r, s, c);
+    v = float2(v.x * c - v.y * s, v.x * s + v.y * c);
+}
+
+RWStructuredBuffer<mesh_data> data;
+float3 pusher_position;
+
+[numthreads(64,1,1)]
+void cs_main(uint3 id : SV_DispatchThreadID)
+{
+    float4x4 mat = data[id.x].mat;
+    float3 base_pos = data[id.x].basePos;
+
+    const float rotation = _Time.y * 0.3f;
+    rotate_2d(base_pos.xz, rotation);
+
+
+    const float3 new_pos = base_pos;
+
+    mat[0][3] = new_pos.x;
+    mat[1][3] = new_pos.y;
+    mat[2][3] = new_pos.z;
+
+    data[id.x].mat = mat;
+}
