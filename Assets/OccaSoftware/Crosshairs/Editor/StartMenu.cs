@@ -1,3 +1,5 @@
+using UnityEngine;
+using UnityEditor;
 
 namespace OccaSoftware.Crosshairs.Editor
 {
