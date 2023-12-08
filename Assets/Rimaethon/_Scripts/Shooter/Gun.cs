@@ -26,7 +26,7 @@ public class Gun : MonoBehaviour
     public bool alwaysShootAtTarget = true;
 
     [Tooltip("The enemy whos target will be used")]
-    public Enemy enemy;
+    public EnemyControllerBase enemyControllerBase;
 
     [Header("Prefab Settings")] [Tooltip("The projectile game object to instantiate when firing this gun")]
     public GameObject projectileGameObject;
@@ -147,9 +147,9 @@ public class Gun : MonoBehaviour
     public void AdjustAim()
     {
         // Special aiming for enemies
-        if (alwaysShootAtTarget && enemy != null)
+        if (alwaysShootAtTarget && enemyControllerBase != null)
         {
-            fireLocationTransform.LookAt(enemy.target);
+            fireLocationTransform.LookAt(enemyControllerBase.target);
             return;
         }
 
