@@ -1,111 +1,84 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Rimaethon._Scripts.Utility;
+using Rimaethon.Runtime.Managers;
+using Rimaethon.Scripts.Managers;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 2f;
-    public float lookSpeed = 60f;
     public float jumpPower = 8f;
     public float gravity = 9.81f;
 
-    public float jumpTimeLeniency = 0.1f;
-    public Shooter playerShooter;
-    public Health playerHealth;
-    public List<GameObject> disableWhileDead;
+    public WeaponController playerWeaponController;
+    [SerializeField] private float lerpTime=0.3f;
+    private CharacterController _characterController;
 
-    public CharacterController characterController;
-    public InputManager inputManager;
-    private bool doubleJumpAvaliable;
+    private Vector3 _moveDirection;
+    private float _timeToStopBeingLenient;
+    [SerializeField]private float targetMoveSpeed = 500f;
+    [SerializeField] private float moveSpeed = 1f;
+    private Vector3 _moveVector;
+    private Vector3 _localMoveDirection;
+    private Transform _cameraTransform;
 
-    private Vector3 moveDirection;
-    private float timeToStopBeingLenient;
-
-
-    private void Start()
+    public PlayerController(CharacterController characterController)
     {
-        if (playerHealth.currentHealth <= 0)
-        {
-            foreach (var inGameObject in disableWhileDead) inGameObject.SetActive(false);
-            return;
-        }
-
-        foreach (var inGameObject in disableWhileDead) inGameObject.SetActive(true);
-
-        SetUpCharacterController();
-        SetUpInputManger();
+        this._characterController = characterController;
     }
 
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        _characterController = GetComponent<CharacterController>();
+        if (Camera.main != null) _cameraTransform = Camera.main.transform;
+    }
 
+    private void OnEnable()
+    {
+        EventManager.Instance.AddHandler<Vector2>(GameEvents.OnPlayerMove, HandlePlayerMove);
+        EventManager.Instance.AddHandler(GameEvents.OnPlayerJump, HandlePlayerJump);
+    }
+
+    private void OnDisable()
+    {
+        if (EventManager.Instance == null) return;
+        EventManager.Instance.RemoveHandler<Vector2>(GameEvents.OnPlayerMove, HandlePlayerMove);
+        EventManager.Instance.RemoveHandler(GameEvents.OnPlayerJump, HandlePlayerJump);
+    }
     private void Update()
     {
-        ProcessMovement();
-        ProcessRotation();
-    }
+        float ypos = _moveDirection.y;
 
-    private void SetUpCharacterController()
-    {
-        characterController = GetComponent<CharacterController>();
-        if (characterController == null)
-            Debug.LogError(
-                "The player controller script does not have a character controller on the same game object!");
-    }
-
-    private void SetUpInputManger()
-    {
-        inputManager = InputManager.instance;
-    }
-
-    private void ProcessMovement()
-    {
-        //Get the input from the input manager
-        var leftRightInput = inputManager.horizontalMoveAxis;
-        //Debug.Log("The left right input value is:"+leftRightInput);
-        var forwardBackwardInput = inputManager.verticalMoveAxis;
-        var jumpPressed = inputManager.jumpPressed;
-
-        //Handle the control of the player while it is on the ground
-        if (characterController.isGrounded)
+        _moveDirection = _cameraTransform.rotation * _localMoveDirection;
+        _moveDirection.y = ypos;
+       if(!IsGrounded())
         {
-            doubleJumpAvaliable = true;
-            timeToStopBeingLenient = Time.time + jumpTimeLeniency;
-            //set the movement direction to be recieved input,set y to 0 since we are grounded
-            moveDirection = new Vector3(leftRightInput, 0, forwardBackwardInput);
-
-            //Set the move direction in relation to the transform instead of its global origin.
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection = moveDirection * moveSpeed;
-
-            if (jumpPressed) moveDirection.y = jumpPower;
-        }
-        else
-        {
-            moveDirection = new Vector3(leftRightInput * moveSpeed, moveDirection.y, forwardBackwardInput * moveSpeed);
-
-            moveDirection = transform.TransformDirection(moveDirection);
-
-            if (jumpPressed && Time.time < timeToStopBeingLenient) moveDirection.y = jumpPower;
-            if (jumpPressed && doubleJumpAvaliable)
-            {
-                moveDirection.y = jumpPower;
-                doubleJumpAvaliable = false;
-            }
+            _moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        moveDirection.y -= gravity * Time.deltaTime;
+        moveSpeed = Mathf.Lerp(moveSpeed, targetMoveSpeed, lerpTime* Time.deltaTime)*_localMoveDirection.x;
 
-        if (characterController.isGrounded && moveDirection.y < 0) moveDirection.y = -0.3f;
-
-
-        characterController.Move(moveDirection * Time.deltaTime);
+        _characterController.Move(_moveDirection * (moveSpeed * Time.deltaTime));
     }
-
-    private void ProcessRotation()
+    private bool IsGrounded()
     {
-        var horizontalLookInput = inputManager.horizontalLookAxis;
-        var verticalLookInput = inputManager.verticalLookAxis;
-        var playerRotation = transform.rotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(new Vector3(playerRotation.x / 2 * Time.deltaTime,
-            playerRotation.y + horizontalLookInput * lookSpeed * Time.deltaTime
-            , playerRotation.z));
+        return _characterController.isGrounded;
     }
+
+    private void HandlePlayerJump()
+    {
+        if (IsGrounded())
+        {
+            _moveDirection.y = jumpPower;
+        }
+    }
+
+
+    private void HandlePlayerMove(Vector2 movementVector)
+    {
+        _localMoveDirection = new Vector3(movementVector.x, 0, movementVector.y);
+    }
+
+
 }
