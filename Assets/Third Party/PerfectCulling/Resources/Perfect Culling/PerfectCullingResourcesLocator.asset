@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbb8bdccb6633c4786d4c2863d78bcc, type: 3}
+  m_Name: PerfectCullingResourcesLocator
+  m_EditorClassIdentifier: 
+  PointExtractorComputeShader: {fileID: 7200000, guid: a3f7eea458883934699d3b8ac87a9724,
+    type: 3}
+  UnlitTagMaterial: {fileID: 2100000, guid: 86d823e0ba800964db1bb11a5dea9e26, type: 2}
+  NativeLib: {fileID: -1121539586, guid: e526dc1bc88ffa84d883e5336edee109, type: 3}
+  NativeVulkanLib: {fileID: -1121539586, guid: ee100fdbff14f2b41bf661a8edf52133, type: 3}
+  Settings: {fileID: 11400000, guid: 79bb3dd1d5373774d9ce2a6c7290de41, type: 2}
+  ColorTable: {fileID: 11400000, guid: 7157b54efd3e0f34582ed1f504e504f6, type: 2}

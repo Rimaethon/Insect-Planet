@@ -1,0 +1,57 @@
+﻿#pragma kernel CSMain
+#pragma kernel CSExtract
+
+Texture2D<float4> Input;
+
+Texture2D<float4> Output_Read;
+RWTexture2D<float4> Output_Write;
+
+AppendStructuredBuffer<uint> AppendDataBuffer : register (u0);
+
+[numthreads(16, 16, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	uint r = 0;
+	uint g = Input[id.xy].g * 255.0;
+	uint b = Input[id.xy].b * 255.0;
+
+	float4 inRGBA = Input[id.xy];
+
+	if (r + g + b == 0)
+	{
+		return;
+	}
+	
+	GroupMemoryBarrierWithGroupSync();
+
+	// We could store a 0.0 to 1.0 value in alpha to represent the number of pixels
+	// I got no idea how to do that in a thread safe way though
+	Output_Write[uint2(g, b)] = float4(inRGBA.rgb, 0);
+}
+
+[numthreads(16, 16, 1)]
+void CSExtract(uint3 id : SV_DispatchThreadID)
+{
+#if SHADER_API_METAL
+	// Change doesn't become visible in Write. We have to use Read.
+	uint r = 0;
+	uint g = Output_Read[id.xy].g * 255;
+	uint b = Output_Read[id.xy].b * 255;
+#else
+	// Change doesn't become visible in Read. We have to use Write.
+	uint r = 0;
+	uint g = Output_Write[id.xy].g * 255;
+	uint b = Output_Write[id.xy].b * 255;
+#endif
+	
+	GroupMemoryBarrierWithGroupSync();
+
+	if (r + g + b <= 0)
+	{
+		return;
+	}
+	AppendDataBuffer.Append((b * 256 * 256) + (g * 256) + r);
+	
+	// Clear for next pass
+	Output_Write[uint2(id.x, id.y)] = float4(0, 0, 0, 0);
+}

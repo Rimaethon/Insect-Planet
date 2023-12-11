@@ -1,0 +1,169 @@
+***********************************
+*** Perfect Culling - Changelog ***
+***********************************
+
+
+# 1.2.1
+Optimized "Initialize" step (optimized world space to local space calculations)
+
+
+# 1.2.0
+FIXED: EndLayoutGroup: BeginLayoutGroup must be called first.
+FIXED: Native renderers potentially selecting empty LOD level
+FIXED: Already referenced additional occluders added again as renderers
+
+
+# 1.1.9
+ADDED: Native Vulkan Renderer (Experimental; Windows only at the moment)
+ADDED: Layer selection to Renderer Selection Window
+ADDED: Option to automatically update the bake speed for better estimates
+FIXED: Unreachable code warning in BitStreamReader
+FIXED: Native Renderer (OpenGL) not taking into account PerfectCullingRendererTag render mode 
+Final bake compression step parallelized for faster bake completion
+Quality of life changes
+
+
+# 1.1.8
+FIXED: Compile errors in Unity Unity 2019.1 and Unity 2019.2
+FIXED: Terrain failing build process if Terrain was on Layer 30
+
+
+# 1.1.7
+FIXED: Gizmos disappearing after entering and leaving play mode until assembly reload occured (in more recent Unity versions)
+ADDED: New OutOfBoundsBehaviour called IgnoreDoNothing (allows to ignore volume if camera was outside)
+Show warning if no bake group was added to add context why Bake button non-interactable
+
+
+# 1.1.6
+FIXED: Unwarranted warning "Hash doesn't match. Rebake might be required." when double-sided checkbox was enabled on PerfectCullingRendererTag
+
+
+# 1.1.5
+FIXED: Incorrect HashCode calculation causing issues in multi-terrain setups
+FIXED: Gizmos incorrectly took into account transform scaling
+ADDED: Option to attempt to find non-empty cell if sampled cell was empty
+
+
+
+# 1.1.4
+FIXED: Potentially not unloading volume asset data after scene transitions
+FIXED: Ignore unloaded scenes when using Bake All option
+FIXED: Fully restore loaded scenes at the time of using Bake All option
+FIXED: HDRP not visualizing Frustum Culling correctly
+FIXED: Merge-downsample visualization was not working correctly
+FIXED: Pipe not connected error in more recent Unity versions
+ADDED: PerfectCullingTerrain script to improve support for terrains
+ADDED: Profiler sections to make profiling easier
+ADDED: Empty Cell Behaviour option. Allows to cull everything or make everything visible if an unbaked/empty cell was active.
+ADDED: AlwaysIncludeVolume that allows to include cells that had been excluded
+ADDED: PerfectCullingMonoGroup to allow to cull any kind of UnityBehaviour along with a renderer (for instance allows to cull lights, scripts, etc.)
+ADDED: Ability to force a render mode to force it to be transparent or opaque
+ADDED: Allow Renderer Selection Window to filter for static occluders/occludee specifically
+ADDED: Ability to exclude probes on NavMesh that are too far away from XZ plane
+ADDED: Additional documentation
+Made ToggleForceRenderingOff the default option (will fallback to ToggleShadowcastMode in Unity 2018)
+Improved performance for applying renderer state changes
+Unity is set as default renderer now because the performance difference became more and more negligible as Unity is improving Editor performance.
+Quality of life changes here and there
+
+
+
+# 1.1.3.1
+FIXED: excludeInsideColliders option with ExcludeBelowColliderArraySamplingProvider excluding cells with an undesired offset 
+
+
+# 1.1.3
+FIXED: Missing deltaTime for FlyCamera demo script
+ADDED: Initial implementation for Portal Cells (allows to clamp to the portal cell instead of the closest cell when out of bounds)
+ADDED: Terrain to mesh convert utility (TerrainToMeshUtility component)
+ADDED: Customizable offset for ExcludeBelowColliderSamplingProvider
+ADDED: ExcludeBelowColliderArraySamplingProvider (this deprecates the original ExcludeBelowColliderSamplingProvider)
+ADDED: ExcludeInsideCollidersSamplingProvider
+ADDED: Calculate hash to inform about potential need of rebake
+ADDED: API to bake a single view point (useful for Editor functionality)
+ADDED: Layer to allow using different volumes for different cameras, etc.
+ADDED: Store bake time and duration in baked data asset
+FIXED: LoadAll<> loading more assets than necessary
+FIXED: Adjusted thread count, etc. for native renderer to make it even more compatible
+FIXED: Manually adding PerfectCullingVolume resulted in volume of size 0
+FIXED: Potential NullReferenceException for missing scripts attached to URP Lights
+FIXED: Null renderers in additional occluder array fails bake
+FIXED: Overflow while merge-downsampling bakes with more than 10M cells
+FIXED: Volume resizing being weird for some rotational values
+Removed path references to make the asset independent from location in project
+Some additional tweaks here and there
+
+# 1.1.2.2
+FIXED: PerfectCullingVolume visualization might not show renderers in Game View (was expecting a layer that however might be culled)
+FIXED: Potential exception caused by accessing UnityEditor.Lightmapping.lightingSettings (only Unity 2020 and higher)
+Removed log message that is no longer relevant
+
+
+# 1.1.2.1
+FIXED: Invalid (null) renderer in LODGroup causes the Renderer Selection Tool to fail
+FIXED: ETA in progress window doesn't make sense when cells are excluded (was not correctly deducting excluded cells)
+
+
+# 1.1.2
+FIXED: Harmless error for meshes that got more materials assigned than sub meshes
+FIXED: Potential Editor slow down selecting large bake data (introduced custom inspector that hides some irrelevant information)
+Improved macOS compatibility and bake speed (Windows is recommended for fastest bake times though)
+Added PerfectCulling.API namespace to centralize all the public API thus making it easier to use
+Added API to add and remove renderers from BakeGroup at run-time
+Added multi-scene bake support
+Print warning for missing renderers (Editor only)
+Added little size utility for scaling PerfectCullingVolume based on the bounds of the selected renderers
+Added "Fix" button that assist you in finding a valid cell size
+Added pre-calculated unique color table for better performance and even more determinism
+Added GUI support for additional occluders that are not managed by the asset (occlcuder but not occludee)
+Added Assembly Definition to Perfect Culling folder
+Patched up some typos in the documentation
+Some quality of life changes here and there
+
+
+# 1.1.1
+FIXED: Unnecessary scene reload when bake didn't even start (for instance no renderers added)
+FIXED: Correctly format numbers in ETA calculation dialog
+FIXED: Missing materials will now show a warning instead of not allowing to bake
+FIXED: Some warnings caused by scripts
+Native Renderer overhead significantly reduced (no more "Preparing sampling information", "Preparing meshes")
+Added ability to render objects double-sided (disables backface culling)
+Made example sampling provider (ExcludeBelowColliderSamplingProvider) a built-in sampling provider and made it more robust.
+Added two more built-in sampling providers: ExcludeFloatingSamplingProvider and ExcludeFarNavMeshSamplingProvider
+Reduced unnecessary memory allocations for some editor scripts.
+Some more polish and quality of life changes
+Updated documentation and video tutorial
+
+
+# 1.1
+FIXED: Exception caused by ToggleRenderer during scene changes
+FIXED: Renderers that use sub-materials failed to render correctly in some configurations
+FIXED: Harmless error spam caused by URP Lights when bake performed using Unity Renderer
+FIXED: Camera aligning to wrong cell in multi-volume setups
+FIXED: LODGroups not correctly taken into account when added to volume (please clear your renderers and re-add them)
+FIXED: Potential baking issues caused by rotated volumes
+Parallelized Merge-Downsample step to make it significantly faster
+General bake performance improvements
+Custom handles for more user-friendly volume scaling
+API to exclude cells from bake by placing volumes and/or custom scripts
+Added tag object to exclude renderers from culling
+Bake API allows to pass in additional occluders
+Ability to perform baking on the CPU (not recommended but should help for less powerful devices)
+Added option to change the out of bounds behaviour for volumes (cull the entire volume instead of clamping to nearest cell)
+Show error message when invalid renderers are detected
+Many smaller quality of life changes
+Additional documentation
+
+
+# 1.0.1
+FIXED: Compile error in Unity 2020
+Frustum Culling Visualization
+Improved bake performance
+Improved volume resizing
+Allow more Downsample+Merge iterations
+Improved transparency support
+Improved documentation
+Small tweaks
+
+# 1.0.0
+Initial release
