@@ -64,7 +64,7 @@ ModelImporter:
     importLights: 1
     nodeNameCollisionStrategy: 0
     fileIdsGeneration: 1
-    swapUVChannels: 0
+    swapUVChannels: 1
     generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
@@ -79,7 +79,7 @@ ModelImporter:
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15
-    secondaryUVHardAngle: 30
+    secondaryUVHardAngle: 87
     secondaryUVMarginMethod: 0
     secondaryUVMinLightmapResolution: 1
     secondaryUVMinObjectScale: 100
