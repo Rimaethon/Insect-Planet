@@ -22,14 +22,17 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Sun
   m_Shader: {fileID: -6465566751694194690, guid: a41d2568b4bcb3c4b8b4984dba3bcd0d, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _RECEIVE_SHADOWS_OFF
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
+  disabledShaderPasses:
+  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -47,12 +50,24 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CellDensity: 100
-    - _CellSpeed: 1.8
+    - _AlphaClip: 0
+    - _Blend: 0
+    - _CastShadows: 0
+    - _CellDensity: 171.2
+    - _CellSpeed: 4.15
+    - _Cull: 2
+    - _DstBlend: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _SolarFlare: 25
+    - _ReceiveShadows: 0
+    - _SolarFlare: 12.2
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
-    - _BaseColor: {r: 0.990566, g: 0.11467351, b: 0, a: 0}
-    - _CellColor: {r: 1, g: 0.45315808, b: 0, a: 0}
+    - _BaseColor: {r: 0.9221513, g: 0, b: 0.014484053, a: 0}
+    - _CellColor: {r: 13.149395, g: 0.20653501, b: 0, a: 0}
   m_BuildTextureStacks: []
