@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using AYellowpaper.SerializedCollections;
 using Rimaethon._Scripts.Utility;
+using Rimaethon.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +14,6 @@ namespace Rimaethon._Scripts.Controller
         [SerializeField] private List<AudioClip> backgroundMusicClips;
         [SerializeField] private Slider musicVolumeSlider;
         [SerializeField] private Slider soundEffectsVolumeSlider;
-        public SerializedDictionary<string, AudioClip> soundEffectsClips;
         private AudioSource musicSource;
 
 
