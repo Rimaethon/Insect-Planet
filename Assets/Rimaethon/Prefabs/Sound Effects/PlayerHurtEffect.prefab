@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1515603650488286217
+--- !u!1 &6757922776264719137
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1127319488519822885}
-  - component: {fileID: 5497548804412578294}
-  - component: {fileID: 88009290858083727}
-  - component: {fileID: 7958156403972729363}
-  - component: {fileID: 593060411956508912}
-  - component: {fileID: 2994036116951472063}
+  - component: {fileID: 4615708114838966835}
+  - component: {fileID: 5888591631088213318}
+  - component: {fileID: 2032605901073469747}
   m_Layer: 0
-  m_Name: EnemyKilledEffect
+  m_Name: PlayerHurtEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1127319488519822885
+--- !u!4 &4615708114838966835
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515603650488286217}
+  m_GameObject: {fileID: 6757922776264719137}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 183.02971, y: 9.999567, z: 289.8671}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,17 +32,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &5497548804412578294
+--- !u!82 &5888591631088213318
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515603650488286217}
+  m_GameObject: {fileID: 6757922776264719137}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: dbbd71e2b05b51f48abccbb76d3b803f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f208b3d7213ad5b4d91543018717cc04, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -131,13 +128,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &88009290858083727
+--- !u!114 &2032605901073469747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515603650488286217}
+  m_GameObject: {fileID: 6757922776264719137}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb0e35e8111ce0944b053d733f9cffb2, type: 3}
@@ -145,61 +142,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 5
   destroyChildrenOnDeath: 1
---- !u!114 &7958156403972729363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515603650488286217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f1ca701cf66d9347a2a80628653de0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  giblets:
-  - {fileID: 6155426268924199387, guid: 532bb75707f6bb448b4715c019040921, type: 3}
-  - {fileID: 3469785301326754146, guid: 96de47ef3e5d5fb45bc59a5cae4802f0, type: 3}
-  - {fileID: 4323085911394242862, guid: 91541acfb390aee42a1f069321387439, type: 3}
-  - {fileID: 5423024292409407709, guid: 3a22057e79d56c74c9181ca90d657b7b, type: 3}
-  - {fileID: 6488097458940939697, guid: 33bbc63cca56a9149bbb93fb69ac3b2f, type: 3}
-  numberToSpawn: 10
-  minimumForce: 20
-  maximumForce: 40
---- !u!114 &593060411956508912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515603650488286217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ff221cf24cafdc4da1e2cda4beab702, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfDrops: 1
-  drops:
-  - {fileID: 8025496173983849875, guid: 9221727c01cc6f04885c1543a92aea89, type: 3}
-  - {fileID: 8451758507711476815, guid: 8f6b70fdb25f98d498e0d1f21cbc0272, type: 3}
-  - {fileID: 6194793869883049914, guid: 9860b8ea97be43342a8d36e5a268816f, type: 3}
-  dropPercentages:
-  - 0.25
-  - 0.25
-  - 0.25
---- !u!114 &2994036116951472063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515603650488286217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b599eb99b3347f7459a2da3c66e9f2ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyEffect: {fileID: 0}
-  onDestroyEvent:
-    m_PersistentCalls:
-      m_Calls: []
