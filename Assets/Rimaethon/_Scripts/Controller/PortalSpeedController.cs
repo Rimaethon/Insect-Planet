@@ -7,41 +7,32 @@ using UnityEngine;
 public class PortalSpeedController : MonoBehaviour
 {
     [Header("Time settings")]
-   
+
     [SerializeField] private int accelerationStartDelayInMilliseconds;
     [SerializeField] private float accelerationEndTime;
     [SerializeField] private float decelerationStartTime;
     [SerializeField] private float decelerationEndTime;
-    
-    
+
+
     [Header("Speed settings")]
     [SerializeField] private float maxRotationSpeed;
     [SerializeField] private float minRotationSpeed;
 
-    public bool isStarting;
     private float _currentSpeed;
     private float _rotationSpeed;
     private float _timer;
 
     private CancellationTokenSource cancellationTokenSource;
     private CancellationToken cancellationToken;
-    private bool isStarted;
     private void Awake()
     {
     cancellationTokenSource = new CancellationTokenSource();
     cancellationToken = cancellationTokenSource.Token;
     }
 
-   
-    private void FixedUpdate()
+    private void Start()
     {
-        if (isStarting&&!isStarted)
-        {
-            StartPortal(cancellationToken).Forget();
-            isStarting = false;
-            isStarted = true;
-            
-        }
+        StartPortal(cancellationToken).Forget();
     }
 
     private void OnDisable()
@@ -52,16 +43,16 @@ public class PortalSpeedController : MonoBehaviour
         }
     }
 
- 
+
     private async UniTaskVoid StartPortal(CancellationToken cancellationTokenReference )
     {
-        
+
         _timer = 0;
 
-        
+
             while (_timer < accelerationEndTime&&!cancellationTokenReference.IsCancellationRequested)
             {
-                _timer += Time.deltaTime; 
+                _timer += Time.deltaTime;
                 _currentSpeed = Mathf.Lerp(0f, maxRotationSpeed, _timer / accelerationEndTime);
                 gameObject.transform.Rotate(0, 0, _currentSpeed * Time.deltaTime);
                 await UniTask.Yield();
@@ -80,10 +71,10 @@ public class PortalSpeedController : MonoBehaviour
                 gameObject.transform.Rotate(0, 0, _currentSpeed * Time.deltaTime);
                 await UniTask.Yield();
             }
-      
 
-        
+
+
     }
-    
-    
+
+
 }
