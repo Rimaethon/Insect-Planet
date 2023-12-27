@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: a65d9b2fb82f9c94c84d73a487cf0613
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _CloudsTexture: {fileID: 2800000, guid: c69ca91c5da35514c837c4e254f7f9d0, type: 3}
+  - _PolarMask: {fileID: 2800000, guid: 11de8dcc04cb0904595785802fa79e3a, type: 3}
+  - _CloudsNormals: {fileID: 2800000, guid: f630a5adaf8f7d34ea82aae28512b1a7, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

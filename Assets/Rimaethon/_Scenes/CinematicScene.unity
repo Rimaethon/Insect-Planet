@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 934029136}
-  m_IndirectSpecularColor: {r: 0.011227659, g: 0.010237928, b: 0.011954287, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5235,58 +5235,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 765734786}
     m_Modifications:
-    - target: {fileID: 455462163, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 455462163, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 455462163, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 455462163, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 455462163, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 455462165, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 1e7a9b840393a1844a01dc733ec032b2, type: 2}
-    - target: {fileID: 1499793982, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: isStarting
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1499793982, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: maxRotationSpeed
-      value: 2500
-      objectReference: {fileID: 0}
-    - target: {fileID: 1499793982, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: minRotationSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1499793982, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: accelerationEndTime
-      value: 7.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1499793982, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: decelerationEndTime
-      value: 8.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1499793982, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: decelerationStartTime
-      value: 7.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1499793982, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: accelerationStartDelayInMilliseconds
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1840480297628001241, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -5334,26 +5282,6 @@ PrefabInstance:
     - target: {fileID: 1840480297628001242, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
       propertyPath: m_Name
       value: PortalVFX_v4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1840480297628001242, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1840480297628001243, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4251794677194557957, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4822035308371741000, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4822035308371741000, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
-      propertyPath: m_LightProbeUsage
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
@@ -6164,27 +6092,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1840480297628001241, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
   m_PrefabInstance: {fileID: 1268506800}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1499793988
+--- !u!95 &1499793988 stripped
 Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1499793988, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
+  m_PrefabInstance: {fileID: 1268506800}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499793976}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1514610932 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4958317004240009577, guid: 16907412ff0031d438e9f41cb3822618, type: 3}
