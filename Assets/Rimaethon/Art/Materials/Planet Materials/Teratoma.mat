@@ -7,12 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tadmor 1
+  m_Name: Teratoma
   m_Shader: {fileID: 4800000, guid: a65d9b2fb82f9c94c84d73a487cf0613, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _ENABLEATMOSPHERE_ON
-  - _ENABLECITIES_ON
   - _ENABLECLOUDS_ON
   - _ENABLEWATER_ON
   m_LightmapFlags: 4
@@ -29,8 +28,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CitiesTexture:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 488419041cfa862479d186bcee3fd4f0, type: 3}
+        m_Scale: {x: 100, y: 100}
         m_Offset: {x: 0, y: 0}
     - _CloudsNormals:
         m_Texture: {fileID: 2800000, guid: f630a5adaf8f7d34ea82aae28512b1a7, type: 3}
@@ -40,11 +39,39 @@ Material:
         m_Texture: {fileID: 2800000, guid: c69ca91c5da35514c837c4e254f7f9d0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Cloudz:
+        m_Texture: {fileID: 2800000, guid: c69ca91c5da35514c837c4e254f7f9d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ColorTexture:
-        m_Texture: {fileID: 2800000, guid: 6d11d45063f503643845e34290d372a5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4aefb4ae25ad36044b51cf60e0679329, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailsNormals:
+        m_Texture: {fileID: 2800000, guid: 1f2a67893cc60524f87c0b7af939b5d7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Laava_Liquid:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Lava:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -57,23 +84,31 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NecessaryWaterMask:
-        m_Texture: {fileID: 2800000, guid: 41c9c7afcd20b24449b8206dee807974, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7cf225258879cb44ead89cbe51d10201, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normals:
-        m_Texture: {fileID: 2800000, guid: a2fe6130f35e1384c87734463bb29ead, type: 3}
+        m_Texture: {fileID: 2800000, guid: 37320dea29dca3f48b6cba00c6a12528, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _PolarMask:
-        m_Texture: {fileID: 2800000, guid: 11de8dcc04cb0904595785802fa79e3a, type: 3}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
+    - _PolarMask:
+        m_Texture: {fileID: 2800000, guid: 11de8dcc04cb0904595785802fa79e3a, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _SunsetTransition:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WavesNormals:
+        m_Texture: {fileID: 2800000, guid: 8af9ee134d9535c45bbff1a23185cd2a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -83,54 +118,63 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
-    - _AlphaClip: 0
     - _AlphaCutoff: 0.5
     - _AlphaCutoffEnable: 0
     - _AlphaDstBlend: 0
     - _AlphaSrcBlend: 1
-    - _Blend: 0
     - _BlendMode: 1
     - _BumpScale: 1
-    - _CitiesDetail: 4
-    - _CitiesSharpness: 0
-    - _CloudSpeed: 34.2
-    - _Cull: 2
+    - _CitiesDetail: 20
+    - _CitiesSharpness: 1
+    - _Citiesoffset: 0
+    - _CloudSpeed: 2
+    - _CloudsRelief: 1
     - _CullMode: 2
     - _CullModeForward: 2
     - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
     - _EnableAtmosphere: 1
-    - _EnableCities: 1
+    - _EnableCities: 0
     - _EnableClouds: 1
+    - _EnableLandLava: 0
     - _EnableWater: 1
     - _EnumFloat: 1
-    - _ExteriorIntensity: 0.25
-    - _ExteriorSize: 0.3
+    - _ExteriorIntensity: 0.38
+    - _ExteriorSize: 0.25
+    - _Float10: 1
+    - _ForceExterior: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _IlluminationBoost: 1
-    - _IlluminationSmoothness: 4
-    - _InteriorIntensity: 0.65
-    - _InteriorSize: 0.3
+    - _IlluminationAmbient: 0.579
+    - _IlluminationBoost: 1.25
+    - _IlluminationSmoothness: 14.91
+    - _InteriorIntensity: 0.752
+    - _InteriorSize: 1.11
     - _Metallic: 0
-    - _NormalsIntensity: 1
+    - _Mode: 0
+    - _NormalsIntensity: 2
     - _OcclusionStrength: 1
-    - _ReceiveShadows: 1
+    - _Parallax: 0.02
     - _ReceivesSSR: 0
-    - _ReliefIntensity: 2.05
-    - _ReliefSmoothness: 3.3
+    - _ReliefIntensity: 5
+    - _ReliefSmoothness: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
     - _ShadowMatteFilter: 2.006836
-    - _ShadowsSharpness: 10
-    - _ShadowsXOffset: -0.005
-    - _ShadowsYOffset: 0.0051
+    - _ShadowsIntensity: 1
+    - _ShadowsOffset: 0.0008
+    - _ShadowsSharpness: 0
+    - _ShadowsXOffset: -0.001
+    - _ShadowsYOffset: 0.0084
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SpecularIntensity: 1
+    - _SpecularIntensity: 0
+    - _SpecularSharpness: 0.518
+    - _SpecularSize: 1
     - _SrcBlend: 1
     - _StencilRef: 0
     - _StencilRefDepth: 0
@@ -142,30 +186,35 @@ Material:
     - _StencilWriteMaskDistortionVec: 64
     - _StencilWriteMaskGBuffer: 3
     - _StencilWriteMaskMV: 128
-    - _Surface: 0
     - _SurfaceType: 0
-    - _TonemappingIntensity: 0.46
+    - _TonemappingIntensity: 1
     - _TransparentBackfaceEnable: 0
     - _TransparentCullMode: 2
     - _TransparentSortPriority: 0
+    - _UVSec: 0
     - _UseShadowThreshold: 0
-    - _WorkflowMode: 1
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - _AtmosphereColor: {r: 1.39772, g: 0.9659636, b: 0.3585774, a: 0}
+    - _AtmosphereColor: {r: 0.65882355, g: 0.3840377, b: 0.32216474, a: 0}
     - _BaseColormodifier: {r: 1, g: 1, b: 1, a: 0}
-    - _Citiescolor: {r: 1.866066, g: 1.866066, b: 1.866066, a: 0}
-    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _ColorA: {r: 1.39772, g: 1.2879515, b: 0.34394157, a: 0.23921569}
+    - _Citiescolor: {r: 0, g: 0, b: 0, a: 0}
+    - _CloudShadowColor: {r: 0, g: 0.07058821, b: 0.3137255, a: 0}
+    - _CloudShadows: {r: 0.05732999, g: 0.1026346, b: 0.315, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorA: {r: 8, g: 5.3193717, b: 3.7277489, a: 0.105882354}
+    - _ColorTransparency: {r: 3.4808812, g: 3.4808812, b: 3.4808812, a: 0.39607844}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _IlluminationAmbient: {r: 0.19600001, g: 0.08620843, b: 0.0524507, a: 0}
-    - _LightSource: {r: 10.97, g: -0.6, b: -35.95, a: 0}
-    - _ShadowColorA: {r: 0.09803921, g: 0.4117647, b: 0.10443938, a: 1}
+    - _EvenigColor: {r: 0.29799998, g: 0.10836363, b: 0, a: 0}
+    - _IlluminationAmbient: {r: 0.3301887, g: 0.22480363, b: 0.2138958, a: 0}
+    - _LightSource: {r: 0.19, g: -0.38, b: -0.59, a: 8.26}
+    - _ShadowColor: {r: 0.07063498, g: 0.10829547, b: 0.255, a: 1}
+    - _ShadowColorA: {r: 0.525, g: 0.2672913, b: 0, a: 1}
+    - _ShadowsColorIntensity: {r: 0.30828, g: 0.62634665, b: 0.734, a: 1}
     - _SkyblendA: {r: 0.491436, g: 0.5812334, b: 0.748, a: 0}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _WaterColor: {r: 0.42646235, g: 0.5176471, b: 0.28235295, a: 0}
+    - _SunsetColor: {r: 0.3685, g: 0.55275, b: 0.737, a: 0}
+    - _WaterColor: {r: 0.7490196, g: 0.47749004, b: 0.34529802, a: 0}
   m_BuildTextureStacks: []

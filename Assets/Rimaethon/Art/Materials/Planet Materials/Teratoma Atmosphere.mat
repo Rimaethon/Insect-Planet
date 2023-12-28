@@ -1,0 +1,241 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Teratoma Atmosphere
+  m_Shader: {fileID: 4800000, guid: f10d4a409c3ad3841834bf3c21c673ea, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _BLENDMODE_ADD
+  - _DISABLE_SSR
+  - _ENABLEATMOSPHERE1_ON
+  - _ENABLEATMOSPHERE_ON
+  - _ENABLECITIES1_ON
+  - _ENABLECITIES_ON
+  - _ENABLECLOUDS1_ON
+  - _ENABLECLOUDS_ON
+  - _ENABLEWATER1_ON
+  - _ENABLEWATER_ON
+  - _SURFACE_TYPE_TRANSPARENT
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    MotionVector: User
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cities1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CitiesTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CitiesTexture1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CloudsNormals:
+        m_Texture: {fileID: 2800000, guid: 8f8da48b88c08f14fb4f24347ce6850a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CloudsNormals1:
+        m_Texture: {fileID: 2800000, guid: f630a5adaf8f7d34ea82aae28512b1a7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CloudsTexture:
+        m_Texture: {fileID: 2800000, guid: fe657274ce6c5054bae359f68db92e1f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CloudsTexture1:
+        m_Texture: {fileID: 2800000, guid: c69ca91c5da35514c837c4e254f7f9d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CloudsTexture3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorTexture:
+        m_Texture: {fileID: 2800000, guid: 41af227b5b9ec55429317fa5ceb01a1d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorTexture1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NecessaryWaterMask:
+        m_Texture: {fileID: 2800000, guid: 278d0545a2127a040ab5d228b97bd379, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NecessaryWaterMask1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normals:
+        m_Texture: {fileID: 2800000, guid: 1907237ddf9d1cf4bb68e66ec44f0787, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normals1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PolarMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PolarMask1:
+        m_Texture: {fileID: 2800000, guid: 11de8dcc04cb0904595785802fa79e3a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AddPrecomputedVelocity: 0
+    - _AlphaClip: 0
+    - _AlphaCutoff: 0.5
+    - _AlphaCutoffEnable: 0
+    - _AlphaDstBlend: 1
+    - _AlphaSrcBlend: 1
+    - _Blend: 0
+    - _BlendMode: 1
+    - _BumpScale: 1
+    - _CitiesDetail: 6.1
+    - _CitiesDetail1: 4
+    - _CitiesSharpness: 0
+    - _CloudSpeed: 1
+    - _CloudSpeed1: 1
+    - _Cull: 2
+    - _CullMode: 1
+    - _CullModeForward: 1
+    - _Cutoff: 0.5
+    - _DoubleSidedEnable: 0
+    - _DoubleSidedNormalMode: 2
+    - _DstBlend: 1
+    - _EnableAtmosphere: 1
+    - _EnableAtmosphere1: 1
+    - _EnableCities: 1
+    - _EnableCities1: 1
+    - _EnableClouds: 1
+    - _EnableClouds1: 1
+    - _EnableWater: 1
+    - _EnableWater1: 1
+    - _EnumFloat: 2
+    - _EnumFloat1: 0
+    - _ExteriorIntensity: 0.038
+    - _ExteriorIntensity1: 0.25
+    - _ExteriorSize: 1
+    - _ExteriorSize1: 0.313
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _IlluminationSmoothness: 4
+    - _IlluminationSmoothness1: 4
+    - _InteriorIntensity: 0.65
+    - _InteriorIntensity1: 0.65
+    - _InteriorSize: 0.3
+    - _InteriorSize1: 0.3
+    - _Metallic: 0
+    - _NormalsIntensity: 2
+    - _NormalsIntensity1: 1
+    - _OcclusionStrength: 1
+    - _ReceiveShadows: 1
+    - _ReceivesSSR: 0
+    - _ReliefIntensity: 2
+    - _ReliefIntensity1: 2
+    - _ReliefSmoothness: 2
+    - _ReliefSmoothness1: 2
+    - _RenderQueueType: 5
+    - _RequireSplitLighting: 0
+    - _ShadowMatteFilter: 2.006836
+    - _ShadowsSharpness: 2.58
+    - _ShadowsSharpness1: 2.5
+    - _ShadowsXOffset: -0.005
+    - _ShadowsXOffset1: -0.005
+    - _ShadowsYOffset: -0.005
+    - _ShadowsYOffset1: -0.005
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SpecularIntensity: 1
+    - _SpecularIntensity1: 1
+    - _SrcBlend: 1
+    - _StencilRef: 2
+    - _StencilRefDepth: 32
+    - _StencilRefDistortionVec: 64
+    - _StencilRefGBuffer: 34
+    - _StencilRefMV: 160
+    - _StencilWriteMask: 3
+    - _StencilWriteMaskDepth: 48
+    - _StencilWriteMaskDistortionVec: 64
+    - _StencilWriteMaskGBuffer: 51
+    - _StencilWriteMaskMV: 176
+    - _Surface: 0
+    - _SurfaceType: 1
+    - _TransparentBackfaceEnable: 0
+    - _TransparentCullMode: 1
+    - _TransparentSortPriority: 0
+    - _UseShadowThreshold: 0
+    - _WorkflowMode: 1
+    - _ZTestDepthEqualForOpaque: 4
+    - _ZTestGBuffer: 4
+    - _ZTestTransparent: 4
+    - _ZWrite: 1
+    m_Colors:
+    - _AtmosphereColor: {r: 0.20392157, g: 0.033485204, b: 0.007843131, a: 0}
+    - _AtmosphereColor1: {r: 0.3764706, g: 1.027451, b: 1.498039, a: 0}
+    - _BaseColormodifier: {r: 1, g: 1, b: 1, a: 0}
+    - _BaseColormodifier1: {r: 1, g: 1, b: 1, a: 0}
+    - _Citiescolor: {r: 84.33185, g: 17.874641, b: 110.13088, a: 1}
+    - _Citiescolor1: {r: 7.906699, g: 2.649365, b: 1.200494, a: 0}
+    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _ColorA: {r: 4.541205, g: 4.541205, b: 4.541205, a: 0.41568628}
+    - _ColorA1: {r: 4.541205, g: 4.541205, b: 4.541205, a: 0.3607843}
+    - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _IlluminationAmbient: {r: 0.26649126, g: 0.1903509, b: 0.43400002, a: 0}
+    - _IlluminationAmbient1: {r: 0.090196066, g: 0.06666665, b: 0.14901957, a: 0}
+    - _LightSource: {r: 0, g: 100, b: 0, a: 0}
+    - _LightSource1: {r: 1, g: 0, b: 0, a: 0}
+    - _LightSourceAtmo: {r: 0, g: -0.52, b: -1, a: 0}
+    - _ShadowColorA: {r: 0.09803919, g: 0.23137257, b: 0.41176468, a: 1}
+    - _ShadowColorA1: {r: 0.09803919, g: 0.23137257, b: 0.41176468, a: 1}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _WaterColor: {r: 0.14470401, g: 0.22769603, b: 0.266, a: 0.18039216}
+    - _WaterColor1: {r: 0.28235298, g: 0.44313726, b: 0.517647, a: 0}
+  m_BuildTextureStacks: []
