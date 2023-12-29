@@ -1,263 +1,141 @@
-﻿using System.Collections;
+﻿using System;
+using Rimaethon._Scripts.Utility;
+using Rimaethon.Scripts.Managers;
+using Rimaethon.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+namespace Rimaethon.Runtime.Managers
 {
-    // A global instance for scripts to reference
-    public static InputManager instance;
-
-    [Header("Player Movement Input")] [Tooltip("The horizontal movmeent input of the player.")]
-    public float horizontalMoveAxis;
-
-    [Tooltip("The vertical movement input of the player.")]
-    public float verticalMoveAxis;
-
-    [Header("Look Around input")] [Tooltip("The horizontal look input")]
-    public float horizontalLookAxis;
-
-    [Tooltip("The vertical look input")] public float verticalLookAxis;
-
-    [Header("Player Fire Input")] [Tooltip("Whether or not the fire button was pressed this frame")]
-    public bool firePressed;
-
-    [Tooltip("Whether or not the fire button is being held down")]
-    public bool fireHeld;
-
-    [Header("Player Jump Input")] [Tooltip("Whether or not the jump button was pressed this fame")]
-    public bool jumpPressed;
-
-    [Tooltip("Whether or not the jump button is being held down")]
-    public bool jumpHeld;
-
-    [Header("Pause Input")] [Tooltip("Whether or not the pause button was pressed this frame")]
-    public bool pausePressed;
-
-    [Header("Cycle weapon input")] [Tooltip("The input from the axis that cycles weapons")]
-    public float cycleWeaponInput;
-
-    [Header("Next weapon input")] [Tooltip("Whether or not the next weapon button was pressed this frame")]
-    public bool nextWeaponPressed;
-
-    [Header("Previous weapon input")] [Tooltip("Whether or not the previous weapon button was pressed this frame")]
-    public bool previousWeaponPressed;
-
-    /// <summary>
-    ///     Description:
-    ///     Standard Unity Function called when the script is loaded
-    ///     Input:
-    ///     none
-    ///     Return:
-    ///     void (no return)
-    /// </summary>
-    private void Awake()
+    public class InputManager : PrivatePersistentSingleton<InputManager>,PlayerInputActionMaps.IPlayerActions
     {
-        // Set up the instance of this
-        if (instance == null)
-            instance = this;
-        else
-            Destructable.DoDestroy(gameObject);
+        private bool _isPlayerDead;
+        private float _movementDirection;
+        private PlayerInputActionMaps _playerInputs;
+
+   
+
+        private void OnEnable()
+        {
+            EnableInputs();
+            EventManager.Instance.AddHandler(GameEvents.OnPlayerDead, HandlePlayerDead);
+            EventManager.Instance.AddHandler(GameEvents.OnPlayerRespawned, HandlePlayerRevive);
+            EventManager.Instance.AddHandler(GameEvents.OnPause, DisableMovement);
+            EventManager.Instance.AddHandler(GameEvents.OnResume, EnableInputs);
+        }
+
+        private void OnDisable()
+        {
+            if (EventManager.Instance == null) return;
+            EventManager.Instance.RemoveHandler(GameEvents.OnPlayerDead, HandlePlayerDead);
+            EventManager.Instance.RemoveHandler(GameEvents.OnPlayerRespawned, HandlePlayerRevive);
+            EventManager.Instance.RemoveHandler(GameEvents.OnPause, DisableMovement);
+            EventManager.Instance.RemoveHandler(GameEvents.OnResume, EnableInputs);
+        }
+
+        protected override void Awake()
+        {
+            _playerInputs = new PlayerInputActionMaps(); 
+            base.Awake();
+        }
+
+
+        public void OnMovement(InputAction.CallbackContext context)
+        {
+            Vector2 movementVector = context.ReadValue<Vector2>();
+            EventManager.Instance.Broadcast(GameEvents.OnPlayerMove, movementVector);
+        }
+
+        public void OnFire(InputAction.CallbackContext context)
+        {
+            EventManager.Instance.Broadcast(GameEvents.OnPlayerClick);
+        }
+
+        public void OnCycleWeapon(InputAction.CallbackContext context)
+        {
+            if(context.ReadValue<float>()==0) return;
+            int value = context.ReadValue<float>()>0?1:-1;
+            EventManager.Instance.Broadcast(GameEvents.OnPlayerCycleWeapon, value);
+        }
+
+        public void OnChangeWeaponNum(InputAction.CallbackContext context)
+        {
+            EventManager.Instance.Broadcast(GameEvents.OnPlayerWeaponChange, context.ReadValue<float>());
+        }
+
+        public void OnCrouch(InputAction.CallbackContext context)
+        {
+            
+            EventManager.Instance.Broadcast(GameEvents.OnPlayerCrouch);
+
+            if (context.canceled)
+            { 
+                EventManager.Instance.Broadcast(GameEvents.OnPlayerCrouch);
+            }
+            
+        }
+
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            EventManager.Instance.Broadcast(GameEvents.OnPlayerJump);
+        }
+
+        public void OnMove(InputAction.CallbackContext context)
+        {
+            Vector2 movementVector = context.ReadValue<Vector2>().normalized;
+            EventManager.Instance.Broadcast<Vector2>(GameEvents.OnPlayerMove, movementVector);
+        }
+
+        public void OnLook(InputAction.CallbackContext context)
+        {
+            Vector2 lookVector = context.ReadValue<Vector2>();
+            EventManager.Instance.Broadcast<Vector2>(GameEvents.OnPlayerLook, lookVector);
+        }
+
+        public void OnPause(InputAction.CallbackContext context)
+        {
+            EventManager.Instance.Broadcast(GameEvents.OnUIBack);
+        }
+
+       
+
+
+        private void HandlePlayerDead()
+        {
+            _isPlayerDead = true;
+            DisableMovement();
+        }
+
+        private void HandlePlayerRevive()
+        {
+            _isPlayerDead = false;
+            EnableInputs();
+        }
+
+        private void DisableMovement()
+        {
+            _playerInputs.Player.Movement.performed -= OnMovement;
+            _playerInputs.Player.Jump.performed -= OnJump;
+        }
+
+
+        private void EnableInputs()
+        {
+            _playerInputs.Enable();
+            Debug.Log("The player inputs are enabled");
+            _playerInputs.Player.Movement.performed += OnMovement;
+            _playerInputs.Player.Movement.canceled += OnMovement;
+            _playerInputs.Player.ChangeWeaponNum.performed += OnChangeWeaponNum;
+            _playerInputs.Player.Fire.performed += OnFire;
+            _playerInputs.Player.Look.performed += OnLook;
+            _playerInputs.Player.Look.canceled += OnLook;
+            _playerInputs.Player.CycleWeapon.performed += OnCycleWeapon;
+            _playerInputs.Player.Jump.performed += OnJump;  
+            _playerInputs.Player.Pause.performed += OnPause;
+            _playerInputs.Player.Crouch.performed += OnCrouch;
+            _playerInputs.Player.Crouch.canceled += OnCrouch;
+        }
     }
 
-    /// <summary>
-    ///     Description:
-    ///     Reads and stores the movement input
-    ///     Input:
-    ///     CallbackContext callbackContext
-    ///     Return:
-    ///     void (no return)
-    /// </summary>
-    /// <param name="callbackContext">The context of the movement input</param>
-    public void ReadMovementInput(InputAction.CallbackContext context)
-    {
-        var inputVector = context.ReadValue<Vector2>();
-        horizontalMoveAxis = inputVector.x;
-        verticalMoveAxis = inputVector.y;
-    }
-
-    /// <summary>
-    ///     Description:
-    ///     Reads and stores the look input
-    ///     Input:
-    ///     CallbackContext callbackContext
-    ///     Return:
-    ///     void (no return)
-    /// </summary>
-    /// <param name="callbackContext">The context of the look input</param>
-    public void ReadLookInput(InputAction.CallbackContext context)
-    {
-        var inputVector = context.ReadValue<Vector2>();
-        horizontalLookAxis = inputVector.x;
-        verticalLookAxis = inputVector.y;
-    }
-
-    /// <summary>
-    ///     Description:
-    ///     Reads and stores the fire input
-    ///     Input:
-    ///     CallbackContext callbackContext
-    ///     Return:
-    ///     void (no return)
-    /// </summary>
-    /// <param name="callbackContext">The context of the fire input</param>
-    public void ReadFireInput(InputAction.CallbackContext context)
-    {
-        firePressed = !context.canceled;
-        fireHeld = !context.canceled;
-        StartCoroutine("ResetFireStart");
-    }
-
-    /// <summary>
-    ///     Description
-    ///     Coroutine that resets the fire pressed variable after one frame
-    ///     Input:
-    ///     none
-    ///     Return:
-    ///     IEnumerator
-    /// </summary>
-    /// <returns>IEnumerator: Allows this to function as a coroutine</returns>
-    private IEnumerator ResetFireStart()
-    {
-        yield return new WaitForEndOfFrame();
-        firePressed = false;
-    }
-
-    /// <summary>
-    ///     Description:
-    ///     Reads and stores the jump input
-    ///     Input:
-    ///     CallbackContext callbackContext
-    ///     Return:
-    ///     void (no return)
-    /// </summary>
-    /// <param name="callbackContext">The context of the jump input</param>
-    public void ReadJumpInput(InputAction.CallbackContext context)
-    {
-        jumpPressed = !context.canceled;
-        jumpHeld = !context.canceled;
-        StartCoroutine("ResetJumpStart");
-    }
-
-    /// <summary>
-    ///     Description
-    ///     Coroutine that resets the jump pressed variable after one frame
-    ///     Input:
-    ///     none
-    ///     Return:
-    ///     IEnumerator
-    /// </summary>
-    /// <returns>IEnumerator: Allows this to function as a coroutine</returns>
-    private IEnumerator ResetJumpStart()
-    {
-        yield return new WaitForEndOfFrame();
-        jumpPressed = false;
-    }
-
-    /// <summary>
-    ///     Description:
-    ///     Reads and stores the pause input
-    ///     Input:
-    ///     CallbackContext callbackContext
-    ///     Return:
-    ///     void (no return)
-    /// </summary>
-    /// <param name="callbackContext">The context of the pause input</param>
-    public void ReadPauseInput(InputAction.CallbackContext context)
-    {
-        pausePressed = !context.canceled;
-        StartCoroutine(ResetPausePressed());
-    }
-
-    /// <summary>
-    ///     Description
-    ///     Coroutine that resets the paused pressed variable after one frame
-    ///     Input:
-    ///     none
-    ///     Return:
-    ///     IEnumerator
-    /// </summary>
-    /// <returns>IEnumerator: Allows this to function as a coroutine</returns>
-    private IEnumerator ResetPausePressed()
-    {
-        yield return new WaitForEndOfFrame();
-        pausePressed = false;
-    }
-
-    /// <summary>
-    ///     Description:
-    ///     Reads and stores the cycle weapon input
-    ///     Input:
-    ///     CallbackContext callbackContext
-    ///     Return:
-    ///     void (no return)
-    /// </summary>
-    /// <param name="callbackContext">The context of the cycle weapon input</param>
-    public void ReadCycleWeaponInput(InputAction.CallbackContext context)
-    {
-        var mouseScrollInput = context.ReadValue<Vector2>();
-        if (mouseScrollInput.y == 0)
-            cycleWeaponInput = 0;
-        else
-            cycleWeaponInput = Mathf.Sign(mouseScrollInput.y);
-    }
-
-    /// <summary>
-    ///     Description:
-    ///     Reads and stores the next weapon input
-    ///     Input:
-    ///     CallbackContext callbackContext
-    ///     Return:
-    ///     void (no return)
-    /// </summary>
-    /// <param name="callbackContext">The context of the next weapon input</param>
-    public void ReadNextWeaponInput(InputAction.CallbackContext context)
-    {
-        nextWeaponPressed = !context.canceled;
-        StartCoroutine("ResetNextWeaponPressedStart");
-    }
-
-    /// <summary>
-    ///     Description
-    ///     Coroutine that resets the next weapon pressed variable after one frame
-    ///     Input:
-    ///     none
-    ///     Return:
-    ///     IEnumerator
-    /// </summary>
-    /// <returns>IEnumerator: Allows this to function as a coroutine</returns>
-    private IEnumerator ResetNextWeaponPressedStart()
-    {
-        yield return new WaitForEndOfFrame();
-        nextWeaponPressed = false;
-    }
-
-    /// <summary>
-    ///     Description:
-    ///     Reads and stores the previous weapon input
-    ///     Input:
-    ///     CallbackContext callbackContext
-    ///     Return:
-    ///     void (no return)
-    /// </summary>
-    /// <param name="callbackContext">The context of the previous weapon input</param>
-    public void ReadPreviousWeaponInput(InputAction.CallbackContext context)
-    {
-        previousWeaponPressed = !context.canceled;
-        StartCoroutine("ResetPreviousWeaponPressedStart");
-    }
-
-    /// <summary>
-    ///     Description
-    ///     Coroutine that resets the previous weapon pressed variable after one frame
-    ///     Input:
-    ///     none
-    ///     Return:
-    ///     IEnumerator
-    /// </summary>
-    /// <returns>IEnumerator: Allows this to function as a coroutine</returns>
-    private IEnumerator ResetPreviousWeaponPressedStart()
-    {
-        yield return new WaitForEndOfFrame();
-        previousWeaponPressed = false;
-    }
+   
 }
