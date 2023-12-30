@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 934029136}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.011227659, g: 0.010237928, b: 0.011954287, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -734,7 +734,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82493167}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -931,6 +931,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1176032424, guid: 228f575605b398c4dbc249e2c4406490, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.033450842
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176032424, guid: 228f575605b398c4dbc249e2c4406490, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.44980398
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176032424, guid: 228f575605b398c4dbc249e2c4406490, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.560137
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176032424, guid: 228f575605b398c4dbc249e2c4406490, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.0024364295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176032424, guid: 228f575605b398c4dbc249e2c4406490, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0031734558
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176032424, guid: 228f575605b398c4dbc249e2c4406490, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.999406
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176032424, guid: 228f575605b398c4dbc249e2c4406490, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.034230445
+      objectReference: {fileID: 0}
     - target: {fileID: 5721086142752933808, guid: 228f575605b398c4dbc249e2c4406490, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -4056,7 +4084,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 910375716}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -5286,6 +5314,10 @@ PrefabInstance:
     - target: {fileID: 1840480297628001242, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
       propertyPath: m_Name
       value: PortalVFX_v4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1840480297628001243, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e53223a3c58ab244babc8bdf3b8eae8, type: 3}
