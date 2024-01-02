@@ -1,3 +1,4 @@
+using Rimaethon._Scripts.Health_Damage;
 using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
@@ -78,7 +79,7 @@ public class EnemyDamage : MonoBehaviour
         if (collidedHealth == null && collision.rigidbody != null)
             collidedHealth = collision.rigidbody.GetComponent<EnemyHealth>();
         if (collidedHealth != null)
-            if (collidedHealth.teamId != teamId)
+            if (collidedHealth.teamID != teamId)
             {
                 collidedHealth.TakeDamage(damageAmount);
                 if (destroyAfterDamage) Destructable.DoDestroy(gameObject);
@@ -95,13 +96,13 @@ public class EnemyDamage : MonoBehaviour
     ///     void (no return)
     /// </summary>
     /// <param name="collision">The Collider that has been collided with</param>
-    private void DealDamage(Collider collision)
+   private void DealDamage(Collider collision)
     {
         var collidedHealth = collision.gameObject.GetComponentInParent<EnemyHealth>();
         if (collidedHealth == null && collision.attachedRigidbody != null)
             collidedHealth = collision.attachedRigidbody.GetComponent<EnemyHealth>();
         if (collidedHealth != null)
-            if (collidedHealth.teamId != teamId)
+            if (collidedHealth.teamID != teamId)
             {
                 collidedHealth.TakeDamage(damageAmount);
                 if (destroyAfterDamage) Destructable.DoDestroy(gameObject);
