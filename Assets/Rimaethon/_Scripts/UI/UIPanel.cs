@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,30 +7,38 @@ namespace Rimaethon._Scripts.UI
     public class UIPanel : UIPage
     {
         [SerializeField] private Transform relatedUIPages;
+        [SerializeField] private List<UIPage> _subsetPages = new List<UIPage>();
         private UIPage _currentPage;
-        private readonly List<UIPage> _subsetPages = new();
 
-
-        private void Awake()
+        private void OnEnable()
         {
-            FindChildPages();
+            relatedUIPages.gameObject.SetActive(true);
+        }
+        private void OnDisable()
+        {
+            relatedUIPages.gameObject.SetActive(false);
+        }
+        public void HandlePageOpening(int index)
+        {
+            if (index < 0 || index >= _subsetPages.Count)
+            {
+                Debug.LogError("Index out of range");
+                return;
+            }
+
+            if (_currentPage != null)
+            {
+                if(_currentPage._isAnimating|| _currentPage==_subsetPages[index])
+                    return;
+                _currentPage.gameObject.SetActive(true);
+                _currentPage.ClosePage();
+            }
+            _currentPage = _subsetPages[index];
+            _currentPage.gameObject.SetActive(true);
+            _currentPage.OpenPage();
         }
 
 
-        public void ClosePanel()
-        {
-            foreach (var page in _subsetPages) page.ClosePage();
-        }
 
-        private void FindChildPages()
-        {
-            foreach (Transform child in relatedUIPages)
-                if (child.GetComponent<UIPage>())
-                {
-                    _subsetPages.Add(child.GetComponent<UIPage>());
-                    child.GetComponent<UIPage>().ClosePage();
-
-                }
-        }
     }
 }

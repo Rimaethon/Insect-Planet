@@ -4,14 +4,14 @@ namespace Rimaethon._Scripts.UI
 {
     public class UIPage : MonoBehaviour
     {
-        protected bool _isOpen;
-
+        public bool _isOpen;
+        public bool _isAnimating;
         public void ClosePage()
         {
             if (!_isOpen) return;
+
             StartCoroutine(UIAnimationHelperMethods.SlideOut(gameObject.GetComponent<RectTransform>(), UIDirection.UP,
-                0.5f,
-                null));
+                2f));
             Debug.Log("Closing Page");
             _isOpen = false;
         }
@@ -20,8 +20,7 @@ namespace Rimaethon._Scripts.UI
         {
             if (_isOpen) return;
             StartCoroutine(UIAnimationHelperMethods.SlideIn(gameObject.GetComponent<RectTransform>(), UIDirection.UP,
-                0.5f,
-                null));
+                2f));
             Debug.Log("Opening Page");
             _isOpen = true;
         }
