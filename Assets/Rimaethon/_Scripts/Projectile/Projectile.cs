@@ -19,6 +19,6 @@ public class Projectile : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
-        transform.position = transform.position + transform.forward * projectileSpeed * Time.deltaTime;
+        transform.position = transform.position + transform.forward * (projectileSpeed * Time.deltaTime);
     }
 }

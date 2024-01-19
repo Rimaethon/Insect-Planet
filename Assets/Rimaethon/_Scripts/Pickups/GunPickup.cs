@@ -19,7 +19,7 @@ public class GunPickup : Pickup
     /// <param name="collision">The collider that is picking this up</param>
     public override void DoOnPickup(Collider collision)
     {
-        var shooter = collision.gameObject.GetComponentInChildren<Shooter>();
+        var shooter = collision.gameObject.GetComponentInChildren<WeaponController>();
         if (collision.tag == "Player" && shooter != null) shooter.MakeGunAvailable(gunIndexToMakeAvailable);
         base.DoOnPickup(collision);
     }

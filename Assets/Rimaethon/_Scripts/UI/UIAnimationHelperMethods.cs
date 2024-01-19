@@ -4,16 +4,17 @@ using UnityEngine.Events;
 
 namespace Rimaethon._Scripts.UI
 {
-    public class UIAnimationHelperMethods : MonoBehaviour
+    public class UIAnimationHelperMethods
     {
-        private static bool isAnimating;
+        private static bool isSlideInAnimating;
+        private static bool isSlideOutAnimating;
 
         public static IEnumerator ZoomIn(RectTransform Transform, float Speed, UnityEvent OnEnd)
         {
-            if (isAnimating)
+            if (isSlideInAnimating)
                 yield break;
 
-            isAnimating = true;
+            isSlideInAnimating = true;
 
             float time = 0;
             while (time < 1)
@@ -27,15 +28,15 @@ namespace Rimaethon._Scripts.UI
 
             OnEnd?.Invoke();
 
-            isAnimating = false;
+            isSlideInAnimating = false;
         }
 
         public static IEnumerator ZoomOut(RectTransform Transform, float Speed, UnityEvent OnEnd)
         {
-            if (isAnimating)
+            if (isSlideInAnimating)
                 yield break;
 
-            isAnimating = true;
+            isSlideInAnimating = true;
 
             float time = 0;
             while (time < 1)
@@ -48,15 +49,15 @@ namespace Rimaethon._Scripts.UI
             Transform.localScale = Vector3.zero;
             OnEnd?.Invoke();
 
-            isAnimating = false;
+            isSlideInAnimating = false;
         }
 
         public static IEnumerator FadeIn(CanvasGroup CanvasGroup, float Speed, UnityEvent OnEnd)
         {
-            if (isAnimating)
+            if (isSlideInAnimating)
                 yield break;
 
-            isAnimating = true;
+            isSlideInAnimating = true;
 
             CanvasGroup.blocksRaycasts = true;
             CanvasGroup.interactable = true;
@@ -72,15 +73,15 @@ namespace Rimaethon._Scripts.UI
             CanvasGroup.alpha = 1;
             OnEnd?.Invoke();
 
-            isAnimating = false;
+            isSlideInAnimating = false;
         }
 
         public static IEnumerator FadeOut(CanvasGroup CanvasGroup, float Speed, UnityEvent OnEnd)
         {
-            if (isAnimating)
+            if (isSlideInAnimating)
                 yield break;
 
-            isAnimating = true;
+            isSlideInAnimating = true;
 
             CanvasGroup.blocksRaycasts = false;
             CanvasGroup.interactable = false;
@@ -96,59 +97,67 @@ namespace Rimaethon._Scripts.UI
             CanvasGroup.alpha = 0;
             OnEnd?.Invoke();
 
-            isAnimating = false;
+            isSlideInAnimating = false;
         }
 
-        public static IEnumerator SlideIn(RectTransform Transform, UIDirection UIDirection, float Speed,
-            UnityEvent OnEnd)
+        public static IEnumerator SlideIn(RectTransform Transform, UIDirection UIDirection, float Speed)
         {
-            if (isAnimating)
+            if (isSlideInAnimating)
                 yield break;
-
-            isAnimating = true;
-
+            Transform.gameObject.SetActive(true);
+            isSlideInAnimating = true;
+            Transform.gameObject.GetComponent<UIPage>()._isAnimating= true;
             Vector2 startPosition;
+            Vector2 endPosition=Vector2.zero;
             switch (UIDirection)
             {
                 case UIDirection.UP:
                     startPosition = new Vector2(0, -Screen.height);
+                    startPosition.x = Transform.anchoredPosition.x;
+                    endPosition.x=Transform.anchoredPosition.x;
                     break;
                 case UIDirection.RIGHT:
                     startPosition = new Vector2(-Screen.width, 0);
+                    startPosition.y = Transform.anchoredPosition.y;
+                    endPosition.y=Transform.anchoredPosition.y;
                     break;
                 case UIDirection.DOWN:
                     startPosition = new Vector2(0, Screen.height);
+                    startPosition.x = Transform.anchoredPosition.x;
+                    endPosition.x=Transform.anchoredPosition.x;
                     break;
                 case UIDirection.LEFT:
                     startPosition = new Vector2(Screen.width, 0);
+                    startPosition.y = Transform.anchoredPosition.y;
+                    endPosition.y=Transform.anchoredPosition.y;
                     break;
                 default:
                     startPosition = new Vector2(0, -Screen.height);
+                    startPosition.x = Transform.anchoredPosition.x;
+                    endPosition.x=Transform.anchoredPosition.x;
                     break;
             }
 
             float time = 0;
             while (time < 1)
             {
-                Transform.anchoredPosition = Vector2.Lerp(startPosition, Vector2.zero, time);
+                Transform.anchoredPosition = Vector2.Lerp(startPosition, endPosition, time);
                 yield return null;
                 time += Time.deltaTime * Speed;
             }
 
             Transform.anchoredPosition = Vector2.zero;
-            OnEnd?.Invoke();
-
-            isAnimating = false;
+            Transform.gameObject.GetComponent<UIPage>()._isAnimating= false;
+            isSlideInAnimating = false;
         }
 
-        public static IEnumerator SlideOut(RectTransform Transform, UIDirection UIDirection, float Speed,
-            UnityEvent OnEnd)
+        public static IEnumerator SlideOut(RectTransform Transform, UIDirection UIDirection, float Speed)
         {
-            if (isAnimating)
+            if (isSlideOutAnimating)
                 yield break;
 
-            isAnimating = true;
-
+            isSlideOutAnimating = true;
+            Transform.gameObject.GetComponent<UIPage>()._isAnimating= true;
             Vector2 endPosition;
             switch (UIDirection)
             {
@@ -168,7 +177,7 @@ namespace Rimaethon._Scripts.UI
                     endPosition = new Vector2(0, Screen.height);
                     break;
             }
-
+            endPosition+=Transform.anchoredPosition;
             float time = 0;
             while (time < 1)
             {
@@ -177,10 +186,10 @@ namespace Rimaethon._Scripts.UI
                 time += Time.deltaTime * Speed;
             }
 
-            Transform.anchoredPosition = endPosition;
-            OnEnd?.Invoke();
-
-            isAnimating = false;
+            Transform.anchoredPosition = new Vector2(0, -Screen.height);
+            Transform.gameObject.SetActive(false);
+            Transform.gameObject.GetComponent<UIPage>()._isAnimating= false;
+            isSlideOutAnimating = false;
         }
     }
 }
