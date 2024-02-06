@@ -115,10 +115,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8563434058860616904}
   - component: {fileID: 8563434058860616908}
-  - component: {fileID: 8563434058860616903}
   - component: {fileID: 8563434058860616902}
   - component: {fileID: 8368549916816679274}
-  - component: {fileID: 1040555263097868784}
   - component: {fileID: 8207183159723797255}
   - component: {fileID: 6332785581345446348}
   - component: {fileID: 8969835978143600991}
@@ -168,40 +166,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
---- !u!114 &8563434058860616903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8563434058860616909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99172bcf12e523441abaa0ae508abb00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
-  canMove: 1
-  target: {fileID: 0}
-  attacker: {fileID: 1040555263097868784}
-  maximumAttackRange: 30
-  doesAttack: 1
-  lineOfSightToAttack: 1
-  moveWhileAttacking: 0
-  needsLineOfSightToMove: 1
-  actionState: 0
-  attackEffect: {fileID: 4964255851663953005, guid: ef1264e0e86472b46ad705e5975f314d, type: 3}
-  animator: {fileID: 0}
-  idleBooleanName: 
-  moveBooleanName: 
-  attackBooleanName: 
-  hitWithLineOfSight:
-    serializedVersion: 2
-    m_Bits: 576
-  agent: {fileID: 8563434058860616908}
-  stopDistance: 0
-  lineOfSightToStop: 1
-  alwaysFacePlayer: 0
 --- !u!54 &8563434058860616902
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -249,23 +213,6 @@ MonoBehaviour:
   eventsOnRespawn:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1040555263097868784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8563434058860616909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 658764297263bd94999399f3cbb7408e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDuration: 0.5
-  cooldownDuration: 1
-  attackClip: {fileID: 0}
-  weaponColliders:
-  - {fileID: 0}
 --- !u!114 &8207183159723797255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,8 +241,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ragdollAnimator: {fileID: 2470448887352082435}
   componentsToDisable:
-  - {fileID: 8563434058860616903}
-  - {fileID: 1040555263097868784}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 8563434058860616908}
   - {fileID: 8563434058860616902}
   - {fileID: 0}
