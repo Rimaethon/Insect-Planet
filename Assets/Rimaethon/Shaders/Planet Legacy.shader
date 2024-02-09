@@ -1,15 +1,9 @@
-// Upgrade NOTE: upgraded instancing buffer 'ExoPlanetsLegacyPlanet' to new syntax.
 
-// Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "Exo-Planets/Legacy/Planet"
+Shader "Rimaethon/Planet"
 {
 	Properties
 	{
-[Range(0.1, 10.0)] _TonemappingIntensity("Tonemapping Intensity", Float) = 1.0
-
-
-
+		[Range(0.1, 10.0)] _TonemappingIntensity("Tonemapping Intensity", Float) = 1.0
 		[NoScaleOffset]_ColorTexture("Color Texture", 2D) = "gray" {}
 		[Toggle]_EnableClouds("Enable Clouds", Float) = 1
 		_PolarMask("Polar Mask", 2D) = "white" {}
@@ -47,11 +41,11 @@ Shader "Exo-Planets/Legacy/Planet"
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 	}
-	
+
 	SubShader
 	{
-		
-		
+
+
 		Tags { "RenderType"="Opaque" }
 	LOD 100
 
@@ -65,15 +59,15 @@ Shader "Exo-Planets/Legacy/Planet"
 		ZWrite On
 		ZTest LEqual
 		Offset 0 , 0
-		
-		
-		
+
+
+
 		Pass
 		{
 			Name "Unlit"
 			CGPROGRAM
 
-			
+
 
 			#ifndef UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX
 			//only defining to not throw compilation error over Unity 5.5
@@ -97,7 +91,7 @@ Shader "Exo-Planets/Legacy/Planet"
 				float4 ase_tangent : TANGENT;
 				float3 ase_normal : NORMAL;
 			};
-			
+
 			struct v2f
 			{
 				float4 vertex : SV_POSITION;
@@ -150,7 +144,7 @@ Shader "Exo-Planets/Legacy/Planet"
 			UNITY_INSTANCING_BUFFER_END(ExoPlanetsLegacyPlanet)
 
 			float _TonemappingIntensity;
-			
+
 			v2f vert ( appdata v )
 			{
 				v2f o;
@@ -167,9 +161,9 @@ Shader "Exo-Planets/Legacy/Planet"
 				o.ase_texcoord3.xyz = ase_worldBitangent;
 				float3 ase_worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 				o.ase_texcoord4.xyz = ase_worldPos;
-				
+
 				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.zw = 0;
 				o.ase_texcoord1.w = 0;
@@ -189,7 +183,7 @@ Shader "Exo-Planets/Legacy/Planet"
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				return o;
 			}
-			
+
 			fixed4 frag (v2f i ) : SV_Target
 			{
 				UNITY_SETUP_INSTANCE_ID(i);
@@ -320,18 +314,16 @@ Shader "Exo-Planets/Legacy/Planet"
 				float4 Specular155 = temp_output_160_0;
 				float4 lerpResult421 = lerp( ( ( 1.0 - ( 1.0 - blendOpSrc190 ) * ( 1.0 - blendOpDest190 ) ) + ( Specular155 * PolarMask103 ) ) , _SkyblendA , _SkyblendA.a);
 				float4 SecondPassInput211 = ( lerpResult421 * _IlluminationBoost );
-				
-				
+
+
 				finalColor = SecondPassInput211;
 
-		
-			
+
+
 				return finalColor;
 			}
 			ENDCG
 		}
 	}
-	CustomEditor "PlanetEditor"
-	
-	
+
 }
