@@ -1,13 +1,12 @@
-Shader "UASDASDasdasdsa"
+Shader "Rimaethon/Lit Instanced Shader"
 {
     Properties
     {
-        // Specular vs Metallic workflow
         [HideInInspector] _WorkflowMode("WorkflowMode", Float) = 1.0
 
         [MainColor] _BaseColor("Color", Color) = (0.5,0.5,0.5,1)
         [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
-
+        [LightColor] _LightColor("Light Color", Color) = (1,1,1,1)
         _Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
 
         _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
@@ -33,6 +32,7 @@ Shader "UASDASDasdasdsa"
         _EmissionMap("Emission", 2D) = "white" {}
 
         // Blending state
+        [HideInInspector] _Intensity("Intensity", Float) = 30.0
         [HideInInspector] _Surface("__surface", Float) = 0.0
         [HideInInspector] _Blend("__blend", Float) = 0.0
         [HideInInspector] _AlphaClip("__clip", Float) = 0.0
@@ -43,8 +43,7 @@ Shader "UASDASDasdasdsa"
 
         _ReceiveShadows("Receive Shadows", Float) = 1.0
 
-            // Editmode props
-            [HideInInspector] _QueueOffset("Queue offset", Float) = 0.0
+        [HideInInspector] _QueueOffset("Queue offset", Float) = 0.0
     }
 
     SubShader
@@ -63,7 +62,6 @@ Shader "UASDASDasdasdsa"
             HLSLPROGRAM
            #pragma exclude_renderers gles gles3 glcore
             #pragma target 4.5
-
             #pragma shader_feature _NORMALMAP
             #pragma shader_feature _ALPHATEST_ON
             #pragma shader_feature _ALPHAPREMULTIPLY_ON
@@ -93,7 +91,7 @@ Shader "UASDASDasdasdsa"
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
-
+            #pragma enable_d3d11_debug_symbols
             #pragma vertex LitPassVertex
             #pragma fragment LitPassFragment
 
@@ -103,7 +101,7 @@ Shader "UASDASDasdasdsa"
 
             struct Attributes
             {
-                float4 positionOS   : POSITION;
+                uint vertexID : SV_VertexID;
                 float3 normalOS     : NORMAL;
                 float4 tangentOS    : TANGENT;
                 float2 uv           : TEXCOORD0;
@@ -114,7 +112,7 @@ Shader "UASDASDasdasdsa"
             {
                 float2 uv                       : TEXCOORD0;
                 float2 uvLM                     : TEXCOORD1;
-                float3 positionWS  : TEXCOORD2; 
+                float3 positionWS  : TEXCOORD2;
                 half3  normalWS                 : TEXCOORD3;
 
 #if _NORMALMAP
@@ -123,24 +121,30 @@ Shader "UASDASDasdasdsa"
 #endif
 
 #ifdef _MAIN_LIGHT_SHADOWS
-                float4 shadowCoord              : TEXCOORD6; // compute shadow coord per-vertex for the main light
+                float4 shadowCoord              : TEXCOORD6;
 #endif
                 float4 positionCS               : SV_POSITION;
             };
-            StructuredBuffer<float4x4> _PerInstanceData;
+
+            half3 _LightColor;
+            float _Intensity;
+            StructuredBuffer<float3>  VertexPositionsOutput;
+            int vertexCount;
             Varyings LitPassVertex(Attributes input, const uint instance_id : SV_InstanceID)
             {
                 Varyings output;
 
-
-                VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
-                VertexNormalInputs vertexNormalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
-
+                const VertexNormalInputs vertexNormalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
                 output.uv = TRANSFORM_TEX(input.uv, _BaseMap);
                 output.uvLM = input.uvLM.xy * unity_LightmapST.xy + unity_LightmapST.zw;
-
-                output.positionWS =vertexInput.positionWS;
                 output.normalWS = vertexNormalInput.normalWS;
+
+                const float3 worldPos=VertexPositionsOutput[instance_id*vertexCount+input.vertexID];
+                output.positionWS =worldPos;
+
+                const float4 clipPos=mul(UNITY_MATRIX_VP,float4(worldPos,1));
+                output.positionCS = clipPos;
+
 
 #ifdef _NORMALMAP
                 output.tangentWS = vertexNormalInput.tangentWS;
@@ -148,21 +152,14 @@ Shader "UASDASDasdasdsa"
 #endif
 
 #ifdef _MAIN_LIGHT_SHADOWS
-  
-                output.shadowCoord = GetShadowCoord(vertexInput);
+                                    output.shadowCoord =TransformWorldToShadowCoord(output.positionWS);
+
 #endif
- const float4 pos = mul(_PerInstanceData[instance_id], input.positionOS);
-                output.positionCS =   mul(UNITY_MATRIX_VP, pos);
-         
 
-// Return the output
-return output;     // Extract the transformation matrix from _PerInstanceData
-
-
+                return output;
             }
 
 
-           
             half4 LitPassFragment(Varyings input) : SV_Target
             {
                 SurfaceData surfaceData;
@@ -194,30 +191,11 @@ return output;     // Extract the transformation matrix from _PerInstanceData
                 Light mainLight = GetMainLight();
 #endif
 
-                // Mix diffuse GI with environment reflections.
                 half3 color = GlobalIllumination(brdfData, bakedGI, surfaceData.occlusion, normalWS, viewDirectionWS);
-
-                // LightingPhysicallyBased computes direct light contribution.
                 color += 0.3 * LightingPhysicallyBased(brdfData, mainLight, normalWS, viewDirectionWS);
 
-                // Additional lights loop
-#ifdef _ADDITIONAL_LIGHTS
-
-                // Returns the amount of lights affecting the object being renderer.
-                // These lights are culled per-object in the forward renderer
-                int additionalLightsCount = GetAdditionalLightsCount();
-                for (int i = 0; i < additionalLightsCount; ++i)
-                {
-                    // Similar to GetMainLight, but it takes a for-loop index. This figures out the
-                    // per-object light index and samples the light buffer accordingly to initialized the
-                    // Light struct. If _ADDITIONAL_LIGHT_SHADOWS is defined it will also compute shadows.
-                    Light light = GetAdditionalLight(i, positionWS);
-
-                    // Same functions used to shade the main light.
-                    color += LightingPhysicallyBased(brdfData, light, normalWS, viewDirectionWS);
-                }
-#endif
                 color += surfaceData.emission;
+                color *= _LightColor * _Intensity;
                 return half4(color, surfaceData.alpha);
             }
             ENDHLSL
