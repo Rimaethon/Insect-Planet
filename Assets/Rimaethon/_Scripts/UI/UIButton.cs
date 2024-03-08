@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Rimaethon._Scripts.UI
 {
-    public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] private float scaleUpAmount = 1.2f;
         private RectTransform _buttonRectTransform;
@@ -27,6 +27,16 @@ namespace Rimaethon._Scripts.UI
         {
             LeanTween.scale(_buttonRectTransform, Vector3.one, _scaleDuration)
                 .setEase(LeanTweenType.easeInOutSine);
+        }
+        protected virtual void DoOnClicked()
+        {
+            Debug.Log("Button Clicked");
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            Debug.Log("Button Clicked");
+            DoOnClicked();
         }
     }
 }
