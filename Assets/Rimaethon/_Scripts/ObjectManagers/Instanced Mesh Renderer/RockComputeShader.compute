@@ -1,0 +1,39 @@
+#pragma kernel function
+#include "UnityCG.cginc"
+
+RWStructuredBuffer<float3> VertexPositionsOutput;
+StructuredBuffer<float3> SpawnPositions;
+StructuredBuffer<float3> VertexPositionsInput;
+int vertexCount;
+
+
+
+[numthreads(32, 1, 1)]
+void function(uint3 id : SV_DispatchThreadID)
+{
+    const int meshIndex = id.x * vertexCount;
+
+    // Random rotation angles
+    const float randX = _Time.x*10;  // Random angle around X-axis
+    const float randY = _Time.x*10;  // Random angle around Y-axis
+    const float randZ = _Time.x;
+
+    const float3x3 rotationMatrix = float3x3(
+      cos(randY), 0.0, sin(randY),
+      0.0, 1.0, 0.0,
+      -sin(randY), 0.0, cos(randY)
+  );
+
+
+    float3 pos=  lerp(SpawnPositions[id.x],SpawnPositions[(id.x+200)%15000],_SinTime.x/10);
+  
+
+
+    for (int i = 0; i < vertexCount; ++i)
+    {
+        VertexPositionsOutput[meshIndex + i] =mul(rotationMatrix, VertexPositionsInput[i])+pos;
+    }
+}
+
+
+
