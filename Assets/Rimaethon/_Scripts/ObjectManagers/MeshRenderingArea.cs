@@ -8,8 +8,6 @@ using UnityEngine.Rendering;
 
 public class MeshRenderingArea : MonoBehaviour
 {
-    string fileName = "Vector3Data_12.03.23-02.55";
-
     private List<Vector3> _spawnPoints;
     [SerializeField] private Mesh objectMesh;
     [SerializeField] private Material objectMaterial;

@@ -5,15 +5,10 @@ public class MoveToDestination : MonoBehaviour
 {
     public Transform targetObject;
     [SerializeField] private ParticleSystem flame;
-    private float acceleration = 1f;
     private readonly float accelerationTime = 3f;
     private float currentSpeed = 50;
     private bool isLoweringStarted;
     private readonly int LoweringStepCount = 30;
-    private float moveSpeed = 500f;
-    private float particleSystemRadius1 = 1f;
-    private float particleSystemRadius2 = 20f;
-    private float particleSystemRadiusTransitionTime = 0.5f;
     private float shapeRadius;
 
     private Vector3 targetPosition;

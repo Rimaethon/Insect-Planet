@@ -22,7 +22,6 @@ public class InstancedMeshRenderer: MonoBehaviour
     [SerializeField] private Camera _camera;
     private Transform _transform;
     private Transform _cameraTransform;
-    private bool _isEnabled;
     [SerializeField] private int LOD1Distance;
     [SerializeField] private int LOD2Distance;
     [SerializeField] private int LOD3Distance;
@@ -156,7 +155,6 @@ public class InstancedMeshRenderer: MonoBehaviour
 
 
         }
-        _isEnabled = true;
     }
 
     public bool IsObjectVisible()

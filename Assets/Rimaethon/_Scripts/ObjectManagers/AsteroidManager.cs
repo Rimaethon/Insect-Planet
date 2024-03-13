@@ -16,7 +16,6 @@ namespace Rimaethon._Scripts.ObjectManagers
         [SerializeField] private GameObject meshRendererPrefab;
         private List<ComputeBuffer> argsBuffers;
         uint[] args = new uint[5] { 0, 0, 0, 0, 0 };
-        private uint pointsToGenerate = 15000;
 
         private void Start()
         {

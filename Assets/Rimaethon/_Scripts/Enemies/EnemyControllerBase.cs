@@ -19,7 +19,7 @@ public enum EnemyState
 }
 
 [RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
-public class EnemyControllerBase : MonoBehaviour, IControllable    
+public class EnemyControllerBase : MonoBehaviour, IControllable
 {
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -42,9 +42,9 @@ public class EnemyControllerBase : MonoBehaviour, IControllable
     private bool isIdle;
     private bool isMoving;
     [SerializeField]private Vector3[] _patrolPoints=new Vector3[3];
-    
+
     private CancellationTokenSource _cancellationTokenSource;
-    
+
     private void Awake()
     {
         _cancellationTokenSource = new CancellationTokenSource();
@@ -52,13 +52,13 @@ public class EnemyControllerBase : MonoBehaviour, IControllable
         FillArrayWithRandomNavmeshLocations(_patrolPoints,10);
         ChangeState(EnemyState.Patrolling);
     }
-    
+
     private void Initialize()
     {
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
     }
-    
+
     public void ChangeState(EnemyState state)
     {
         enemyState = state;
@@ -80,13 +80,15 @@ public class EnemyControllerBase : MonoBehaviour, IControllable
 
     bool IsPlayerInRange()
     {
+        if (!lineOfSightToAttack)
+            return false;
         return Vector3.Distance(transform.position, target.position) < maximumAttackRange;
     }
 
-  
+
     private int _currentPatrolIndex = 0;
 
-   
+
     private void OnDisable()
     {
         _cancellationTokenSource.Cancel();
@@ -153,6 +155,6 @@ public class EnemyControllerBase : MonoBehaviour, IControllable
         _animator.SetBool(attackAnimationHash, false);
         _animator.SetBool(animationHash, true);
     }
-    
-   
+
+
 }

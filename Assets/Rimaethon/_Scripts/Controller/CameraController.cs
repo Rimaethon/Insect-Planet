@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 1f;
-    [SerializeField] private float lookSpeed = 1f; 
+    [SerializeField] private float lookSpeed = 1f;
     [SerializeField] private int downClamp = 30;
     [SerializeField] private int upClamp = -30;
-    private Vector3 _moveVector; 
-    private Vector2 _lookVector; 
+    private Vector3 _moveVector;
+    private Vector2 _lookVector;
 
     private void Awake()
     {
@@ -44,7 +43,7 @@ public class CameraController : MonoBehaviour
         newRotation.x = Xrotation;
         newRotation.y += horizontalLookInput;
         transform.eulerAngles = newRotation;
-    
+
     }
     private void Update()
     {

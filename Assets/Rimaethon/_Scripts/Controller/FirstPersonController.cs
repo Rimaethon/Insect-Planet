@@ -27,29 +27,26 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float maxVelocityChange = 10f;
     private Vector2 _moveVector;
     [SerializeField] private bool _isWalking = false;
-    
+
     #region Jump
     [SerializeField] bool enableJump = true;
     [SerializeField] float jumpPower = 5f;
     public bool _isGrounded;
     #endregion
-    
+
     #region Crouch
     [SerializeField] private bool _enableCrouch = true;
     [SerializeField] private bool holdToCrouch;
-    [SerializeField] private float crouchHeight = .75f;
     [SerializeField] private float speedReduction = .5f;
     private bool _isCrouched = false;
     private Vector3 _originalScale;
     #endregion
-    
+
     #endregion
 
     #region Weapon Wobble
 
-    [SerializeField] private bool enableWeaponWobble = true;
     [SerializeField] private Transform joint;
-    [SerializeField] private float wobbleSpeed = 10f;
     [SerializeField] private Vector3 wobbleAmount = new Vector3(.01f, .025f, 0f);
     private Vector3 _jointOriginalPos;
 
@@ -62,10 +59,10 @@ public class FirstPersonController : MonoBehaviour
 
 
     #region OnEnable/OnDisable
-    
+
     private void OnEnable()
     {
-        EventManager.Instance.AddHandler<Vector2>(GameEvents.OnPlayerMove, movementVector => 
+        EventManager.Instance.AddHandler<Vector2>(GameEvents.OnPlayerMove, movementVector =>
         {
             _moveVector = movementVector;
         });
@@ -100,7 +97,7 @@ public class FirstPersonController : MonoBehaviour
         playerCamera.fieldOfView = fov;
         _originalScale = transform.localScale;
         _jointOriginalPos = joint.localPosition;
-        _collider = GetComponent<CapsuleCollider>();    
+        _collider = GetComponent<CapsuleCollider>();
     }
 
     private void Start()
@@ -118,7 +115,7 @@ public class FirstPersonController : MonoBehaviour
         HandlePlayerLook();
     }
 
-   
+
     private void FixedUpdate()
     {
         #region Movement
@@ -137,9 +134,9 @@ public class FirstPersonController : MonoBehaviour
             Jump();
         }
     }
-   
+
     #endregion
-    
+
     #region Camera
     private void HandlePlayerLook()
     {
@@ -178,13 +175,15 @@ public class FirstPersonController : MonoBehaviour
         }
     }
     private void Jump()
-    { 
+    {
         if (!_isGrounded) return;
         _rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
         _isGrounded = false;
     }
     private void HandlePlayerCrouch()
     {
+        if(!_enableCrouch)
+            return;
         if(_isCrouched)
         {
             walkSpeed /= speedReduction;
@@ -197,7 +196,7 @@ public class FirstPersonController : MonoBehaviour
             _collider.height = 1f;
             _isCrouched = true;
         }
-     
+
     }
-    
+
 }
