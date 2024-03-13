@@ -13,7 +13,7 @@ namespace Rimaethon.Runtime.Managers
         private float _movementDirection;
         private PlayerInputActionMaps _playerInputs;
 
-   
+
 
         private void OnEnable()
         {
@@ -35,24 +35,30 @@ namespace Rimaethon.Runtime.Managers
 
         protected override void Awake()
         {
-            _playerInputs = new PlayerInputActionMaps(); 
+            _playerInputs = new PlayerInputActionMaps();
             base.Awake();
         }
 
 
         public void OnMovement(InputAction.CallbackContext context)
         {
+            if(_isPlayerDead)
+                return;
             Vector2 movementVector = context.ReadValue<Vector2>();
             EventManager.Instance.Broadcast(GameEvents.OnPlayerMove, movementVector);
         }
 
         public void OnFire(InputAction.CallbackContext context)
         {
+            if(_isPlayerDead)
+                return;
             EventManager.Instance.Broadcast(GameEvents.OnPlayerClick);
         }
 
         public void OnCycleWeapon(InputAction.CallbackContext context)
         {
+            if(_isPlayerDead)
+                return;
             if(context.ReadValue<float>()==0) return;
             int value = context.ReadValue<float>()>0?1:-1;
             EventManager.Instance.Broadcast(GameEvents.OnPlayerCycleWeapon, value);
@@ -60,34 +66,43 @@ namespace Rimaethon.Runtime.Managers
 
         public void OnChangeWeaponNum(InputAction.CallbackContext context)
         {
+            if(_isPlayerDead)
+                return;
             EventManager.Instance.Broadcast(GameEvents.OnPlayerWeaponChange, context.ReadValue<float>());
         }
 
         public void OnCrouch(InputAction.CallbackContext context)
         {
-            
+            if(_isPlayerDead)
+                return;
             EventManager.Instance.Broadcast(GameEvents.OnPlayerCrouch);
 
             if (context.canceled)
-            { 
+            {
                 EventManager.Instance.Broadcast(GameEvents.OnPlayerCrouch);
             }
-            
+
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
+            if(_isPlayerDead)
+                return;
             EventManager.Instance.Broadcast(GameEvents.OnPlayerJump);
         }
 
         public void OnMove(InputAction.CallbackContext context)
         {
+            if(_isPlayerDead)
+                return;
             Vector2 movementVector = context.ReadValue<Vector2>().normalized;
             EventManager.Instance.Broadcast<Vector2>(GameEvents.OnPlayerMove, movementVector);
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
+            if(_isPlayerDead)
+                return;
             Vector2 lookVector = context.ReadValue<Vector2>();
             EventManager.Instance.Broadcast<Vector2>(GameEvents.OnPlayerLook, lookVector);
         }
@@ -97,7 +112,7 @@ namespace Rimaethon.Runtime.Managers
             EventManager.Instance.Broadcast(GameEvents.OnUIBack);
         }
 
-       
+
 
 
         private void HandlePlayerDead()
@@ -130,12 +145,12 @@ namespace Rimaethon.Runtime.Managers
             _playerInputs.Player.Look.performed += OnLook;
             _playerInputs.Player.Look.canceled += OnLook;
             _playerInputs.Player.CycleWeapon.performed += OnCycleWeapon;
-            _playerInputs.Player.Jump.performed += OnJump;  
+            _playerInputs.Player.Jump.performed += OnJump;
             _playerInputs.Player.Pause.performed += OnPause;
             _playerInputs.Player.Crouch.performed += OnCrouch;
             _playerInputs.Player.Crouch.canceled += OnCrouch;
         }
     }
 
-   
+
 }
