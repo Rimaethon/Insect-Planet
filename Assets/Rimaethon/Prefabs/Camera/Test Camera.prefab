@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 8255084268382319733}
   - component: {fileID: 534454416}
   m_Layer: 10
-  m_Name: Camera
+  m_Name: Test Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +176,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 22000
+  far clip plane: 400000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RenderShadows: 1
   m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
+  m_RequiresOpaqueTextureOption: 1
   m_CameraType: 0
   m_Cameras: []
   m_RendererIndex: -1
@@ -248,24 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75e3b24726501a645ab60203e72d272a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doFocus: 0
-  focusLimit: 100
-  minFocusDistance: 5
-  firstUndoKey: 306
-  secondUndoKey: 122
-  moveSpeed: 10000
-  rotationSpeed: 5
-  zoomSpeed: 5
-  mouseY: Mouse Y
-  mouseX: Mouse X
-  zoomAxis: Mouse ScrollWheel
-  forwardKey: 119
-  backKey: 115
-  leftKey: 97
-  rightKey: 100
-  flatMoveKey: 304
-  anchoredMoveKey: 325
-  anchoredRotateKey: 324
+  moveSpeed: 1000
+  lookSpeed: 5
 --- !u!54 &534454416
 Rigidbody:
   m_ObjectHideFlags: 0
