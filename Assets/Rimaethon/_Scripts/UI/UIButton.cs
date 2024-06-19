@@ -30,12 +30,10 @@ namespace Rimaethon._Scripts.UI
         }
         protected virtual void DoOnClicked()
         {
-            Debug.Log("Button Clicked");
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log("Button Clicked");
             DoOnClicked();
         }
     }
